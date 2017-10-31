@@ -25,13 +25,13 @@ class GradientDescent(object):
             x0 = x0 - self.learning_rate * self.loss_function.gradient(x0)
             loss_after = self.loss_function(x0)
 
-            if abs(loss_after - loss_before) / loss_before < ftol:
+            if abs((loss_after - loss_before) / loss_before) < ftol:
                 msg = ("Loss function has not changed by {} since the previous"
                        " iteration".format(ftol))
                 self.save_state(x0, loss_after, i+1, msg)
                 break
 
-            if abs(x_tmp - x0 < xtol).all():
+            if (abs(x_tmp - x0) < xtol).all():
                 msg = ("Optimal parameters have not changed by {} since"
                        "the previous iteration.".format(xtol))
                 self.save_state(x0, loss_after, i+1, msg)
