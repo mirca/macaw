@@ -21,6 +21,23 @@ class L2Norm(LossFunction):
         Observed data
     model : callable
         A functional form that defines the model
+
+    Examples
+    --------
+    >>> from macaw.objective_functions import L2Norm
+    >>> from macaw.optimizers import GradientDescent
+    >>> from oktopus.models import LineModel
+    >>> # generate fake data
+    >>> np.random.seed(0)
+    >>> x = np.linspace(0, 10, 200)
+    >>> fake_data = x * 3 + 10 + np.random.normal(scale=2, size=x.shape)
+    >>> # build the model
+    >>> my_line = LineModel(x)
+    >>> # build the objective function
+    >>> l2norm = L2Norm(fake_data, my_line)
+    >>> # perform optimization
+    >>> gd = GradientDescent(l2norm)
+    >>> gd.compute(x0=(1., 1.))
     """
 
     def __init__(self, y, model):
