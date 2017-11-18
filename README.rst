@@ -4,4 +4,4 @@ macaw
 
 .. |logo| image:: docs/source/_static/logo/macaw_small.png
 
-*image credit: @chedges*
+*image credit: `@christinahedges <https://www.github.com/christinahedges>`_*
