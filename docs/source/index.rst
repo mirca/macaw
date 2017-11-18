@@ -6,6 +6,9 @@
 Welcome to Macaw
 ================
 
+**macaw** is a colorful long-tailed package for beautiful Majorization-Minimization
+applied to Machine Learning
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
