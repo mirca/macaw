@@ -15,7 +15,7 @@ def test_fitting_line():
     # build the objective function
     l2norm = L2Norm(fake_data, my_line)
     # perform optimization
-    gd = GradientDescent(l2norm)
+    gd = GradientDescent(l2norm.evaluate, l2norm.gradient)
     gd.compute(x0=(1., 1.))
 
     assert_allclose(gd.x, [3., 10.], rtol=1e-1)
