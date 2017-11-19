@@ -43,7 +43,7 @@ class L1Norm(LossFunction):
     >>> mm = MajorizationMinimization(l1norm)
     >>> mm.compute(x0=(1., 1.))
     >>> print(mm.x)
-    [  2.96298344  10.27857897]
+    [  2.96298402  10.27857625]
     """
 
     def __init__(self, y, model):
@@ -64,17 +64,10 @@ class L1Norm(LossFunction):
 
     def gradient_surrogate(self, theta, theta_n):
         """Computes the gradient of the surrogate function."""
-        _grad = lambda model, argnum, theta: model.gradient(*theta)[argnum]
-        n_theta = len(theta)
         r = self.y - self.model(*theta)
         abs_r = np.abs(self.y - self.model(*theta_n))
-        grad_norm = np.array([])
-        for i in range(n_theta):
-            grad = _grad(self.model, i, theta)
-            grad_norm = np.append(grad_norm,
-                                  - np.nansum(r * grad / abs_r)
-                                 )
-        return grad_norm
+        grad_model = self.model.gradient(*theta)
+        return - np.nansum(r * grad_model / abs_r, axis=1)
 
     def fit(self, x0=None, n=100, xtol=1e-6, ftol=1e-6):
         if x0 is None:
@@ -132,15 +125,8 @@ class L2Norm(LossFunction):
         return .5 * np.nansum(residual * residual)
 
     def gradient(self, theta):
-        _grad = lambda model, argnum, theta: model.gradient(*theta)[argnum]
-        n_theta = len(theta)
-        grad_norm = np.array([])
-        for i in range(n_theta):
-            grad = _grad(self.model, i, theta)
-            grad_norm = np.append(grad_norm,
-                                  - np.nansum((self.y - self.model.evaluate(*theta)) * grad)
-                                 )
-        return grad_norm
+        grad = self.model.gradient(*theta)
+        return - np.nansum((self.y - self.model(*theta)) * grad, axis=1)
 
     def fit(self, x0=None, n=100, xtol=1e-6, ftol=1e-6):
         if x0 is None:
@@ -149,3 +135,13 @@ class L2Norm(LossFunction):
         gd = GradientDescent(self.evaluate, self.gradient)
         gd.compute(x0, n, xtol, ftol)
         return gd
+
+class BernoulliLikelihood(LossFunction):
+
+    def __init__(self, y, model):
+        self.y = y
+        self.model = model
+
+    def evaluate(self, params):
+        return np.nansum(self.y * np.log(model(*params))
+                         + (1 - self.y) * np.log(1 - model(*params)))
