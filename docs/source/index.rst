@@ -20,8 +20,8 @@ Majorization-minimization is all about inequalities such as
 
 .. math::
 
-    \psi\left(\mathbb{E}\left[X\right]\right) \leq \mathbb{E}\left[\psi\left(X\right)\right]
-for convex :math:`\psi`.
+    \phi\left(\mathbb{E}\left[X\right]\right) \leq \mathbb{E}\left[\phi\left(X\right)\right],
+for convex :math:`\phi`.
 
 2. *Cauchy-Schwarz Inequality*:
 
