@@ -1,8 +1,8 @@
 import numpy as np
 from oktopus.models import LineModel
 from numpy.testing import assert_allclose
-from ..objective_functions import L2Norm
-from ..optimizers import GradientDescent
+from ..objective_functions import L1Norm, L2Norm
+from ..optimizers import GradientDescent, MajorizationMinimization
 
 
 def test_fitting_line():
@@ -17,5 +17,8 @@ def test_fitting_line():
     # perform optimization
     gd = GradientDescent(l2norm.evaluate, l2norm.gradient)
     gd.compute(x0=(1., 1.))
-
     assert_allclose(gd.x, [3., 10.], rtol=1e-1)
+
+    l1norm = L1Norm(fake_data, my_line)
+    mm = MajorizationMinimization(l1norm)
+    mm.compute(x0=(1., 1.))

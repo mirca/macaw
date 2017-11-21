@@ -136,6 +136,7 @@ class L2Norm(LossFunction):
         gd.compute(x0, n, xtol, ftol)
         return gd
 
+
 class BernoulliLikelihood(LossFunction):
 
     def __init__(self, y, model):
