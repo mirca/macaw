@@ -142,6 +142,12 @@ class BernoulliLikelihood(LossFunction):
         self.y = y
         self.model = model
 
-    def evaluate(self, params):
-        return np.nansum(self.y * np.log(model(*params))
-                         + (1 - self.y) * np.log(1 - model(*params)))
+    def evaluate(self, theta):
+        model_theta = self.model(*theta)
+        return - np.nansum(self.y * np.log(model_theta)
+                           + (1. - self.y) * np.log(1. - model_theta))
+
+    def gradient(self, theta):
+        model_theta = self.model(*theta)
+        grad = self.model.gradient(*theta)
+        return - np.nansum((1 / (1 - model_theta)) * (self.y / (1 + model_theta) - 1) * grad, axis=1)

@@ -50,7 +50,6 @@ class GradientDescent(object):
 
             grad_diff = fun_prime(x0) - grad
             self.gamma = np.dot(x0 - x_tmp, grad_diff) / np.dot(grad_diff, grad_diff)
-
             i += 1
 
         if i == n:
