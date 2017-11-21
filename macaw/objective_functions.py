@@ -1,10 +1,23 @@
 import numpy as np
-from inspect import signature
 from oktopus.loss import LossFunction
 from .optimizers import GradientDescent, MajorizationMinimization
 
 
 __all__ = ['L1Norm', 'L2Norm']
+
+
+if sys.version_info[0] == 2:
+    from inspect import getargspec
+    def _get_number_of_arguments(func):
+        list_of_args = getargspec(func).args
+        if 'self' in list_of_args:
+            return len(list_of_args) - 1
+        else:
+            return len(list_of_args)
+else:
+    from inspect import signature
+    def _get_number_of_arguments(func):
+        return len(signature(func).parameters)
 
 
 class L1Norm(LossFunction):
@@ -71,7 +84,7 @@ class L1Norm(LossFunction):
 
     def fit(self, x0=None, n=100, xtol=1e-6, ftol=1e-6):
         if x0 is None:
-            n_theta = len(signature(self.model.evaluate).parameters)
+            n_theta = _get_number_of_arguments(self.model.evaluate)
             x0 = np.random.uniform(low=-1, high=1, size=n_theta)
         mm = MajorizationMinimization(self)
         mm.compute(x0, n, xtol, ftol)
@@ -130,7 +143,7 @@ class L2Norm(LossFunction):
 
     def fit(self, x0=None, n=100, xtol=1e-6, ftol=1e-6):
         if x0 is None:
-            n_theta = len(signature(self.model.evaluate).parameters)
+            n_theta = _get_number_of_arguments(self.model.evaluate)
             x0 = np.random.uniform(low=-1, high=1, size=n_theta)
         gd = GradientDescent(self.evaluate, self.gradient)
         gd.compute(x0, n, xtol, ftol)
