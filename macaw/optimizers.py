@@ -73,13 +73,13 @@ class MajorizationMinimization(Optimizer):
     ----------
     fun : object
         Objective function to be minimized. Note that this must be an object
-        that contains the following methods:
+        that contains the following methods::
 
             * `evaluate`: returns the value of the objective function
             * `surrogate_fun`: returns the value of an appropriate surrogate function
             * `gradient_surrogate`: return the value of the gradient of the surrogate function
     optimizer : str
-        Specifies the optimizer to use during the Minimization step. Options are:
+        Specifies the optimizer to use during the Minimization step. Options are::
 
             * 'sgd' : Stochastic Gradient Descent
     kwargs : dict
