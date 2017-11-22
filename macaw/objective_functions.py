@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 from oktopus.loss import LossFunction
 from .optimizers import GradientDescent, MajorizationMinimization
