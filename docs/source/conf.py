@@ -42,6 +42,8 @@ extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'sphinx.ext.graphviz',
+    'sphinx.ext.inheritance_diagram',
     'numpydoc',
     'nbsphinx']
 
