@@ -6,7 +6,7 @@ Objective Functions
     :undoc-members:
 
 Inheritance Diagram
-===================
+-------------------
 
 .. inheritance-diagram:: macaw.objective_functions
     :parts: 0

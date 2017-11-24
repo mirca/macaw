@@ -5,6 +5,8 @@ __all__ = ['GradientDescent', 'MajorizationMinimization']
 
 
 class Optimizer(object):
+    """A simple base class for an optimizer."""
+
     def save_state(self, x0, funval, n_iter, message):
         self.x = x0
         self.funval = funval
