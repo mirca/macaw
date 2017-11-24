@@ -42,7 +42,7 @@ optimization problems that arise often in signal processing and machine learning
 See, for instance, `Majorization-Minimization Algorithms in Signal Processing, Communications, and Machine Learning <http://ieeexplore.ieee.org/document/7547360/>`_ by Y. Sun, P. Babu, and D. P. Palomar.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
 *************
