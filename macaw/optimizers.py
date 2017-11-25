@@ -46,13 +46,13 @@ class GradientDescent(Optimizer):
             fun_after = fun(x0)
 
             if abs((fun_after - fun_before) / fun_before) < ftol:
-                msg = ("Loss function has not changed by {} since the previous"
-                       " iteration".format(ftol))
+                msg = ("Success: loss function has not changed by {} since the"
+                       "previous iteration".format(ftol))
                 self.save_state(x0, fun_after, i+1, msg)
                 break
 
             if (abs((x_tmp - x0) / x0) < xtol).all():
-                msg = ("Optimal parameters have not changed by {} since"
+                msg = ("Success: parameters have not changed by {} since"
                        " the previous iteration.".format(xtol))
                 self.save_state(x0, fun_after, i+1, msg)
                 break
@@ -62,8 +62,8 @@ class GradientDescent(Optimizer):
             i += 1
 
         if i == n:
-            msg = ("Max. number of iterations ({}) reached."
-                   " The algorithm might not have converged.".format(n))
+            msg = ("Failure: max. number of iterations ({}) reached."
+                   " The algorithm may not have converged.".format(n))
             self.save_state(x0, fun_after, n, msg)
 
 
@@ -106,13 +106,13 @@ class MajorizationMinimization(Optimizer):
             fun_after = self.fun.evaluate(x0)
 
             if abs((fun_after - fun_before) / fun_before) < ftol:
-                msg = ("Loss function has not changed by {} since the previous"
-                       " iteration".format(ftol))
+                msg = ("Success: loss function has not changed by {} since the"
+                       "previous iteration".format(ftol))
                 self.save_state(x0, fun_after, i+1, msg)
                 break
 
             if (abs((x_tmp - x0) / x0) < xtol).all():
-                msg = ("Optimal parameters have not changed by {} since"
+                msg = ("Success: parameters have not changed by {} since"
                        " the previous iteration.".format(xtol))
                 self.save_state(x0, fun_after, i+1, msg)
                 break
@@ -120,8 +120,8 @@ class MajorizationMinimization(Optimizer):
             i += 1
 
         if i == n:
-            msg = ("Max. number of iterations ({}) reached."
-                   " The algorithm might not have converged.".format(n))
+            msg = ("Failure: max. number of iterations ({}) reached."
+                   " The algorithm may not have converged.".format(n))
             self.save_state(x0, fun_after, n, msg)
 
 
