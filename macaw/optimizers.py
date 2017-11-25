@@ -28,7 +28,7 @@ class GradientDescent(Optimizer):
         Learning rate
     """
 
-    def __init__(self, fun, gradient, gamma=.1):
+    def __init__(self, fun, gradient, gamma=1e-6):
         self.fun = fun
         self.gradient = gradient
         self.gamma = gamma
