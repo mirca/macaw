@@ -54,6 +54,7 @@ Documentation
 
     install
     api/index
+    ipython_notebooks/index
 
 Indices and tables
 ==================
