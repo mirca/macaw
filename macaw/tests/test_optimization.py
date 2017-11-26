@@ -1,5 +1,5 @@
 import numpy as np
-from oktopus.models import LineModel
+from oktopus.models import LinearModel
 from sklearn import datasets, linear_model
 from numpy.testing import assert_allclose
 from ..objective_functions import L1Norm, L2Norm
@@ -12,7 +12,7 @@ def test_fitting_line():
     x = np.linspace(0, 10, 200)
     fake_data = x * 3 + 10 + np.random.normal(scale=2, size=x.shape)
     # build the model
-    my_line = LineModel(x)
+    my_line = LinearModel(x)
     # build the objective function
     l2norm = L2Norm(fake_data, my_line)
     # perform optimization
@@ -38,7 +38,7 @@ def test_ordinary_least_squares_against_sklearn():
     regr.fit(diabetes_X_train, diabetes_y_train)
 
     # Using macaw
-    model_train = LineModel(diabetes_X_train.reshape(-1))
+    model_train = LinearModel(diabetes_X_train.reshape(-1))
     l2norm = L2Norm(y=diabetes_y_train.reshape(-1), model=model_train)
     results = l2norm.fit(x0=[0., 0.])
 
