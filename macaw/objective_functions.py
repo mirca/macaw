@@ -69,14 +69,14 @@ class L1Norm(ObjectiveFunction):
     --------
     >>> from macaw.objective_functions import L1Norm
     >>> from macaw.optimizers import MajorizationMinimization
-    >>> from oktopus.models import LineModel
+    >>> from oktopus.models import LinearModel
     >>> import numpy as np
     >>> # generate fake data
     >>> np.random.seed(0)
     >>> x = np.linspace(0, 10, 200)
     >>> fake_data = x * 3 + 10 + np.random.normal(scale=2, size=x.shape)
     >>> # build the model
-    >>> my_line = LineModel(x)
+    >>> my_line = LinearModel(x)
     >>> # build the objective function
     >>> l1norm = L1Norm(fake_data, my_line)
     >>> # perform optimization
@@ -141,13 +141,13 @@ class L2Norm(ObjectiveFunction):
     >>> import numpy as np
     >>> from macaw.objective_functions import L2Norm
     >>> from macaw.optimizers import GradientDescent
-    >>> from oktopus.models import LineModel
+    >>> from oktopus.models import LinearModel
     >>> # generate fake data
     >>> np.random.seed(0)
     >>> x = np.linspace(0, 10, 200)
     >>> fake_data = x * 3 + 10 + np.random.normal(scale=2, size=x.shape)
     >>> # build the model
-    >>> my_line = LineModel(x)
+    >>> my_line = LinearModel(x)
     >>> # build the objective function
     >>> l2norm = L2Norm(fake_data, my_line)
     >>> # perform optimization
@@ -258,4 +258,4 @@ class LinearLogisitcRegression(BernoulliLikelihood):
     def __init__(self, y, X):
         self.y = y
         self.X = X
-        self.model = LineModel(X)
+        self.model = LinearModel(X)
