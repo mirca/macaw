@@ -36,7 +36,7 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     setup_requires=['pytest-runner'],
-    tests_require=['pytest', 'pytest-cov'],
+    tests_require=['pytest', 'pytest-cov, sklearn'],
     keywords='statistics probability',
     install_requires=['numpy', 'scipy']
 )
