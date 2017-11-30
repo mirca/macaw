@@ -7,11 +7,11 @@ __all__ = ['GradientDescent', 'MajorizationMinimization']
 class Optimizer(object):
     """A simple base class for an optimizer."""
 
-    def save_state(self, x0, funval, n_iter, message):
+    def save_state(self, x0, funval, n_iter, status):
         self.x = x0
         self.funval = funval
         self.niters = n_iter
-        self.message = message
+        self.status = status
 
 
 class GradientDescent(Optimizer):
@@ -46,8 +46,8 @@ class GradientDescent(Optimizer):
             fun_after = fun(x0)
 
             if abs((fun_after - fun_before) / fun_before) < ftol:
-                msg = ("Success: loss function has not changed by {} since the"
-                       "previous iteration".format(ftol))
+                msg = ("Success: loss function has not changed by {} since"
+                       " the previous iteration".format(ftol))
                 self.save_state(x0, fun_after, i+1, msg)
                 break
 
@@ -106,8 +106,8 @@ class MajorizationMinimization(Optimizer):
             fun_after = self.fun.evaluate(x0)
 
             if abs((fun_after - fun_before) / fun_before) < ftol:
-                msg = ("Success: loss function has not changed by {} since the"
-                       "previous iteration".format(ftol))
+                msg = ("Success: loss function has not changed by {} since"
+                       "  the previous iteration".format(ftol))
                 self.save_state(x0, fun_after, i+1, msg)
                 break
 
