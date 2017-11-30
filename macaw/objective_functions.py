@@ -1,5 +1,6 @@
 from abc import abstractmethod
 import numpy as np
+from oktopus.models import LinearModel
 from .optimizers import GradientDescent, MajorizationMinimization
 
 
@@ -184,6 +185,60 @@ class L2Norm(ObjectiveFunction):
         return gd
 
 
+class RidgeRegression(ObjectiveFunction):
+    r"""
+    Implements Ridge regression objective function.
+    """
+    def __init__(self, y, X, alpha=1):
+        self.y = y
+        self.model = LinearModel(X)
+        self.alpha = alpha
+
+    def evaluate(self, theta):
+        theta = np.asarray(theta)
+        return (2 * L2Norm(y=self.y, model=self.model).evaluate(theta)
+                + self.alpha * np.nansum(theta * theta))
+
+    def gradient(self, theta):
+        return (2 * L2Norm(y=self.y, model=self.model).gradient(theta)
+                + 2 * self.alpha * np.nansum(theta))
+
+    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6):
+        gd = GradientDescent(self.evaluate, self.gradient)
+        gd.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
+        return gd
+
+
+class Lasso(ObjectiveFunction):
+    r"""
+    Implements the Lasso objective function.
+    """
+
+    def __init__(self, y, X, alpha=1):
+        self.y = y
+        self.model = LinearModel(X)
+        self.alpha = alpha
+
+    def evaluate(self, theta):
+        return (L2Norm(y=self.y, model=self.model).evaluate(theta) / len(self.y)
+                + self.alpha * np.nansum(np.abs(theta)))
+
+    def surrogate_fun(self, theta, theta_n):
+        theta = np.asarray(theta)
+        abs_t = np.abs(theta_n)
+        return (L2Norm(y=self.y, model=self.model).evaluate(theta) / len(self.y)
+                + .5 * self.alpha * np.nansum(theta * theta / abs_t + abs_t))
+
+    def gradient_surrogate(self, theta, theta_n):
+        return (L2Norm(y=self.y, model=self.model).gradient(theta)
+                + self.alpha * np.nansum(theta / np.abs(theta_n), axis=-1))
+
+    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6):
+        mm = MajorizationMinimization(self)
+        mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
+        return mm
+
+
 class BernoulliLikelihood(ObjectiveFunction):
     r"""Implements the negative log likelihood function for independent
     (possibly non-identical distributed) Bernoulli random variables.
@@ -254,8 +309,7 @@ class BernoulliLikelihood(ObjectiveFunction):
         return gd
 
 
-class LinearLogisitcRegression(BernoulliLikelihood):
+class LogisitcRegression(ObjectiveFunction):
     def __init__(self, y, X):
         self.y = y
-        self.X = X
         self.model = LinearModel(X)
