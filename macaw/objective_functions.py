@@ -85,10 +85,10 @@ class L1Norm(ObjectiveFunction):
     >>> mm.compute(x0=(1., 1.))
     >>> # get best fit parameters
     >>> print(mm.x)
-    [  2.96298429  10.27857368]
+    [  2.96298446  10.27857207]
     >>> # get uncertainties on the best fit parameters
     >>> print(l1norm.uncertainties(mm.x))
-    [ 0.11554496  0.55774923]
+    [ 0.11554496  0.5577492 ]
     """
 
     def __init__(self, y, model):
@@ -114,8 +114,8 @@ class L1Norm(ObjectiveFunction):
         grad_model = self.model.gradient(*theta)
         return - np.nansum(r * grad_model / abs_r, axis=-1)
 
-    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6):
-        mm = MajorizationMinimization(self)
+    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
+        mm = MajorizationMinimization(self, **kwargs)
         mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
         return mm
 
@@ -156,10 +156,10 @@ class L2Norm(ObjectiveFunction):
     >>> gd.compute(x0=(1., 1.))
     >>> # get the best fit parameters
     >>> print(gd.x)
-    [  2.96264043  10.32861654]
+    [  2.96263148  10.32861519]
     >>> # get uncertainties on the best fit parameters
     >>> print(l2norm.uncertainties(gd.x))
-    [ 0.11568702  0.55871659]
+    [ 0.11568693  0.55871632]
     """
 
     def __init__(self, y, model, yerr=1):
@@ -280,12 +280,12 @@ class BernoulliLikelihood(ObjectiveFunction):
     >>> result = ber.fit(x0=[0.3])
     >>> # get best fit parameters
     >>> print(result.x)
-    [ 0.55999924]
+    [ 0.55999999]
     >>> print(np.mean(y>0)) # theorectical MLE
     0.56
     >>> # get uncertainties on the best fit parameters
     >>> print(ber.uncertainties(result.x))
-    [ 0.0496387]
+    [ 0.04963869]
     >>> # theorectical uncertainty
     >>> print(np.sqrt(.56 * .44 / 100))
     0.049638694584
