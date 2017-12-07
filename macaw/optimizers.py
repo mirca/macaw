@@ -28,7 +28,7 @@ class GradientDescent(Optimizer):
         Learning rate
     """
 
-    def __init__(self, fun, gradient, gamma=1e-6):
+    def __init__(self, fun, gradient, gamma=1e-3):
         self.fun = fun
         self.gradient = gradient
         self.gamma = gamma
@@ -45,13 +45,13 @@ class GradientDescent(Optimizer):
             x0 = x0 - self.gamma * grad
             fun_after = fun(x0)
 
-            if abs((fun_after - fun_before) / fun_before) < ftol:
+            if abs((fun_after - fun_before) / (1.+fun_before)) < ftol:
                 msg = ("Success: loss function has not changed by {} since"
                        " the previous iteration".format(ftol))
                 self.save_state(x0, fun_after, i+1, msg)
                 break
 
-            if (abs((x_tmp - x0) / x0) < xtol).all():
+            if (abs((x_tmp - x0) / (1.+x0)) < xtol).all():
                 msg = ("Success: parameters have not changed by {} since"
                        " the previous iteration.".format(xtol))
                 self.save_state(x0, fun_after, i+1, msg)
@@ -105,13 +105,13 @@ class MajorizationMinimization(Optimizer):
             x0 = self.optimizer.x
             fun_after = self.fun.evaluate(x0)
 
-            if abs((fun_after - fun_before) / fun_before) < ftol:
+            if abs((fun_after - fun_before) / (1.+fun_before)) < ftol:
                 msg = ("Success: loss function has not changed by {} since"
-                       "  the previous iteration".format(ftol))
+                       " the previous iteration".format(ftol))
                 self.save_state(x0, fun_after, i+1, msg)
                 break
 
-            if (abs((x_tmp - x0) / x0) < xtol).all():
+            if (abs((x_tmp - x0) / (1.+x0)) < xtol).all():
                 msg = ("Success: parameters have not changed by {} since"
                        " the previous iteration.".format(xtol))
                 self.save_state(x0, fun_after, i+1, msg)
