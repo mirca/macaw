@@ -1,6 +1,6 @@
 from abc import abstractmethod
 import numpy as np
-from oktopus.models import LinearModel
+from macaw.models import LinearModel
 from .optimizers import GradientDescent, MajorizationMinimization
 
 
@@ -70,7 +70,7 @@ class L1Norm(ObjectiveFunction):
     --------
     >>> from macaw.objective_functions import L1Norm
     >>> from macaw.optimizers import MajorizationMinimization
-    >>> from oktopus.models import LinearModel
+    >>> from macaw.models import LinearModel
     >>> import numpy as np
     >>> # generate fake data
     >>> np.random.seed(0)
@@ -142,7 +142,7 @@ class L2Norm(ObjectiveFunction):
     >>> import numpy as np
     >>> from macaw.objective_functions import L2Norm
     >>> from macaw.optimizers import GradientDescent
-    >>> from oktopus.models import LinearModel
+    >>> from macaw.models import LinearModel
     >>> # generate fake data
     >>> np.random.seed(0)
     >>> x = np.linspace(0, 10, 200)
@@ -188,6 +188,14 @@ class L2Norm(ObjectiveFunction):
 class RidgeRegression(ObjectiveFunction):
     r"""
     Implements Ridge regression objective function.
+
+    Ridge regression is a specific case of regression in which the
+    model is linear, the objective function is the L2 norm,
+    and the regularization term is the L2 norm.
+
+    .. math::
+
+        {\arg\,\min}_{\mathbf{w} \in \mathcal{W}}  \frac{1}{2}||y - f(X, \mathbf{w})||^{2}_{2} + \alpha||\mathbf{w}||^{2}_{2}
     """
     def __init__(self, y, X, alpha=1):
         self.y = y
@@ -261,7 +269,7 @@ class BernoulliLikelihood(ObjectiveFunction):
     --------
     >>> import numpy as np
     >>> from macaw import BernoulliLikelihood
-    >>> from oktopus.models import ConstantModel as constant
+    >>> from macaw.models import ConstantModel as constant
     >>> # generate integer fake data in the set {0, 1}
     >>> np.random.seed(0)
     >>> y = np.random.choice([0, 1], size=100)
@@ -309,7 +317,9 @@ class BernoulliLikelihood(ObjectiveFunction):
         return gd
 
 
-class LogisitcRegression(ObjectiveFunction):
+class LogisticRegression(BernoulliLikelihood):
+    r"""Implements a Logistic regression objective function.
+    """
     def __init__(self, y, X):
-        self.y = y
-        self.model = LinearModel(X)
+        self.X = X
+        super().__init__(y=y, model=LogisticModel(self.X))
