@@ -42,6 +42,28 @@ class LinearModel(Model):
             return np.array([self.X, np.ones(len(self.X))])
 
 
+class QuadraticModel(model):
+    def __init__(self, X):
+        self.X = np.asarray(X)
+
+    def evaluate(self, *theta):
+        if len(self.X.shape) > 1:
+            w, b = theta[:-1], theta[-1]
+            return (np.dot(self.X, w) + b) ** 2
+        else:
+            w, b = theta
+            return (self.X * w + b) ** 2
+
+    def gradient(self, *theta):
+        if len(self.X.shape) > 1:
+            w, b = theta[:-1], theta[-1]
+            X_ = [self.X[:, i] for i in range(self.X.shape[-1])]
+            return 2 * (np.dot(self.X, w) + b) * np.array(X_ + [np.ones(self.X.shape[0])])
+        else:
+            w, b = theta
+            return 2 * (self.X * w + b) * np.array([self.X, np.ones(len(self.X))])
+
+
 class LogisticModel(Model):
     def __init__(self, X):
         self.linear = LinearModel(X)
