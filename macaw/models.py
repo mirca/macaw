@@ -2,6 +2,9 @@ from abc import abstractmethod
 import numpy as np
 
 
+__all__ = ['ConstantModel', 'LinearModel', 'LogisticModel']
+
+
 class Model(object):
     def __call__(self, *params):
         return self.evaluate(*params)
@@ -16,7 +19,7 @@ class ConstantModel(Model):
         return np.array([c])
 
     def gradient(self, c):
-        return [1.]
+        return np.array([1.])
 
 
 class LinearModel(Model):
@@ -34,18 +37,18 @@ class LinearModel(Model):
     def gradient(self, *theta):
         if len(self.X.shape) > 1:
             X_ = [self.X[:, i] for i in range(self.X.shape[-1])]
-            return X_ + [np.ones(self.X.shape[0])]
+            return np.array(X_ + [np.ones(self.X.shape[0])])
         else:
-            return [self.X, np.ones(len(self.X))]
+            return np.array([self.X, np.ones(len(self.X))])
 
 
 class LogisticModel(Model):
     def __init__(self, X):
-        self.X = X
+        self.linear = LinearModel(X)
 
-    def evaluate(self, w):
-        return 1 / (1 - np.exp(-np.dot(self.X, w)))
+    def evaluate(self, *theta):
+        return 1 / (1 + np.exp(-self.linear(*theta)))
 
-    def gradient(self, w):
-        fun = self.evaluate(w)
-        return (self.X * np.exp(-np.dot(self.X, w))) * fun ** 2
+    def gradient(self, *theta):
+        fun = np.exp(-self.linear(*theta))
+        return fun * self.linear.gradient(*theta) / (1 + fun) ** 2
