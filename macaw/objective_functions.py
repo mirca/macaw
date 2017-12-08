@@ -1,10 +1,11 @@
 from abc import abstractmethod
 import numpy as np
-from macaw.models import LinearModel
+from macaw.models import LinearModel, LogisticModel
 from .optimizers import GradientDescent, MajorizationMinimization
 
 
-__all__ = ['L1Norm', 'L2Norm', 'BernoulliLikelihood']
+__all__ = ['L1Norm', 'L2Norm', 'BernoulliLikelihood',
+           'RidgeRegression', 'LogisticRegression']
 
 
 class ObjectiveFunction(object):
@@ -241,8 +242,8 @@ class Lasso(ObjectiveFunction):
         return (L2Norm(y=self.y, model=self.model).gradient(theta)
                 + self.alpha * np.nansum(theta / np.abs(theta_n), axis=-1))
 
-    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6):
-        mm = MajorizationMinimization(self)
+    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
+        mm = MajorizationMinimization(self, **kwargs)
         mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
         return mm
 
@@ -292,7 +293,7 @@ class BernoulliLikelihood(ObjectiveFunction):
     """
 
     def __init__(self, y, model):
-        self.y = y
+        self.y = np.asarray(y)
         self.model = model
 
     def evaluate(self, theta):
@@ -318,7 +319,8 @@ class BernoulliLikelihood(ObjectiveFunction):
 
 
 class LogisticRegression(BernoulliLikelihood):
-    r"""Implements a Logistic regression objective function.
+    r"""Implements a Logistic regression objective function for
+    Binary classification.
     """
     def __init__(self, y, X):
         self.X = X
