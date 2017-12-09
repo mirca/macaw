@@ -50,6 +50,11 @@ class ObjectiveFunction(object):
         inv_fisher = np.linalg.inv(self.fisher_information_matrix(theta))
         return np.sqrt(np.diag(inv_fisher))
 
+    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6):
+        gd = GradientDescent(self.evaluate, self.gradient)
+        gd.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
+        return gd
+
 
 class L1Norm(ObjectiveFunction):
     r"""Defines the L1 Norm loss function. L1 norm is usually useful
@@ -180,11 +185,6 @@ class L2Norm(ObjectiveFunction):
         return - np.nansum((self.y - self.model(*theta)) * grad
                            / (self.yerr * self.yerr), axis=-1)
 
-    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6):
-        gd = GradientDescent(self.evaluate, self.gradient)
-        gd.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
-        return gd
-
 
 class RidgeRegression(ObjectiveFunction):
     r"""
@@ -211,11 +211,6 @@ class RidgeRegression(ObjectiveFunction):
     def gradient(self, theta):
         return (2 * L2Norm(y=self.y, model=self.model).gradient(theta)
                 + 2 * self.alpha * np.nansum(theta))
-
-    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6):
-        gd = GradientDescent(self.evaluate, self.gradient)
-        gd.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
-        return gd
 
 
 class Lasso(ObjectiveFunction):
@@ -312,20 +307,14 @@ class BernoulliLikelihood(ObjectiveFunction):
         return len(self.y) * super(BernoulliLikelihood,
                self).fisher_information_matrix(theta) / (1 - self.model(*theta))
 
-    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6):
-        gd = GradientDescent(self.evaluate, self.gradient)
-        gd.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
-        return gd
-
 
 class LogisticRegression(BernoulliLikelihood):
     r"""Implements a Logistic regression objective function for
     Binary classification.
     """
     def __init__(self, y, X):
-        self.y = y
         self.X = X
-        self._logistic_model = LogisticModel(self.X)
+        super().__init__(y, LogisticModel(self.X))
         self._linear_model = LinearModel(self.X)
 
     def evaluate(self, theta):
@@ -334,27 +323,30 @@ class LogisticRegression(BernoulliLikelihood):
 
     def gradient(self, theta):
         l_grad = self._linear_model.gradient(*theta)
-        f, f_grad = self._logistic_model(*theta), self._logistic_model.gradient(*theta)
+        f, f_grad = self.model(*theta), self.model.gradient(*theta)
 
         return np.nansum((1 - self.y) * l_grad - f_grad / f, axis=-1)
 
-    def surrogate_fun(self, theta, theta_n):
-        n = len(self.y)
-        f, fn = self._logistic_model(*theta), self._logistic_model(*theta_n)
-        l, ln = self._linear_model(*theta), self._linear_model(*theta_n)
 
-        return np.nansum((1 - self.y) * l + np.log1p(np.exp(-ln))) - n * np.log(n / np.nansum(fn / f))
+class L1LogisticRegression(LogisticRegression):
+    r"""Implements a Logistic regression objective function with
+    L1-norm regularization for Binary classification.
+    """
+
+    def __init__(self, y, X, alpha=.1):
+        super().__init__(y, X)
+        self.alpha = alpha
+
+    def evaluate(self, theta):
+        return super().evaluate(theta) + self.alpha * np.nansum(np.abs(theta))
+
+    def surrogate_fun(self, theta, theta_n):
+        theta = np.asarray(theta)
+        abs_n = np.abs(theta_n)
+        return (super().evaluate(theta)
+                + .5 * self.alpha * np.nansum(theta * theta / abs_n + abs_n))
 
     def gradient_surrogate(self, theta, theta_n):
-        n = len(self.y)
-        l = self._linear_model(*theta)
-        f, fn = self._logistic_model(*theta), self._logistic_model(*theta_n)
-        l_grad = self._linear_model.gradient(*theta)
-
-        return np.nansum(((1 - self.y) - n * fn * np.exp(-l) / np.nansum(fn / f)) * l_grad,
-                         axis=-1)
-
-    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
-        mm = MajorizationMinimization(self, **kwargs)
-        mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
-        return mm
+        theta = np.asarray(theta)
+        abs_n = np.abs(theta_n)
+        return super().gradient(theta) + self.alpha * np.nansum(theta / abs_n, axis=-1)
