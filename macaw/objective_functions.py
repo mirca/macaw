@@ -222,19 +222,20 @@ class Lasso(ObjectiveFunction):
         self.y = y
         self.model = LinearModel(X)
         self.alpha = alpha
+        self._l2norm = L2Norm(y=self.y, model=self.model)
 
     def evaluate(self, theta):
-        return (L2Norm(y=self.y, model=self.model).evaluate(theta) / len(self.y)
+        return (self._l2norm(theta) / len(self.y)
                 + self.alpha * np.nansum(np.abs(theta)))
 
     def surrogate_fun(self, theta, theta_n):
         theta = np.asarray(theta)
-        abs_t = np.abs(theta_n)
-        return (L2Norm(y=self.y, model=self.model).evaluate(theta) / len(self.y)
-                + .5 * self.alpha * np.nansum(theta * theta / abs_t + abs_t))
+        abs_n = np.abs(theta_n)
+        return (self._l2norm(theta) / len(self.y)
+                + .5 * self.alpha * np.nansum(theta * theta / abs_n + abs_n))
 
     def gradient_surrogate(self, theta, theta_n):
-        return (L2Norm(y=self.y, model=self.model).gradient(theta)
+        return (self._l2norm.gradient(theta)
                 + self.alpha * np.nansum(theta / np.abs(theta_n), axis=-1))
 
     def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
@@ -328,25 +329,32 @@ class LogisticRegression(BernoulliLikelihood):
         return np.nansum((1 - self.y) * l_grad - f_grad / f, axis=-1)
 
 
-class L1LogisticRegression(LogisticRegression):
+class L1LogisticRegression(ObjectiveFunction):
     r"""Implements a Logistic regression objective function with
     L1-norm regularization for Binary classification.
     """
 
     def __init__(self, y, X, alpha=.1):
-        super().__init__(y, X)
+        self.y = y
+        self.X = X
+        self._logistic = LogisticRegression(y, X)
         self.alpha = alpha
 
     def evaluate(self, theta):
-        return super().evaluate(theta) + self.alpha * np.nansum(np.abs(theta))
+        return self._logistic.evaluate(theta) + self.alpha * np.nansum(np.abs(theta))
 
     def surrogate_fun(self, theta, theta_n):
         theta = np.asarray(theta)
         abs_n = np.abs(theta_n)
-        return (super().evaluate(theta)
+        return (self._logistic.evaluate(theta)
                 + .5 * self.alpha * np.nansum(theta * theta / abs_n + abs_n))
 
     def gradient_surrogate(self, theta, theta_n):
         theta = np.asarray(theta)
-        abs_n = np.abs(theta_n)
-        return super().gradient(theta) + self.alpha * np.nansum(theta / abs_n, axis=-1)
+        return (self._logistic.gradient(theta)
+                + self.alpha * np.nansum(theta / np.abs(theta_n), axis=-1))
+
+    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
+        mm = MajorizationMinimization(self, **kwargs)
+        mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
+        return mm
