@@ -2,7 +2,7 @@ from abc import abstractmethod
 import numpy as np
 
 
-__all__ = ['ConstantModel', 'LinearModel', 'LogisticModel']
+__all__ = ['ConstantModel', 'LinearModel', 'LogisticModel', 'QuadraticModel']
 
 
 class Model(object):
@@ -42,7 +42,7 @@ class LinearModel(Model):
             return np.array([self.X, np.ones(len(self.X))])
 
 
-class QuadraticModel(model):
+class QuadraticModel(Model):
     def __init__(self, X):
         self.X = np.asarray(X)
 

@@ -1,6 +1,6 @@
 from abc import abstractmethod
 import numpy as np
-from macaw.models import LinearModel, LogisticModel
+from macaw.models import LinearModel, LogisticModel, QuadraticModel
 from .optimizers import GradientDescent, MajorizationMinimization
 
 
@@ -323,5 +323,38 @@ class LogisticRegression(BernoulliLikelihood):
     Binary classification.
     """
     def __init__(self, y, X):
+        self.y = y
         self.X = X
-        super().__init__(y=y, model=LogisticModel(self.X))
+        self._logistic_model = LogisticModel(self.X)
+        self._linear_model = LinearModel(self.X)
+
+    def evaluate(self, theta):
+        l = self._linear_model(*theta)
+        return np.nansum((1 - self.y) * l + np.log1p(np.exp(-l)))
+
+    def gradient(self, theta):
+        l_grad = self._linear_model.gradient(*theta)
+        f, f_grad = self._logistic_model(*theta), self._logistic_model.gradient(*theta)
+
+        return np.nansum((1 - self.y) * l_grad - f_grad / f, axis=-1)
+
+    def surrogate_fun(self, theta, theta_n):
+        n = len(self.y)
+        f, fn = self._logistic_model(*theta), self._logistic_model(*theta_n)
+        l, ln = self._linear_model(*theta), self._linear_model(*theta_n)
+
+        return np.nansum((1 - self.y) * l + np.log1p(np.exp(-ln))) - n * np.log(n / np.nansum(fn / f))
+
+    def gradient_surrogate(self, theta, theta_n):
+        n = len(self.y)
+        l = self._linear_model(*theta)
+        f, fn = self._logistic_model(*theta), self._logistic_model(*theta_n)
+        l_grad = self._linear_model.gradient(*theta)
+
+        return np.nansum(((1 - self.y) - n * fn * np.exp(-l) / np.nansum(fn / f)) * l_grad,
+                         axis=-1)
+
+    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
+        mm = MajorizationMinimization(self, **kwargs)
+        mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
+        return mm
