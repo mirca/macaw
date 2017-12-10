@@ -44,6 +44,8 @@ class GradientDescent(Optimizer):
             grad = fun_prime(x0)
             x0 = x0 - self.gamma * grad
             fun_after = fun(x0)
+            grad_diff = fun_prime(x0) - grad
+            self.gamma = np.dot(x0 - x_tmp, grad_diff) / np.dot(grad_diff, grad_diff)
 
             if abs((fun_after - fun_before) / (1.+fun_before)) < ftol:
                 msg = ("Success: loss function has not changed by {} since"
@@ -56,15 +58,69 @@ class GradientDescent(Optimizer):
                        " the previous iteration.".format(xtol))
                 self.save_state(x0, fun_after, i+1, msg)
                 break
-
-            grad_diff = fun_prime(x0) - grad
-            self.gamma = np.dot(x0 - x_tmp, grad_diff) / np.dot(grad_diff, grad_diff)
             i += 1
 
         if i == n:
             msg = ("Failure: max. number of iterations ({}) reached."
                    " The algorithm may not have converged.".format(n))
             self.save_state(x0, fun_after, n, msg)
+
+
+class CoordinateDescent(Optimizer):
+    """Implements a sequential coordinate descent algorithm to find local
+    minimum of functions.
+
+    Attributes
+    ----------
+    fun : callable
+        The function to be minimized
+    gradient : callable
+        The gradient of the fun
+    gamma : float
+        Learning rate
+    """
+
+    def __init__(self, fun, gradient, gamma=1e-3):
+        self.fun = fun
+        self.gradient = gradient
+        self.gamma = gamma
+
+    def compute(self, x0, fun_args=(), n=100, xtol=1e-6, ftol=1e-6):
+        fun = _wrap_function(self.fun, fun_args)
+        fun_prime = _wrap_function(self.gradient, fun_args)
+        x0 = np.asarray(x0)
+        i, j, d = 0, 0, len(x0)
+        while i < n:
+            while j < d:
+                x_tmp = np.copy(x0)
+                fun_before = fun(x0)
+                grad = fun_prime(x0)
+                x0[j] = x0[j] - self.gamma * grad[j]
+                fun_after = fun(x0)
+                grad_diff = fun_prime(x0) - grad
+                self.gamma = np.dot(x0 - x_tmp, grad_diff) / np.dot(grad_diff, grad_diff)
+
+                if abs((fun_after - fun_before) / (1.+fun_before)) < ftol:
+                    msg = ("Success: loss function has not changed by {} since"
+                           " the previous iteration".format(ftol))
+                    self.save_state(x0, fun_after, i+1, msg)
+                    j += 1
+                    continue
+
+                if (abs((x_tmp - x0) / (1.+x0)) < xtol).all():
+                    msg = ("Success: parameters have not changed by {} since"
+                           " the previous iteration.".format(xtol))
+                    self.save_state(x0, fun_after, i+1, msg)
+                    j += 1
+            if j == d:
+                j = 0
+            i += 1
+
+        if i == n:
+            msg = ("Failure: max. number of iterations ({}) reached."
+                   " The algorithm may not have converged.".format(n))
+            self.save_state(x0, fun_after, n, msg)
+
 
 
 class MajorizationMinimization(Optimizer):
