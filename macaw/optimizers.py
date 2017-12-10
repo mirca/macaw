@@ -100,18 +100,12 @@ class CoordinateDescent(Optimizer):
                 grad_diff = fun_prime(x0) - grad
                 self.gamma = np.dot(x0 - x_tmp, grad_diff) / np.dot(grad_diff, grad_diff)
 
-                if abs((fun_after - fun_before) / (1.+fun_before)) < ftol:
-                    msg = ("Success: loss function has not changed by {} since"
-                           " the previous iteration".format(ftol))
-                    self.save_state(x0, fun_after, i+1, msg)
+                if (abs((fun_after - fun_before) / (1.+fun_before)) < ftol
+                    or (abs((x_tmp - x0) / (1.+x0)) < xtol).all()):
+                    self.save_state(x0, fun_after, i+1, "converged.")
                     j += 1
                     continue
 
-                if (abs((x_tmp - x0) / (1.+x0)) < xtol).all():
-                    msg = ("Success: parameters have not changed by {} since"
-                           " the previous iteration.".format(xtol))
-                    self.save_state(x0, fun_after, i+1, msg)
-                    j += 1
             if j == d:
                 j = 0
             i += 1
