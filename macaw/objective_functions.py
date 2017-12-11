@@ -132,7 +132,7 @@ class L2Norm(ObjectiveFunction):
 
     .. math::
 
-        {\arg\,\min}_{\mathbf{w} \in \mathcal{W}}  \frac{1}{2}||y - f(X, \mathbf{w})||^{2}_{2}
+        \arg \min_{w \in \mathcal{W}}  \frac{1}{2}||y - f(X, \mathbf{w})||^{2}_{2}
 
     Attributes
     ----------
@@ -196,7 +196,7 @@ class RidgeRegression(ObjectiveFunction):
 
     .. math::
 
-        {\arg\,\min}_{\mathbf{w} \in \mathcal{W}}  \frac{1}{2}||y - f(X, \mathbf{w})||^{2}_{2} + \alpha||\mathbf{w}||^{2}_{2}
+        \arg \min_{w \in \mathcal{W}}  \frac{1}{2}||y - f(X, \mathbf{w})||^{2}_{2} + \alpha||\mathbf{w}||^{2}_{2}
     """
     def __init__(self, y, X, alpha=1):
         self.y = y
@@ -253,7 +253,7 @@ class BernoulliLikelihood(ObjectiveFunction):
     More precisely, the MLE is computed as
 
     .. math::
-        {\arg\,\min}_{\bm{\theta} \in \Theta} - \sum_{i=1}^{n} y_i\log(\pi(\bm{\theta})) + (1 - y_i)\log(1 - \pi(\bm{\theta}))
+        \arg \min_{\theta \in \Theta} - \sum_{i=1}^{n} y_i\log\pi_i(\mathbf{\theta}) + (1 - y_i)\log(1 - \pi_i(\mathbf{\theta}))
 
     Attributes
     ----------
