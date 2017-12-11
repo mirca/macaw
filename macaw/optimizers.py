@@ -105,7 +105,6 @@ class CoordinateDescent(Optimizer):
                 if (abs((fun_after - fun_before) / (1.+fun_before)) < ftol
                     or (abs((x_tmp - x0) / (1.+x0)) < xtol).all()
                     or k == n):
-                    self.save_state(x0, fun_after, i+1, "")
                     j += 1
                     continue
 
@@ -153,14 +152,9 @@ class MajorizationMinimization(Optimizer):
 
     def __init__(self, fun, optimizer='gd', **kwargs):
         self.fun = fun
-        if optimizer == 'gd':
-            self.optimizer = GradientDescent(fun.surrogate_fun,
-                                             fun.gradient_surrogate, **kwargs)
-        elif optimizer == 'cd':
-            self.optimizer = CoordinateDescent(fun.surrogate_fun,
-                                               fun.gradient_surrogate, **kwargs)
-        else:
-            raise ValueError('optimizer is not recognized, got {}'.format(optimizer))
+        opts = {'gd': GradientDescent, 'cd': CoordinateDescent}
+        self.optimizer = opts[optimizer](self.fun.surrogate_fun,
+                                         self.fun.gradient_surrogate, **kwargs)
 
     def compute(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
         i = 0
