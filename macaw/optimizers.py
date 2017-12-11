@@ -134,6 +134,7 @@ class MajorizationMinimization(Optimizer):
         Specifies the optimizer to use during the Minimization step. Options are::
 
             * 'sgd' : Stochastic Gradient Descent
+            * 'cd' : Coordinate Descent
     kwargs : dict
         Keyword arguments to be passed to the optimizer.
     """
@@ -143,6 +144,9 @@ class MajorizationMinimization(Optimizer):
         if optimizer == 'sgd':
             self.optimizer = GradientDescent(fun.surrogate_fun,
                                              fun.gradient_surrogate, **kwargs)
+        elif optimizer == 'cd':
+            self.optimizer = CoordinateDescent(fun.surrogate_fun,
+                                               fun.gradient_surrogate, **kwargs)
         else:
             raise ValueError('optimizer is not recognized, got {}'.format(optimizer))
 

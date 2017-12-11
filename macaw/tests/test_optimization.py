@@ -7,8 +7,8 @@ from ..objective_functions import L1Norm, L2Norm
 from ..optimizers import GradientDescent, CoordinateDescent, MajorizationMinimization
 
 
-@pytest.mark.parametrize("optimizer", (GradientDescent, CoordinateDescent))
-def test_fitting_line(optimizer):
+@pytest.mark.parametrize("opt", ('sgd', 'cd'))
+def test_fitting_line(opt):
     # generate fake data
     np.random.seed(0)
     x = np.linspace(0, 10, 200)
@@ -18,13 +18,17 @@ def test_fitting_line(optimizer):
     # build the objective function
     l2norm = L2Norm(fake_data, my_line)
     # perform optimization
-    opt = optimizer(l2norm.evaluate, l2norm.gradient)
-    opt.compute(x0=(1., 1.), n=50)
-    assert_allclose(opt.x, [3., 10.], rtol=1e-1)
+    if opt == 'sgd':
+        optimizer = GradientDescent
+    elif opt == 'cd':
+        optimizer = CoordinateDescent
+    res = optimizer(l2norm.evaluate, l2norm.gradient)
+    res.compute(x0=(1., 1.), n=10)
+    assert_allclose(res.x, [3., 10.], rtol=1e-1)
 
     l1norm = L1Norm(fake_data, my_line)
-    mm = MajorizationMinimization(l1norm)
-    mm.compute(x0=(1., 1.))
+    mm = MajorizationMinimization(l1norm, optimizer=opt)
+    mm.compute(x0=(1., 1.), n=10)
     assert_allclose(mm.x, [3., 10.], rtol=1e-1)
 
 def test_ordinary_least_squares_against_sklearn():
