@@ -4,8 +4,8 @@ from macaw.models import LinearModel, LogisticModel, QuadraticModel
 from .optimizers import GradientDescent, MajorizationMinimization
 
 
-__all__ = ['L1Norm', 'L2Norm', 'BernoulliLikelihood',
-           'RidgeRegression', 'LogisticRegression']
+__all__ = ['L1Norm', 'L2Norm', 'BernoulliLikelihood', 'Lasso',
+           'RidgeRegression', 'LogisticRegression', 'L1LogisticRegression']
 
 
 class ObjectiveFunction(object):

@@ -1,6 +1,6 @@
 import numpy as np
 
-__all__ = ['GradientDescent', 'MajorizationMinimization']
+__all__ = ['GradientDescent', 'CoordinateDescent', 'MajorizationMinimization']
 
 
 class Optimizer(object):
