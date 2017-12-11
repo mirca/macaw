@@ -1,6 +1,5 @@
 import numpy as np
 
-
 __all__ = ['GradientDescent', 'MajorizationMinimization']
 
 
@@ -91,6 +90,9 @@ class CoordinateDescent(Optimizer):
         x0 = np.asarray(x0)
         i, j, d = 0, 0, len(x0)
         while i < n:
+            x0_aux = np.copy(x0)
+            total_fun_before = fun(x0)
+            k = 0
             while j < d:
                 x_tmp = np.copy(x0)
                 fun_before = fun(x0)
@@ -98,13 +100,24 @@ class CoordinateDescent(Optimizer):
                 x0[j] = x0[j] - self.gamma * grad[j]
                 fun_after = fun(x0)
                 grad_diff = fun_prime(x0) - grad
-                self.gamma = np.dot(x0 - x_tmp, grad_diff) / np.dot(grad_diff, grad_diff)
+                self.gamma = np.dot(x0 - x_tmp, grad_diff + 1) / np.dot(grad_diff + 1, grad_diff + 1)
 
                 if (abs((fun_after - fun_before) / (1.+fun_before)) < ftol
-                    or (abs((x_tmp - x0) / (1.+x0)) < xtol).all()):
-                    self.save_state(x0, fun_after, i+1, "converged.")
+                    or (abs((x_tmp - x0) / (1.+x0)) < xtol).all()
+                    or k == n):
+                    self.save_state(x0, fun_after, i+1, "")
                     j += 1
                     continue
+
+                k += 1
+
+            total_fun_after = fun(x0)
+            if (abs((total_fun_after - total_fun_before) / (1.+total_fun_before)) < ftol
+                or (abs((x0_aux - x0) / (1.+x0)) < xtol).all()):
+                msg = ("Convergence has been achieved according to the"
+                       " tolerance criterion.")
+                self.save_state(x0, total_fun_after, i+1, msg)
+                break
 
             if j == d:
                 j = 0
@@ -114,7 +127,6 @@ class CoordinateDescent(Optimizer):
             msg = ("Failure: max. number of iterations ({}) reached."
                    " The algorithm may not have converged.".format(n))
             self.save_state(x0, fun_after, n, msg)
-
 
 
 class MajorizationMinimization(Optimizer):
@@ -133,15 +145,15 @@ class MajorizationMinimization(Optimizer):
     optimizer : str
         Specifies the optimizer to use during the Minimization step. Options are::
 
-            * 'sgd' : Stochastic Gradient Descent
+            * 'gd' : Gradient Descent
             * 'cd' : Coordinate Descent
     kwargs : dict
         Keyword arguments to be passed to the optimizer.
     """
 
-    def __init__(self, fun, optimizer='sgd', **kwargs):
+    def __init__(self, fun, optimizer='gd', **kwargs):
         self.fun = fun
-        if optimizer == 'sgd':
+        if optimizer == 'gd':
             self.optimizer = GradientDescent(fun.surrogate_fun,
                                              fun.gradient_surrogate, **kwargs)
         elif optimizer == 'cd':
