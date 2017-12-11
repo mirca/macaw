@@ -10,7 +10,7 @@ macaw
    :target: https://travis-ci.org/mirca/macaw
 .. |cov-badge| image:: https://codecov.io/gh/mirca/macaw/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/mirca/macaw/branch/master/
-   
+
 .. |logo| image:: docs/source/_static/logo/macaw_small.png
 
 *image credit:* `@christinahedges <https://www.github.com/christinahedges>`_
