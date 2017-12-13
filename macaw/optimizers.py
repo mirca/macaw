@@ -96,18 +96,15 @@ class CoordinateDescent(Optimizer):
             while j < d:
                 x_tmp = np.copy(x0)
                 fun_before = fun(x0)
-                grad = fun_prime(x0)
-                x0[j] = x0[j] - self.gamma * grad[j]
+                grad = fun_prime(x0)[j]
+                x0[j] = x0[j] - self.gamma * grad
                 fun_after = fun(x0)
-                grad_diff = fun_prime(x0) - grad
-                self.gamma = np.dot(x0 - x_tmp, grad_diff + 1) / np.dot(grad_diff + 1, grad_diff + 1)
+                self.gamma = (x0[j] - x_tmp[j]) / (fun_prime(x0)[j] - grad + 1e-1)
 
                 if (abs((fun_after - fun_before) / (1.+fun_before)) < ftol
-                    or (abs((x_tmp - x0) / (1.+x0)) < xtol).all()
-                    or k == n):
+                    or abs((x_tmp[j] - x0[j]) / (1.+x0[j])) < xtol or k == n):
                     j += 1
                     continue
-
                 k += 1
 
             total_fun_after = fun(x0)
