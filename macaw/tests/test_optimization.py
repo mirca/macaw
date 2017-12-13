@@ -1,8 +1,8 @@
 import pytest
 import numpy as np
-from oktopus.models import LinearModel
 from sklearn import datasets, linear_model
 from numpy.testing import assert_allclose
+from ..models import LinearModel
 from ..objective_functions import L1Norm, L2Norm
 from ..optimizers import GradientDescent, CoordinateDescent, MajorizationMinimization
 
