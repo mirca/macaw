@@ -31,7 +31,7 @@ for convex :math:`\phi`.
 
 .. math::
 
-    \mathbb{E}^2\left[XY\right] \leq \mathbb{E}\left[X^2\right]\mathbb{E}\left[Y^2\right]
+    \left(\mathbb{E}\left[XY\right]\right)^2 \leq \mathbb{E}\left[X^2\right]\mathbb{E}\left[Y^2\right]
 
 3. *Arithmetic and Geometric Means*:
 
