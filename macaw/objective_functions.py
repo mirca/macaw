@@ -1,7 +1,7 @@
 from abc import abstractmethod
 import numpy as np
 from macaw.models import LinearModel, LogisticModel, QuadraticModel
-from .optimizers import GradientDescent, MajorizationMinimization
+from .optimizers import GradientDescent, CoordinateDescent, MajorizationMinimization
 
 
 __all__ = ['L1Norm', 'L2Norm', 'BernoulliLikelihood', 'Lasso',
@@ -50,10 +50,12 @@ class ObjectiveFunction(object):
         inv_fisher = np.linalg.inv(self.fisher_information_matrix(theta))
         return np.sqrt(np.diag(inv_fisher))
 
-    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6):
-        gd = GradientDescent(self.evaluate, self.gradient)
-        gd.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
-        return gd
+    def fit(self, x0, optimizer='gd', n=100, xtol=1e-6, ftol=1e-6):
+        opts = {'gd': GradientDescent, 'cd': CoordinateDescent}
+        optimizer = opts[optimizer]
+        opt = optimizer(self.evaluate, self.gradient)
+        opt.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
+        return opt
 
 
 class L1Norm(ObjectiveFunction):
@@ -196,26 +198,31 @@ class RidgeRegression(ObjectiveFunction):
 
     .. math::
 
-        \arg \min_{w \in \mathcal{W}}  \frac{1}{2}||y - f(X, \mathbf{w})||^{2}_{2} + \alpha||\mathbf{w}||^{2}_{2}
+        \arg \min_{w \in \mathcal{W}}  \frac{1}{2}||y - X\mathbf{w}||^{2}_{2} + \alpha||\mathbf{w}||^{2}_{2}
     """
     def __init__(self, y, X, alpha=1):
         self.y = y
         self.model = LinearModel(X)
         self.alpha = alpha
+        self._l2norm = L2Norm(y=self.y, model=self.model)
 
     def evaluate(self, theta):
         theta = np.asarray(theta)
-        return (2 * L2Norm(y=self.y, model=self.model).evaluate(theta)
-                + self.alpha * np.nansum(theta * theta))
+        return (2 * self._l2norm(theta) + self.alpha * np.nansum(theta * theta))
 
     def gradient(self, theta):
-        return (2 * L2Norm(y=self.y, model=self.model).gradient(theta)
-                + 2 * self.alpha * np.nansum(theta))
+        return 2 * (self._l2norm.gradient(theta) + self.alpha * np.nansum(theta))
 
 
 class Lasso(ObjectiveFunction):
     r"""
     Implements the Lasso objective function.
+
+    Lasso is usually used to estimate sparse coefficients.
+
+    .. math::
+
+        \arg \min_{w \in \mathcal{W}}  \frac{1}{2\cdot n_{\text{samples}}}||y - X\mathbf{w}||^{2}_{2} + \alpha||\mathbf{w}||^{1}_{1}
     """
 
     def __init__(self, y, X, alpha=1):
