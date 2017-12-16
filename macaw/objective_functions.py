@@ -364,6 +364,10 @@ class L1LogisticRegression(ObjectiveFunction):
                 + self.alpha * np.nansum(theta / np.abs(theta_n), axis=-1))
 
     def fit(self, x0, n=1000, xtol=1e-6, ftol=1e-9, **kwargs):
-        mm = MajorizationMinimization(self, **kwargs)
-        mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
-        return mm
+        self.mm = MajorizationMinimization(self, **kwargs)
+        self.mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
+        return self.mm
+
+    def predict(self, X):
+        model = LogisticModel(X)
+        return np.round(model(*self.mm.x))
