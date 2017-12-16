@@ -32,7 +32,7 @@ class GradientDescent(Optimizer):
         self.gradient = gradient
         self.gamma = gamma
 
-    def compute(self, x0, fun_args=(), n=100, xtol=1e-6, ftol=1e-6):
+    def compute(self, x0, fun_args=(), n=1000, xtol=1e-6, ftol=1e-9):
         fun = _wrap_function(self.fun, fun_args)
         fun_prime = _wrap_function(self.gradient, fun_args)
 
@@ -84,7 +84,7 @@ class CoordinateDescent(Optimizer):
         self.gradient = gradient
         self.gamma = gamma
 
-    def compute(self, x0, fun_args=(), n=100, xtol=1e-6, ftol=1e-6):
+    def compute(self, x0, fun_args=(), n=1000, xtol=1e-6, ftol=1e-6):
         fun = _wrap_function(self.fun, fun_args)
         fun_prime = _wrap_function(self.gradient, fun_args)
         x0 = np.asarray(x0)
@@ -153,7 +153,7 @@ class MajorizationMinimization(Optimizer):
         self.optimizer = opts[optimizer](self.fun.surrogate_fun,
                                          self.fun.gradient_surrogate, **kwargs)
 
-    def compute(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
+    def compute(self, x0, n=1000, xtol=1e-6, ftol=1e-9, **kwargs):
         i = 0
         while i < n:
             x_tmp = x0

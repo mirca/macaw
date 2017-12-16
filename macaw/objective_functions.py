@@ -43,19 +43,18 @@ class ObjectiveFunction(object):
             for j in range(i, n_params):
                 fisher[i, j] = (grad_model[i] * grad_model[j] / model).sum()
                 fisher[j, i] = fisher[i, j]
-
         return fisher
 
     def uncertainties(self, theta):
         inv_fisher = np.linalg.inv(self.fisher_information_matrix(theta))
         return np.sqrt(np.diag(inv_fisher))
 
-    def fit(self, x0, optimizer='gd', n=100, xtol=1e-6, ftol=1e-6):
+    def fit(self, x0, optimizer='gd', n=1000, xtol=1e-6, ftol=1e-9):
         opts = {'gd': GradientDescent, 'cd': CoordinateDescent}
         optimizer = opts[optimizer]
-        opt = optimizer(self.evaluate, self.gradient)
-        opt.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
-        return opt
+        self.opt = optimizer(self.evaluate, self.gradient)
+        self.opt.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
+        return self.opt
 
 
 class L1Norm(ObjectiveFunction):
@@ -122,7 +121,7 @@ class L1Norm(ObjectiveFunction):
         grad_model = self.model.gradient(*theta)
         return - np.nansum(r * grad_model / abs_r, axis=-1)
 
-    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
+    def fit(self, x0, n=1000, xtol=1e-6, ftol=1e-9, **kwargs):
         mm = MajorizationMinimization(self, **kwargs)
         mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
         return mm
@@ -245,7 +244,7 @@ class Lasso(ObjectiveFunction):
         return (self._l2norm.gradient(theta)
                 + self.alpha * np.nansum(theta / np.abs(theta_n), axis=-1))
 
-    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
+    def fit(self, x0, n=1000, xtol=1e-6, ftol=1e-9, **kwargs):
         mm = MajorizationMinimization(self, **kwargs)
         mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
         return mm
@@ -332,8 +331,11 @@ class LogisticRegression(BernoulliLikelihood):
     def gradient(self, theta):
         l_grad = self._linear_model.gradient(*theta)
         f, f_grad = self.model(*theta), self.model.gradient(*theta)
-
         return np.nansum((1 - self.y) * l_grad - f_grad / f, axis=-1)
+
+    def predict(self, X):
+        model = LogisticModel(X)
+        return np.round(model(*self.opt.x))
 
 
 class L1LogisticRegression(ObjectiveFunction):
@@ -361,7 +363,7 @@ class L1LogisticRegression(ObjectiveFunction):
         return (self._logistic.gradient(theta)
                 + self.alpha * np.nansum(theta / np.abs(theta_n), axis=-1))
 
-    def fit(self, x0, n=100, xtol=1e-6, ftol=1e-6, **kwargs):
+    def fit(self, x0, n=1000, xtol=1e-6, ftol=1e-9, **kwargs):
         mm = MajorizationMinimization(self, **kwargs)
         mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
         return mm
