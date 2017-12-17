@@ -171,8 +171,8 @@ class L2Norm(ObjectiveFunction):
 
     def __init__(self, y, model, yerr=1):
         self.y = y
-        self.yerr = yerr
         self.model = model
+        self.yerr = yerr
 
     def __repr__(self):
         return "<L2Norm(y={}, model={})>".format(self.y, self.model)
@@ -333,6 +333,22 @@ class LogisticRegression(BernoulliLikelihood):
         f, f_grad = self.model(*theta), self.model.gradient(*theta)
         return np.nansum((1 - self.y) * l_grad - f_grad / f, axis=-1)
 
+    def surrogate_fun(self, theta, theta_n):
+        n = len(self.y)
+        f, fn = self.model(*theta), self.model(*theta_n)
+        l, ln = self._linear_model(*theta), self._linear_model(*theta_n)
+
+        return np.nansum((1 - self.y) * l + np.log1p(np.exp(-ln))) - n * np.log(n / np.nansum(fn / f))
+
+    def gradient_surrogate(self, theta, theta_n):
+        n = len(self.y)
+        l = self._linear_model(*theta)
+        f, fn = self.model(*theta), self.model(*theta_n)
+        l_grad = self._linear_model.gradient(*theta)
+
+        return np.nansum(((1 - self.y) - n * fn * np.exp(-l) / np.nansum(fn / f)) * l_grad,
+                         axis=-1)
+
     def predict(self, X):
         model = LogisticModel(X)
         return np.round(model(*self.opt.x))
@@ -355,15 +371,15 @@ class L1LogisticRegression(ObjectiveFunction):
     def surrogate_fun(self, theta, theta_n):
         theta = np.asarray(theta)
         abs_n = np.abs(theta_n)
-        return (self._logistic.evaluate(theta)
+        return (self._logistic.surrogate_fun(theta, theta_n)
                 + .5 * self.alpha * np.nansum(theta * theta / abs_n + abs_n))
 
     def gradient_surrogate(self, theta, theta_n):
         theta = np.asarray(theta)
-        return (self._logistic.gradient(theta)
+        return (self._logistic.gradient_surrogate(theta, theta_n)
                 + self.alpha * np.nansum(theta / np.abs(theta_n), axis=-1))
 
-    def fit(self, x0, n=1000, xtol=1e-6, ftol=1e-9, **kwargs):
+    def fit(self, x0, n=10, xtol=1e-6, ftol=1e-9, **kwargs):
         self.mm = MajorizationMinimization(self, **kwargs)
         self.mm.compute(x0=x0, n=n, xtol=xtol, ftol=ftol)
         return self.mm
