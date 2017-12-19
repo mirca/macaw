@@ -33,7 +33,7 @@ class GradientDescent(Optimizer):
         self.gradient = gradient
         self.gamma = gamma
 
-    def compute(self, x0, fun_args=(), n=1000, xtol=1e-6, gtol=1e-9, ftol=1e-9):
+    def compute(self, x0, fun_args=(), n=1000, xtol=1e-6, ftol=1e-9, gtol=1e-6):
         fun = _wrap_function(self.fun, fun_args)
         fun_prime = _wrap_function(self.gradient, fun_args)
 
@@ -92,22 +92,28 @@ class CoordinateDescent(Optimizer):
         self.gradient = gradient
         self.gamma = gamma
 
-    def compute(self, x0, fun_args=(), n=1000, xtol=1e-6, ftol=1e-6):
+    def compute(self, x0, fun_args=(), n=1000, xtol=1e-6, ftol=1e-6, gtol=1e-6):
         fun = _wrap_function(self.fun, fun_args)
         fun_prime = _wrap_function(self.gradient, fun_args)
+
         x0 = np.asarray(x0)
         i, j, d = 0, 0, len(x0)
         while i < n:
             x0_aux = np.copy(x0)
-            total_fun_before = fun(x0)
+            total_fun_before = fun(x0_aux)
             k = 0
             while j < d:
                 x_tmp = np.copy(x0)
-                fun_before = fun(x0)
-                grad = fun_prime(x0)[j]
+                fun_before = fun(x_tmp)
+                grad = fun_prime(x_tmp)[j]
+
+                if math.sqrt(np.sum(grad * grad))/d < gtol:
+                    j += 1
+                    continue
+
                 x0[j] = x0[j] - self.gamma * grad
                 fun_after = fun(x0)
-                self.gamma = (x0[j] - x_tmp[j]) / (fun_prime(x0)[j] - grad + 1e-1)
+                self.gamma = (x0[j] - x_tmp[j]) / (fun_prime(x0)[j] - grad)
 
                 if (abs((fun_after - fun_before) / (1.+fun_before)) < ftol
                     or abs((x_tmp[j] - x0[j]) / (1.+x0[j])) < xtol or k == n):
@@ -116,10 +122,22 @@ class CoordinateDescent(Optimizer):
                 k += 1
 
             total_fun_after = fun(x0)
-            if (abs((total_fun_after - total_fun_before) / (1.+total_fun_before)) < ftol
-                or (abs((x0_aux - x0) / (1.+x0)) < xtol).all()):
-                msg = ("Convergence has been achieved according to the"
-                       " tolerance criterion.")
+            if (abs((total_fun_after - total_fun_before) / (1.+total_fun_before)) < ftol):
+                msg = ("Success: loss function has not changed by {} since"
+                       " the previous iteration".format(ftol))
+                self.save_state(x0, total_fun_after, i+1, msg)
+                break
+
+            if (abs((x0_aux - x0) / (1.+x0)) < xtol).all():
+                msg = ("Success: parameters have not changed by {} since"
+                       " the previous iteration.".format(xtol))
+                self.save_state(x0, total_fun_after, i+1, msg)
+                break
+
+            total_grad = fun_prime(x0)
+            if math.sqrt(np.sum(total_grad * total_grad))/d < gtol:
+                msg = ("Sucess: mean norm of the gradient has not changed by"
+                       " {} since the previous iteration.".format(gtol))
                 self.save_state(x0, total_fun_after, i+1, msg)
                 break
 
