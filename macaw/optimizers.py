@@ -1,3 +1,4 @@
+import math
 import numpy as np
 
 __all__ = ['GradientDescent', 'CoordinateDescent', 'MajorizationMinimization']
@@ -32,7 +33,7 @@ class GradientDescent(Optimizer):
         self.gradient = gradient
         self.gamma = gamma
 
-    def compute(self, x0, fun_args=(), n=1000, xtol=1e-6, ftol=1e-9):
+    def compute(self, x0, fun_args=(), n=1000, xtol=1e-6, gtol=1e-9, ftol=1e-9):
         fun = _wrap_function(self.fun, fun_args)
         fun_prime = _wrap_function(self.gradient, fun_args)
 
@@ -41,6 +42,13 @@ class GradientDescent(Optimizer):
             x_tmp = x0
             fun_before = fun(x0)
             grad = fun_prime(x0)
+
+            if math.sqrt(np.sum(grad * grad)) < gtol:
+                msg = ("Success: norm of the gradient is less than {}"
+                       .format(gtol))
+                self.save_state(x0, fun_before, i+1, msg)
+                break
+
             x0 = x0 - self.gamma * grad
             fun_after = fun(x0)
             grad_diff = fun_prime(x0) - grad
