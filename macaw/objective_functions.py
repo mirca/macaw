@@ -92,10 +92,10 @@ class L1Norm(ObjectiveFunction):
     >>> mm.compute(x0=(1., 1.))
     >>> # get best fit parameters
     >>> print(mm.x)
-    [  2.96008798  10.30652088]
+    [  2.96016173  10.30580954]
     >>> # get uncertainties on the best fit parameters
     >>> print(l1norm.uncertainties(mm.x))
-    [ 0.11559887  0.55821846]
+    [ 0.11559749  0.55820652]
     """
 
     def __init__(self, y, model):

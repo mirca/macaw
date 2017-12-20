@@ -28,7 +28,7 @@ def test_fitting_line(opt):
 
     l1norm = L1Norm(fake_data, my_line)
     mm = MajorizationMinimization(l1norm, optimizer=opt)
-    mm.compute(x0=(1., 1.))
+    mm.compute(x0=(1., 1.), n=1)
     assert_allclose(mm.x, [3., 10.], rtol=1e-1)
 
 def test_ordinary_least_squares_against_sklearn():
