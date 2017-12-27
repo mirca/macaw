@@ -103,7 +103,7 @@ class L1Norm(ObjectiveFunction):
         self.model = model
 
     def __repr__(self):
-        return "<L1Norm(y={}, model={})>".format(self.y, self.model)
+        return "<L1Norm(model={})>".format(self.model)
 
     def evaluate(self, theta):
         return np.nansum(np.absolute(self.y - self.model(*theta)))
@@ -175,7 +175,7 @@ class L2Norm(ObjectiveFunction):
         self.yerr = yerr
 
     def __repr__(self):
-        return "<L2Norm(y={}, model={})>".format(self.y, self.model)
+        return "<L2Norm(model={})>".format(self.model)
 
     def evaluate(self, theta):
         residual = self.y - self.model(*theta)
