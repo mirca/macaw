@@ -33,13 +33,6 @@ class ObjectiveFunction(object):
         """
         pass
 
-    def fisher_information_matrix(self, theta):
-        pass
-
-    def uncertainties(self, theta):
-        inv_fisher = np.linalg.inv(self.fisher_information_matrix(theta))
-        return np.sqrt(np.diag(inv_fisher))
-
     def fit(self, x0, optimizer='gd', n=1000, xtol=1e-6, ftol=1e-9):
         opts = {'gd': GradientDescent, 'cd': CoordinateDescent}
         optimizer = opts[optimizer]
@@ -84,9 +77,6 @@ class L1Norm(ObjectiveFunction):
     >>> # get best fit parameters
     >>> print(mm.x)
     [  2.96016173  10.30580954]
-    >>> # get uncertainties on the best fit parameters
-    >>> print(l1norm.uncertainties(mm.x))
-    [ 0.11559749  0.55820652]
     """
 
     def __init__(self, y, model):
@@ -155,9 +145,6 @@ class L2Norm(ObjectiveFunction):
     >>> # get the best fit parameters
     >>> print(gd.x)
     [  2.96263148  10.32861519]
-    >>> # get uncertainties on the best fit parameters
-    >>> print(l2norm.uncertainties(gd.x))
-    [ 0.11568693  0.55871632]
     """
 
     def __init__(self, y, model, yerr=1):
@@ -313,6 +300,9 @@ class BernoulliLikelihood(ObjectiveFunction):
                 fisher[j, i] = fisher[i, j]
         return len(self.y) * fisher / (1 - self.model(*theta))
 
+    def uncertainties(self, theta):
+        inv_fisher = np.linalg.inv(self.fisher_information_matrix(theta))
+        return np.sqrt(np.diag(inv_fisher))
 
 class LogisticRegression(BernoulliLikelihood):
     r"""Implements a Logistic regression objective function for
