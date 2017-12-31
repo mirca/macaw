@@ -34,16 +34,7 @@ class ObjectiveFunction(object):
         pass
 
     def fisher_information_matrix(self, theta):
-        n_params = len(theta)
-        fisher = np.empty(shape=(n_params, n_params))
-        grad_model = self.model.gradient(*theta)
-        model = self.model(*theta)
-
-        for i in range(n_params):
-            for j in range(i, n_params):
-                fisher[i, j] = (grad_model[i] * grad_model[j] / model).sum()
-                fisher[j, i] = fisher[i, j]
-        return fisher
+        pass
 
     def uncertainties(self, theta):
         inv_fisher = np.linalg.inv(self.fisher_information_matrix(theta))
@@ -311,8 +302,16 @@ class BernoulliLikelihood(ObjectiveFunction):
                            axis=-1)
 
     def fisher_information_matrix(self, theta):
-        return len(self.y) * super(BernoulliLikelihood,
-               self).fisher_information_matrix(theta) / (1 - self.model(*theta))
+        n_params = len(theta)
+        fisher = np.empty(shape=(n_params, n_params))
+        grad_model = self.model.gradient(*theta)
+        model = self.model(*theta)
+
+        for i in range(n_params):
+            for j in range(i, n_params):
+                fisher[i, j] = (grad_model[i] * grad_model[j] / model).sum()
+                fisher[j, i] = fisher[i, j]
+        return len(self.y) * fisher / (1 - self.model(*theta))
 
 
 class LogisticRegression(BernoulliLikelihood):
