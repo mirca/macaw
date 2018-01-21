@@ -304,6 +304,7 @@ class BernoulliLikelihood(ObjectiveFunction):
         inv_fisher = np.linalg.inv(self.fisher_information_matrix(theta))
         return np.sqrt(np.diag(inv_fisher))
 
+
 class LogisticRegression(BernoulliLikelihood):
     r"""Implements a Logistic regression objective function for
     Binary classification.
