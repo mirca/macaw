@@ -219,6 +219,7 @@ class Lasso(ObjectiveFunction):
                 + .5 * self.alpha * np.nansum(theta * theta / abs_n + abs_n))
 
     def gradient_surrogate(self, theta, theta_n):
+        theta = np.asarray(theta)
         return (self._l2norm.gradient(theta)
                 + self.alpha * theta / np.abs(theta_n))
 
