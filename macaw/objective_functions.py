@@ -188,7 +188,7 @@ class RidgeRegression(ObjectiveFunction):
         return (2 * self._l2norm(theta) + self.alpha * np.nansum(theta * theta))
 
     def gradient(self, theta):
-        return 2 * (self._l2norm.gradient(theta) + self.alpha * np.nansum(theta))
+        return 2 * (self._l2norm.gradient(theta) + self.alpha)
 
 
 class Lasso(ObjectiveFunction):
@@ -220,7 +220,7 @@ class Lasso(ObjectiveFunction):
 
     def gradient_surrogate(self, theta, theta_n):
         return (self._l2norm.gradient(theta)
-                + self.alpha * np.nansum(theta / np.abs(theta_n), axis=-1))
+                + self.alpha * theta / np.abs(theta_n), axis=-1))
 
     def fit(self, x0, n=1000, xtol=1e-6, ftol=1e-9, **kwargs):
         mm = MajorizationMinimization(self, **kwargs)
