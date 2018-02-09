@@ -1,0 +1,1729 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Logistic Regression Applied to Classification of Breast Tumors"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In this notebook, we use logistic regression to classify breast tumors in two classes, benign or malignant.\n",
+    "The dataset used in this short tutorial is available here: https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/. *Note: there were a few missing data (label as '?') which were replaced with zeros*."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The whole documentation of the dataset can be seen in the ``breast-cancer-wisconsin.names`` file available in the link above. Nonetheless, I will briefly mention the characteristics of this dataset."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This dataset has nine interger-valued features that biologically characterizes a given tumor, e.g., size of the cell, clump thickness, etc. Every sample in the dataset has a label (or ``class``) which indicates whether the tumor is benign or malignant. Benign samples have ``class == 2`` whereas malignant samples have ``class == 4``."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 1. Data Visualization\n",
+    "Let's load and visualize the dataset using Pandas"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "np.random.seed(123)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "names = ['Sample code number', 'Clump Thickness', 'Uniformity of Cell Size',\n",
+    "          'Uniformity of Cell Shape', 'Marginal Adhesion', 'Single Epithelial Cell Size',\n",
+    "          'Bare Nuclei', 'Bland Chromatin', 'Normal Nucleoli', 'Mitoses', 'Class']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "breast_cancer_df = pd.read_csv('breast-cancer-wisconsin.data', names=names)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style>\n",
+       "    .dataframe thead tr:only-child th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: left;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Sample code number</th>\n",
+       "      <th>Clump Thickness</th>\n",
+       "      <th>Uniformity of Cell Size</th>\n",
+       "      <th>Uniformity of Cell Shape</th>\n",
+       "      <th>Marginal Adhesion</th>\n",
+       "      <th>Single Epithelial Cell Size</th>\n",
+       "      <th>Bare Nuclei</th>\n",
+       "      <th>Bland Chromatin</th>\n",
+       "      <th>Normal Nucleoli</th>\n",
+       "      <th>Mitoses</th>\n",
+       "      <th>Class</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1000025</td>\n",
+       "      <td>5</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1002945</td>\n",
+       "      <td>5</td>\n",
+       "      <td>4</td>\n",
+       "      <td>4</td>\n",
+       "      <td>5</td>\n",
+       "      <td>7</td>\n",
+       "      <td>10</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1015425</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>2</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1016277</td>\n",
+       "      <td>6</td>\n",
+       "      <td>8</td>\n",
+       "      <td>8</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>7</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1017023</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>1017122</td>\n",
+       "      <td>8</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>8</td>\n",
+       "      <td>7</td>\n",
+       "      <td>10</td>\n",
+       "      <td>9</td>\n",
+       "      <td>7</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>1018099</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>10</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>1018561</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>1033078</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>5</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>1033078</td>\n",
+       "      <td>4</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>1035283</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>1036172</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>12</th>\n",
+       "      <td>1041801</td>\n",
+       "      <td>5</td>\n",
+       "      <td>3</td>\n",
+       "      <td>3</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>3</td>\n",
+       "      <td>4</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>1043999</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>3</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>14</th>\n",
+       "      <td>1044572</td>\n",
+       "      <td>8</td>\n",
+       "      <td>7</td>\n",
+       "      <td>5</td>\n",
+       "      <td>10</td>\n",
+       "      <td>7</td>\n",
+       "      <td>9</td>\n",
+       "      <td>5</td>\n",
+       "      <td>5</td>\n",
+       "      <td>4</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>15</th>\n",
+       "      <td>1047630</td>\n",
+       "      <td>7</td>\n",
+       "      <td>4</td>\n",
+       "      <td>6</td>\n",
+       "      <td>4</td>\n",
+       "      <td>6</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>16</th>\n",
+       "      <td>1048672</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>17</th>\n",
+       "      <td>1049815</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>18</th>\n",
+       "      <td>1050670</td>\n",
+       "      <td>10</td>\n",
+       "      <td>7</td>\n",
+       "      <td>7</td>\n",
+       "      <td>6</td>\n",
+       "      <td>4</td>\n",
+       "      <td>10</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19</th>\n",
+       "      <td>1050718</td>\n",
+       "      <td>6</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>20</th>\n",
+       "      <td>1054590</td>\n",
+       "      <td>7</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>10</td>\n",
+       "      <td>5</td>\n",
+       "      <td>10</td>\n",
+       "      <td>5</td>\n",
+       "      <td>4</td>\n",
+       "      <td>4</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>21</th>\n",
+       "      <td>1054593</td>\n",
+       "      <td>10</td>\n",
+       "      <td>5</td>\n",
+       "      <td>5</td>\n",
+       "      <td>3</td>\n",
+       "      <td>6</td>\n",
+       "      <td>7</td>\n",
+       "      <td>7</td>\n",
+       "      <td>10</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>22</th>\n",
+       "      <td>1056784</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>23</th>\n",
+       "      <td>1057013</td>\n",
+       "      <td>8</td>\n",
+       "      <td>4</td>\n",
+       "      <td>5</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>0</td>\n",
+       "      <td>7</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>24</th>\n",
+       "      <td>1059552</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>25</th>\n",
+       "      <td>1065726</td>\n",
+       "      <td>5</td>\n",
+       "      <td>2</td>\n",
+       "      <td>3</td>\n",
+       "      <td>4</td>\n",
+       "      <td>2</td>\n",
+       "      <td>7</td>\n",
+       "      <td>3</td>\n",
+       "      <td>6</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>26</th>\n",
+       "      <td>1066373</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>27</th>\n",
+       "      <td>1066979</td>\n",
+       "      <td>5</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>28</th>\n",
+       "      <td>1067444</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>29</th>\n",
+       "      <td>1070935</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>669</th>\n",
+       "      <td>1350423</td>\n",
+       "      <td>5</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>8</td>\n",
+       "      <td>5</td>\n",
+       "      <td>5</td>\n",
+       "      <td>7</td>\n",
+       "      <td>10</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>670</th>\n",
+       "      <td>1352848</td>\n",
+       "      <td>3</td>\n",
+       "      <td>10</td>\n",
+       "      <td>7</td>\n",
+       "      <td>8</td>\n",
+       "      <td>5</td>\n",
+       "      <td>8</td>\n",
+       "      <td>7</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>671</th>\n",
+       "      <td>1353092</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>672</th>\n",
+       "      <td>1354840</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>673</th>\n",
+       "      <td>1354840</td>\n",
+       "      <td>5</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>674</th>\n",
+       "      <td>1355260</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>675</th>\n",
+       "      <td>1365075</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>676</th>\n",
+       "      <td>1365328</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>677</th>\n",
+       "      <td>1368267</td>\n",
+       "      <td>5</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>678</th>\n",
+       "      <td>1368273</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>679</th>\n",
+       "      <td>1368882</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>680</th>\n",
+       "      <td>1369821</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>5</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>7</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>681</th>\n",
+       "      <td>1371026</td>\n",
+       "      <td>5</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>4</td>\n",
+       "      <td>10</td>\n",
+       "      <td>5</td>\n",
+       "      <td>6</td>\n",
+       "      <td>3</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>682</th>\n",
+       "      <td>1371920</td>\n",
+       "      <td>5</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>683</th>\n",
+       "      <td>466906</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>684</th>\n",
+       "      <td>466906</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>685</th>\n",
+       "      <td>534555</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>686</th>\n",
+       "      <td>536708</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>687</th>\n",
+       "      <td>566346</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>688</th>\n",
+       "      <td>603148</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>689</th>\n",
+       "      <td>654546</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>8</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>690</th>\n",
+       "      <td>654546</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>691</th>\n",
+       "      <td>695091</td>\n",
+       "      <td>5</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>5</td>\n",
+       "      <td>4</td>\n",
+       "      <td>5</td>\n",
+       "      <td>4</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>692</th>\n",
+       "      <td>714039</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>693</th>\n",
+       "      <td>763235</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>694</th>\n",
+       "      <td>776715</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>695</th>\n",
+       "      <td>841769</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>696</th>\n",
+       "      <td>888820</td>\n",
+       "      <td>5</td>\n",
+       "      <td>10</td>\n",
+       "      <td>10</td>\n",
+       "      <td>3</td>\n",
+       "      <td>7</td>\n",
+       "      <td>3</td>\n",
+       "      <td>8</td>\n",
+       "      <td>10</td>\n",
+       "      <td>2</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>697</th>\n",
+       "      <td>897471</td>\n",
+       "      <td>4</td>\n",
+       "      <td>8</td>\n",
+       "      <td>6</td>\n",
+       "      <td>4</td>\n",
+       "      <td>3</td>\n",
+       "      <td>4</td>\n",
+       "      <td>10</td>\n",
+       "      <td>6</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>698</th>\n",
+       "      <td>897471</td>\n",
+       "      <td>4</td>\n",
+       "      <td>8</td>\n",
+       "      <td>8</td>\n",
+       "      <td>5</td>\n",
+       "      <td>4</td>\n",
+       "      <td>5</td>\n",
+       "      <td>10</td>\n",
+       "      <td>4</td>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>699 rows × 11 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     Sample code number  Clump Thickness  Uniformity of Cell Size  \\\n",
+       "0               1000025                5                        1   \n",
+       "1               1002945                5                        4   \n",
+       "2               1015425                3                        1   \n",
+       "3               1016277                6                        8   \n",
+       "4               1017023                4                        1   \n",
+       "5               1017122                8                       10   \n",
+       "6               1018099                1                        1   \n",
+       "7               1018561                2                        1   \n",
+       "8               1033078                2                        1   \n",
+       "9               1033078                4                        2   \n",
+       "10              1035283                1                        1   \n",
+       "11              1036172                2                        1   \n",
+       "12              1041801                5                        3   \n",
+       "13              1043999                1                        1   \n",
+       "14              1044572                8                        7   \n",
+       "15              1047630                7                        4   \n",
+       "16              1048672                4                        1   \n",
+       "17              1049815                4                        1   \n",
+       "18              1050670               10                        7   \n",
+       "19              1050718                6                        1   \n",
+       "20              1054590                7                        3   \n",
+       "21              1054593               10                        5   \n",
+       "22              1056784                3                        1   \n",
+       "23              1057013                8                        4   \n",
+       "24              1059552                1                        1   \n",
+       "25              1065726                5                        2   \n",
+       "26              1066373                3                        2   \n",
+       "27              1066979                5                        1   \n",
+       "28              1067444                2                        1   \n",
+       "29              1070935                1                        1   \n",
+       "..                  ...              ...                      ...   \n",
+       "669             1350423                5                       10   \n",
+       "670             1352848                3                       10   \n",
+       "671             1353092                3                        2   \n",
+       "672             1354840                2                        1   \n",
+       "673             1354840                5                        3   \n",
+       "674             1355260                1                        1   \n",
+       "675             1365075                4                        1   \n",
+       "676             1365328                1                        1   \n",
+       "677             1368267                5                        1   \n",
+       "678             1368273                1                        1   \n",
+       "679             1368882                2                        1   \n",
+       "680             1369821               10                       10   \n",
+       "681             1371026                5                       10   \n",
+       "682             1371920                5                        1   \n",
+       "683              466906                1                        1   \n",
+       "684              466906                1                        1   \n",
+       "685              534555                1                        1   \n",
+       "686              536708                1                        1   \n",
+       "687              566346                3                        1   \n",
+       "688              603148                4                        1   \n",
+       "689              654546                1                        1   \n",
+       "690              654546                1                        1   \n",
+       "691              695091                5                       10   \n",
+       "692              714039                3                        1   \n",
+       "693              763235                3                        1   \n",
+       "694              776715                3                        1   \n",
+       "695              841769                2                        1   \n",
+       "696              888820                5                       10   \n",
+       "697              897471                4                        8   \n",
+       "698              897471                4                        8   \n",
+       "\n",
+       "     Uniformity of Cell Shape  Marginal Adhesion  Single Epithelial Cell Size  \\\n",
+       "0                           1                  1                            2   \n",
+       "1                           4                  5                            7   \n",
+       "2                           1                  1                            2   \n",
+       "3                           8                  1                            3   \n",
+       "4                           1                  3                            2   \n",
+       "5                          10                  8                            7   \n",
+       "6                           1                  1                            2   \n",
+       "7                           2                  1                            2   \n",
+       "8                           1                  1                            2   \n",
+       "9                           1                  1                            2   \n",
+       "10                          1                  1                            1   \n",
+       "11                          1                  1                            2   \n",
+       "12                          3                  3                            2   \n",
+       "13                          1                  1                            2   \n",
+       "14                          5                 10                            7   \n",
+       "15                          6                  4                            6   \n",
+       "16                          1                  1                            2   \n",
+       "17                          1                  1                            2   \n",
+       "18                          7                  6                            4   \n",
+       "19                          1                  1                            2   \n",
+       "20                          2                 10                            5   \n",
+       "21                          5                  3                            6   \n",
+       "22                          1                  1                            2   \n",
+       "23                          5                  1                            2   \n",
+       "24                          1                  1                            2   \n",
+       "25                          3                  4                            2   \n",
+       "26                          1                  1                            1   \n",
+       "27                          1                  1                            2   \n",
+       "28                          1                  1                            2   \n",
+       "29                          3                  1                            2   \n",
+       "..                        ...                ...                          ...   \n",
+       "669                        10                  8                            5   \n",
+       "670                         7                  8                            5   \n",
+       "671                         1                  2                            2   \n",
+       "672                         1                  1                            2   \n",
+       "673                         2                  1                            3   \n",
+       "674                         1                  1                            2   \n",
+       "675                         4                  1                            2   \n",
+       "676                         2                  1                            2   \n",
+       "677                         1                  1                            2   \n",
+       "678                         1                  1                            2   \n",
+       "679                         1                  1                            2   \n",
+       "680                        10                 10                            5   \n",
+       "681                        10                 10                            4   \n",
+       "682                         1                  1                            2   \n",
+       "683                         1                  1                            2   \n",
+       "684                         1                  1                            2   \n",
+       "685                         1                  1                            2   \n",
+       "686                         1                  1                            2   \n",
+       "687                         1                  1                            2   \n",
+       "688                         1                  1                            2   \n",
+       "689                         1                  1                            2   \n",
+       "690                         1                  3                            2   \n",
+       "691                        10                  5                            4   \n",
+       "692                         1                  1                            2   \n",
+       "693                         1                  1                            2   \n",
+       "694                         1                  1                            3   \n",
+       "695                         1                  1                            2   \n",
+       "696                        10                  3                            7   \n",
+       "697                         6                  4                            3   \n",
+       "698                         8                  5                            4   \n",
+       "\n",
+       "     Bare Nuclei  Bland Chromatin  Normal Nucleoli  Mitoses  Class  \n",
+       "0              1                3                1        1      2  \n",
+       "1             10                3                2        1      2  \n",
+       "2              2                3                1        1      2  \n",
+       "3              4                3                7        1      2  \n",
+       "4              1                3                1        1      2  \n",
+       "5             10                9                7        1      4  \n",
+       "6             10                3                1        1      2  \n",
+       "7              1                3                1        1      2  \n",
+       "8              1                1                1        5      2  \n",
+       "9              1                2                1        1      2  \n",
+       "10             1                3                1        1      2  \n",
+       "11             1                2                1        1      2  \n",
+       "12             3                4                4        1      4  \n",
+       "13             3                3                1        1      2  \n",
+       "14             9                5                5        4      4  \n",
+       "15             1                4                3        1      4  \n",
+       "16             1                2                1        1      2  \n",
+       "17             1                3                1        1      2  \n",
+       "18            10                4                1        2      4  \n",
+       "19             1                3                1        1      2  \n",
+       "20            10                5                4        4      4  \n",
+       "21             7                7               10        1      4  \n",
+       "22             1                2                1        1      2  \n",
+       "23             0                7                3        1      4  \n",
+       "24             1                3                1        1      2  \n",
+       "25             7                3                6        1      4  \n",
+       "26             1                2                1        1      2  \n",
+       "27             1                2                1        1      2  \n",
+       "28             1                2                1        1      2  \n",
+       "29             1                1                1        1      2  \n",
+       "..           ...              ...              ...      ...    ...  \n",
+       "669            5                7               10        1      4  \n",
+       "670            8                7                4        1      4  \n",
+       "671            1                3                1        1      2  \n",
+       "672            1                3                1        1      2  \n",
+       "673            1                1                1        1      2  \n",
+       "674            1                2                1        1      2  \n",
+       "675            1                1                1        1      2  \n",
+       "676            1                2                1        1      2  \n",
+       "677            1                1                1        1      2  \n",
+       "678            1                1                1        1      2  \n",
+       "679            1                1                1        1      2  \n",
+       "680           10               10               10        7      4  \n",
+       "681           10                5                6        3      4  \n",
+       "682            1                3                2        1      2  \n",
+       "683            1                1                1        1      2  \n",
+       "684            1                1                1        1      2  \n",
+       "685            1                1                1        1      2  \n",
+       "686            1                1                1        1      2  \n",
+       "687            1                2                3        1      2  \n",
+       "688            1                1                1        1      2  \n",
+       "689            1                1                1        8      2  \n",
+       "690            1                1                1        1      2  \n",
+       "691            5                4                4        1      4  \n",
+       "692            1                1                1        1      2  \n",
+       "693            1                2                1        2      2  \n",
+       "694            2                1                1        1      2  \n",
+       "695            1                1                1        1      2  \n",
+       "696            3                8               10        2      4  \n",
+       "697            4               10                6        1      4  \n",
+       "698            5               10                4        1      4  \n",
+       "\n",
+       "[699 rows x 11 columns]"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "breast_cancer_df"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's take a look at the distribution of the dataset:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "benign_samples = breast_cancer_df[breast_cancer_df['Class'] == 2]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "malignant_samples = breast_cancer_df[breast_cancer_df['Class'] == 4]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Percentage of benign examples: 66.0%\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"Percentage of benign examples: {}%\".format(np.round(len(benign_samples) / len(breast_cancer_df) * 100)))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Percentage of malignant examples: 34.0%\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"Percentage of malignant examples: {}%\".format(np.round(len(malignant_samples) / len(breast_cancer_df) * 100)))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 2. Model fitting"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's use Scikit-learn to split the dataset in training set and testing set:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "from sklearn.model_selection import train_test_split"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "X_train, X_test, y_train, y_test = train_test_split(breast_cancer_df.loc[:, 'Clump Thickness':'Mitoses'],\n",
+    "                                                    breast_cancer_df['Class'] / 2 - 1, test_size=.3)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that I scaled the `'Class'` label such that `0` represents benign sample and `1` represents malignant samples.\n",
+    "This has to be done solely because of the assumptions of the logistic regression algorithm implemented in ``macaw``."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now, let's import the ``LogisticRegression`` objective function from ``macaw``:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "from macaw.objective_functions import LogisticRegression"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "See https://mirca.github.io/macaw/api/objective_functions.html#macaw.objective_functions.LogisticRegression\n",
+    "for documentation."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's instantiate an object from ``LogisticRegression`` passing the labels ``y_train`` and the features ``X_train``:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "logreg = LogisticRegression(y=np.array(y_train, dtype=float), X=np.array(X_train, dtype=float))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's use the method `fit` to get the maximum likelihood weights.\n",
+    "\n",
+    "*Note that we need to pass an initial estimate for the linear weights and bias of the `LogisiticRegression`*:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "res = logreg.fit(x0=np.zeros(X_train.shape[1] + 1))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The maximum likelihood weights can accessed using the ``.x`` attribute:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([  0.67344859,  -0.12356275,   0.22360975,   0.37988553,\n",
+       "        -0.06955918,   0.48159258,   0.66077088,   0.25734695,\n",
+       "         0.5895142 , -11.20932873])"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res.x"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Additionally, we can check the status of the `fit` and the number of iterations that it took to converge."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'Success: loss function has not changed by 1e-09 since the previous iteration'"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "res.status"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Number of iterations needed: 244\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"Number of iterations needed: {}\".format(res.niters))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now, let's compute the accuracy of our model using the test set. For that we can use the ``predict`` method passing the testing samples. This method outputs the class of each samples:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ 1.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,  1.,  1.,  0.,  0.,  0.,\n",
+       "        0.,  0.,  1.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  0.,  1.,  0.,\n",
+       "        0.,  1.,  0.,  1.,  0.,  1.,  0.,  1.,  1.,  0.,  0.,  0.,  0.,\n",
+       "        0.,  0.,  1.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,  1.,  0.,  0.,\n",
+       "        1.,  0.,  0.,  1.,  1.,  0.,  1.,  1.,  1.,  0.,  1.,  0.,  0.,\n",
+       "        0.,  1.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,\n",
+       "        0.,  1.,  0.,  1.,  1.,  1.,  0.,  0.,  1.,  1.,  0.,  0.,  0.,\n",
+       "        0.,  0.,  0.,  0.,  1.,  1.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,\n",
+       "        1.,  0.,  0.,  1.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,\n",
+       "        1.,  1.,  1.,  1.,  0.,  1.,  0.,  1.,  1.,  0.,  0.,  1.,  0.,\n",
+       "        0.,  1.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,\n",
+       "        0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,  1.,  1.,\n",
+       "        0.,  0.,  0.,  1.,  1.,  0.,  0.,  1.,  0.,  1.,  0.,  0.,  0.,\n",
+       "        1.,  0.,  1.,  1.,  0.,  1.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,\n",
+       "        0.,  0.,  1.,  1.,  0.,  1.,  0.,  0.,  1.,  1.,  0.,  0.,  1.,\n",
+       "        0.,  0.,  1.,  1.,  0.,  1.,  1.,  0.,  1.,  0.,  0.,  0.,  0.,\n",
+       "        0.,  0.])"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "logreg.predict(np.array(X_test))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now we can compute the percentage of samples correctly classified:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "accuracy = np.round((np.array(y_test) == logreg.predict(np.array(X_test))).sum() / len(np.array(y_test)) * 100, decimals=5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The accuracy of the model is 96.19048%\n"
+     ]
+    }
+   ],
+   "source": [
+    "print('The accuracy of the model is {}%'.format(accuracy))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 3. Comparison against scikit-learn"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's compare ``macaw`` against ``scikit-learn``:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "from sklearn.linear_model import LogisticRegression"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "logit = LogisticRegression()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,\n",
+       "          intercept_scaling=1, max_iter=100, multi_class='ovr', n_jobs=1,\n",
+       "          penalty='l2', random_state=None, solver='liblinear', tol=0.0001,\n",
+       "          verbose=0, warm_start=False)"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "logit.fit(X_train, y_train)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.96190476190476193"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "logit.score(X_test, y_test)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Looks like** `macaw` **has a good agreement with** `sklearn` **:)!**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "collapsed": true
+   },
+   "source": [
+    "## 4. Logistic Regression with L1 Regularization"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "from macaw.objective_functions import L1LogisticRegression"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "alpha = [.1, 1., 10., 100.]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "acc = []\n",
+    "for a in alpha:\n",
+    "    l1logreg = L1LogisticRegression(y=np.array(y_train, dtype=float), X=np.array(X_train, dtype=float), alpha=a)\n",
+    "    res_l1 = l1logreg.fit(x0=np.zeros(X_train.shape[1] + 1) + 1e-1)\n",
+    "    accuracy = np.round((np.array(y_test) == l1logreg.predict(np.array(X_test))).sum() / len(np.array(y_test)) * 100,\n",
+    "                        decimals=5)\n",
+    "    acc.append(accuracy)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[95.238100000000003,\n",
+       " 95.714290000000005,\n",
+       " 96.190479999999994,\n",
+       " 62.380949999999999]"
+      ]
+     },
+     "execution_count": 27,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "acc"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt\n",
+    "%matplotlib inline"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<matplotlib.text.Text at 0x1197fbef0>"
+      ]
+     },
+     "execution_count": 29,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\nTkSuQmCC\n",
+      "text/plain": [
+       "<matplotlib.figure.Figure at 0x1197ef2e8>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "plt.loglog(alpha, acc, '*', markersize=15)\n",
+    "plt.ylabel('accuracy')\n",
+    "plt.xlabel('alpha')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python [default]",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

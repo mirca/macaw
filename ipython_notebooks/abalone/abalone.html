@@ -1,0 +1,1753 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Predicting the ages of abalones using Linear Regression &mdash; macaw 0.1dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Logistic Regression Applied to Classification of Breast Tumors" href="../breast_cancer/breast-cancer.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> macaw
+          
+
+          
+            
+            <img src="../../_static/macaw_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#development-version">Development version</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/optimizers.html">Optimizers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/optimizers.html#inheritance-diagram">Inheritance Diagram</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/objective_functions.html">Objective Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/objective_functions.html#inheritance-diagram">Inheritance Diagram</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">IPython notebooks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../l1_l2norm_linear_regression.html">L1 and L2 Linear Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logistic_regression.html">Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../breast_cancer/breast-cancer.html">Logistic Regression Applied to Classification of Breast Tumors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../breast_cancer/breast-cancer.html#1.-Data-Visualization">1. Data Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../breast_cancer/breast-cancer.html#2.-Model-fitting">2. Model fitting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../breast_cancer/breast-cancer.html#3.-Comparison-against-scikit-learn">3. Comparison against scikit-learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../breast_cancer/breast-cancer.html#4.-Logistic-Regression-with-L1-Regularization">4. Logistic Regression with L1 Regularization</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Predicting the ages of abalones using Linear Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#1.-Data-Visualization">1. Data Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#2.-Model-fitting">2. Model fitting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#3.-Comparison-against-scikit-learn">3. Comparison against scikit-learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#4.-Linear-Regression-with-L1-Regularization">4. Linear Regression with L1 Regularization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">macaw</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">IPython notebooks</a> &raquo;</li>
+        
+      <li>Predicting the ages of abalones using Linear Regression</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/ipython_notebooks/abalone/abalone.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Predicting-the-ages-of-abalones-using-Linear-Regression">
+<h1>Predicting the ages of abalones using Linear Regression<a class="headerlink" href="#Predicting-the-ages-of-abalones-using-Linear-Regression" title="Permalink to this headline">¶</a></h1>
+<p><em>Note: if you don’t now what an abalone is, you might want to educate
+yourself before proceeding further:</em>
+<a class="reference external" href="https://en.wikipedia.org/wiki/Abalone">https://en.wikipedia.org/wiki/Abalone</a></p>
+<p>In this notebook, we use linear regression to predict the ages of
+abalones. The dataset used in this short tutorial is available here:
+<a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/abalone">https://archive.ics.uci.edu/ml/datasets/abalone</a>.</p>
+<p>This dataset provides measurements on physical characteristics of
+abalones such as length, diameter, height, weight, etc. This physical
+features will be used to infer the age of abalones.</p>
+<div class="section" id="1.-Data-Visualization">
+<h2>1. Data Visualization<a class="headerlink" href="#1.-Data-Visualization" title="Permalink to this headline">¶</a></h2>
+<p>Let’s load and visualize the dataset using Pandas</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span> <span class="s1">&#39;Length&#39;</span><span class="p">,</span> <span class="s1">&#39;Diameter&#39;</span><span class="p">,</span> <span class="s1">&#39;Height&#39;</span><span class="p">,</span> <span class="s1">&#39;Whole weight&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;Shucked weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Viscera weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Shell weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Rings&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">abalone_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;abalone.data&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">abalone_df</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Sex</th>
+      <th>Length</th>
+      <th>Diameter</th>
+      <th>Height</th>
+      <th>Whole weight</th>
+      <th>Shucked weight</th>
+      <th>Viscera weight</th>
+      <th>Shell weight</th>
+      <th>Rings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M</td>
+      <td>0.455</td>
+      <td>0.365</td>
+      <td>0.095</td>
+      <td>0.5140</td>
+      <td>0.2245</td>
+      <td>0.1010</td>
+      <td>0.1500</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M</td>
+      <td>0.350</td>
+      <td>0.265</td>
+      <td>0.090</td>
+      <td>0.2255</td>
+      <td>0.0995</td>
+      <td>0.0485</td>
+      <td>0.0700</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>F</td>
+      <td>0.530</td>
+      <td>0.420</td>
+      <td>0.135</td>
+      <td>0.6770</td>
+      <td>0.2565</td>
+      <td>0.1415</td>
+      <td>0.2100</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M</td>
+      <td>0.440</td>
+      <td>0.365</td>
+      <td>0.125</td>
+      <td>0.5160</td>
+      <td>0.2155</td>
+      <td>0.1140</td>
+      <td>0.1550</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>I</td>
+      <td>0.330</td>
+      <td>0.255</td>
+      <td>0.080</td>
+      <td>0.2050</td>
+      <td>0.0895</td>
+      <td>0.0395</td>
+      <td>0.0550</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>I</td>
+      <td>0.425</td>
+      <td>0.300</td>
+      <td>0.095</td>
+      <td>0.3515</td>
+      <td>0.1410</td>
+      <td>0.0775</td>
+      <td>0.1200</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>F</td>
+      <td>0.530</td>
+      <td>0.415</td>
+      <td>0.150</td>
+      <td>0.7775</td>
+      <td>0.2370</td>
+      <td>0.1415</td>
+      <td>0.3300</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>F</td>
+      <td>0.545</td>
+      <td>0.425</td>
+      <td>0.125</td>
+      <td>0.7680</td>
+      <td>0.2940</td>
+      <td>0.1495</td>
+      <td>0.2600</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>M</td>
+      <td>0.475</td>
+      <td>0.370</td>
+      <td>0.125</td>
+      <td>0.5095</td>
+      <td>0.2165</td>
+      <td>0.1125</td>
+      <td>0.1650</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>F</td>
+      <td>0.550</td>
+      <td>0.440</td>
+      <td>0.150</td>
+      <td>0.8945</td>
+      <td>0.3145</td>
+      <td>0.1510</td>
+      <td>0.3200</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>F</td>
+      <td>0.525</td>
+      <td>0.380</td>
+      <td>0.140</td>
+      <td>0.6065</td>
+      <td>0.1940</td>
+      <td>0.1475</td>
+      <td>0.2100</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>M</td>
+      <td>0.430</td>
+      <td>0.350</td>
+      <td>0.110</td>
+      <td>0.4060</td>
+      <td>0.1675</td>
+      <td>0.0810</td>
+      <td>0.1350</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>M</td>
+      <td>0.490</td>
+      <td>0.380</td>
+      <td>0.135</td>
+      <td>0.5415</td>
+      <td>0.2175</td>
+      <td>0.0950</td>
+      <td>0.1900</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>F</td>
+      <td>0.535</td>
+      <td>0.405</td>
+      <td>0.145</td>
+      <td>0.6845</td>
+      <td>0.2725</td>
+      <td>0.1710</td>
+      <td>0.2050</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>F</td>
+      <td>0.470</td>
+      <td>0.355</td>
+      <td>0.100</td>
+      <td>0.4755</td>
+      <td>0.1675</td>
+      <td>0.0805</td>
+      <td>0.1850</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>M</td>
+      <td>0.500</td>
+      <td>0.400</td>
+      <td>0.130</td>
+      <td>0.6645</td>
+      <td>0.2580</td>
+      <td>0.1330</td>
+      <td>0.2400</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>I</td>
+      <td>0.355</td>
+      <td>0.280</td>
+      <td>0.085</td>
+      <td>0.2905</td>
+      <td>0.0950</td>
+      <td>0.0395</td>
+      <td>0.1150</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>F</td>
+      <td>0.440</td>
+      <td>0.340</td>
+      <td>0.100</td>
+      <td>0.4510</td>
+      <td>0.1880</td>
+      <td>0.0870</td>
+      <td>0.1300</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>M</td>
+      <td>0.365</td>
+      <td>0.295</td>
+      <td>0.080</td>
+      <td>0.2555</td>
+      <td>0.0970</td>
+      <td>0.0430</td>
+      <td>0.1000</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>M</td>
+      <td>0.450</td>
+      <td>0.320</td>
+      <td>0.100</td>
+      <td>0.3810</td>
+      <td>0.1705</td>
+      <td>0.0750</td>
+      <td>0.1150</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>M</td>
+      <td>0.355</td>
+      <td>0.280</td>
+      <td>0.095</td>
+      <td>0.2455</td>
+      <td>0.0955</td>
+      <td>0.0620</td>
+      <td>0.0750</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>I</td>
+      <td>0.380</td>
+      <td>0.275</td>
+      <td>0.100</td>
+      <td>0.2255</td>
+      <td>0.0800</td>
+      <td>0.0490</td>
+      <td>0.0850</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>F</td>
+      <td>0.565</td>
+      <td>0.440</td>
+      <td>0.155</td>
+      <td>0.9395</td>
+      <td>0.4275</td>
+      <td>0.2140</td>
+      <td>0.2700</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>F</td>
+      <td>0.550</td>
+      <td>0.415</td>
+      <td>0.135</td>
+      <td>0.7635</td>
+      <td>0.3180</td>
+      <td>0.2100</td>
+      <td>0.2000</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>F</td>
+      <td>0.615</td>
+      <td>0.480</td>
+      <td>0.165</td>
+      <td>1.1615</td>
+      <td>0.5130</td>
+      <td>0.3010</td>
+      <td>0.3050</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>F</td>
+      <td>0.560</td>
+      <td>0.440</td>
+      <td>0.140</td>
+      <td>0.9285</td>
+      <td>0.3825</td>
+      <td>0.1880</td>
+      <td>0.3000</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>F</td>
+      <td>0.580</td>
+      <td>0.450</td>
+      <td>0.185</td>
+      <td>0.9955</td>
+      <td>0.3945</td>
+      <td>0.2720</td>
+      <td>0.2850</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>M</td>
+      <td>0.590</td>
+      <td>0.445</td>
+      <td>0.140</td>
+      <td>0.9310</td>
+      <td>0.3560</td>
+      <td>0.2340</td>
+      <td>0.2800</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>M</td>
+      <td>0.605</td>
+      <td>0.475</td>
+      <td>0.180</td>
+      <td>0.9365</td>
+      <td>0.3940</td>
+      <td>0.2190</td>
+      <td>0.2950</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>M</td>
+      <td>0.575</td>
+      <td>0.425</td>
+      <td>0.140</td>
+      <td>0.8635</td>
+      <td>0.3930</td>
+      <td>0.2270</td>
+      <td>0.2000</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4147</th>
+      <td>M</td>
+      <td>0.695</td>
+      <td>0.550</td>
+      <td>0.195</td>
+      <td>1.6645</td>
+      <td>0.7270</td>
+      <td>0.3600</td>
+      <td>0.4450</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>4148</th>
+      <td>M</td>
+      <td>0.770</td>
+      <td>0.605</td>
+      <td>0.175</td>
+      <td>2.0505</td>
+      <td>0.8005</td>
+      <td>0.5260</td>
+      <td>0.3550</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>4149</th>
+      <td>I</td>
+      <td>0.280</td>
+      <td>0.215</td>
+      <td>0.070</td>
+      <td>0.1240</td>
+      <td>0.0630</td>
+      <td>0.0215</td>
+      <td>0.0300</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4150</th>
+      <td>I</td>
+      <td>0.330</td>
+      <td>0.230</td>
+      <td>0.080</td>
+      <td>0.1400</td>
+      <td>0.0565</td>
+      <td>0.0365</td>
+      <td>0.0460</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4151</th>
+      <td>I</td>
+      <td>0.350</td>
+      <td>0.250</td>
+      <td>0.075</td>
+      <td>0.1695</td>
+      <td>0.0835</td>
+      <td>0.0355</td>
+      <td>0.0410</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4152</th>
+      <td>I</td>
+      <td>0.370</td>
+      <td>0.280</td>
+      <td>0.090</td>
+      <td>0.2180</td>
+      <td>0.0995</td>
+      <td>0.0545</td>
+      <td>0.0615</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4153</th>
+      <td>I</td>
+      <td>0.430</td>
+      <td>0.315</td>
+      <td>0.115</td>
+      <td>0.3840</td>
+      <td>0.1885</td>
+      <td>0.0715</td>
+      <td>0.1100</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4154</th>
+      <td>I</td>
+      <td>0.435</td>
+      <td>0.330</td>
+      <td>0.095</td>
+      <td>0.3930</td>
+      <td>0.2190</td>
+      <td>0.0750</td>
+      <td>0.0885</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4155</th>
+      <td>I</td>
+      <td>0.440</td>
+      <td>0.350</td>
+      <td>0.110</td>
+      <td>0.3805</td>
+      <td>0.1575</td>
+      <td>0.0895</td>
+      <td>0.1150</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4156</th>
+      <td>M</td>
+      <td>0.475</td>
+      <td>0.370</td>
+      <td>0.110</td>
+      <td>0.4895</td>
+      <td>0.2185</td>
+      <td>0.1070</td>
+      <td>0.1460</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4157</th>
+      <td>M</td>
+      <td>0.475</td>
+      <td>0.360</td>
+      <td>0.140</td>
+      <td>0.5135</td>
+      <td>0.2410</td>
+      <td>0.1045</td>
+      <td>0.1550</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4158</th>
+      <td>I</td>
+      <td>0.480</td>
+      <td>0.355</td>
+      <td>0.110</td>
+      <td>0.4495</td>
+      <td>0.2010</td>
+      <td>0.0890</td>
+      <td>0.1400</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4159</th>
+      <td>F</td>
+      <td>0.560</td>
+      <td>0.440</td>
+      <td>0.135</td>
+      <td>0.8025</td>
+      <td>0.3500</td>
+      <td>0.1615</td>
+      <td>0.2590</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>4160</th>
+      <td>F</td>
+      <td>0.585</td>
+      <td>0.475</td>
+      <td>0.165</td>
+      <td>1.0530</td>
+      <td>0.4580</td>
+      <td>0.2170</td>
+      <td>0.3000</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>4161</th>
+      <td>F</td>
+      <td>0.585</td>
+      <td>0.455</td>
+      <td>0.170</td>
+      <td>0.9945</td>
+      <td>0.4255</td>
+      <td>0.2630</td>
+      <td>0.2845</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>4162</th>
+      <td>M</td>
+      <td>0.385</td>
+      <td>0.255</td>
+      <td>0.100</td>
+      <td>0.3175</td>
+      <td>0.1370</td>
+      <td>0.0680</td>
+      <td>0.0920</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4163</th>
+      <td>I</td>
+      <td>0.390</td>
+      <td>0.310</td>
+      <td>0.085</td>
+      <td>0.3440</td>
+      <td>0.1810</td>
+      <td>0.0695</td>
+      <td>0.0790</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4164</th>
+      <td>I</td>
+      <td>0.390</td>
+      <td>0.290</td>
+      <td>0.100</td>
+      <td>0.2845</td>
+      <td>0.1255</td>
+      <td>0.0635</td>
+      <td>0.0810</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4165</th>
+      <td>I</td>
+      <td>0.405</td>
+      <td>0.300</td>
+      <td>0.085</td>
+      <td>0.3035</td>
+      <td>0.1500</td>
+      <td>0.0505</td>
+      <td>0.0880</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4166</th>
+      <td>I</td>
+      <td>0.475</td>
+      <td>0.365</td>
+      <td>0.115</td>
+      <td>0.4990</td>
+      <td>0.2320</td>
+      <td>0.0885</td>
+      <td>0.1560</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4167</th>
+      <td>M</td>
+      <td>0.500</td>
+      <td>0.380</td>
+      <td>0.125</td>
+      <td>0.5770</td>
+      <td>0.2690</td>
+      <td>0.1265</td>
+      <td>0.1535</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>4168</th>
+      <td>F</td>
+      <td>0.515</td>
+      <td>0.400</td>
+      <td>0.125</td>
+      <td>0.6150</td>
+      <td>0.2865</td>
+      <td>0.1230</td>
+      <td>0.1765</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4169</th>
+      <td>M</td>
+      <td>0.520</td>
+      <td>0.385</td>
+      <td>0.165</td>
+      <td>0.7910</td>
+      <td>0.3750</td>
+      <td>0.1800</td>
+      <td>0.1815</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4170</th>
+      <td>M</td>
+      <td>0.550</td>
+      <td>0.430</td>
+      <td>0.130</td>
+      <td>0.8395</td>
+      <td>0.3155</td>
+      <td>0.1955</td>
+      <td>0.2405</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4171</th>
+      <td>M</td>
+      <td>0.560</td>
+      <td>0.430</td>
+      <td>0.155</td>
+      <td>0.8675</td>
+      <td>0.4000</td>
+      <td>0.1720</td>
+      <td>0.2290</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>4172</th>
+      <td>F</td>
+      <td>0.565</td>
+      <td>0.450</td>
+      <td>0.165</td>
+      <td>0.8870</td>
+      <td>0.3700</td>
+      <td>0.2390</td>
+      <td>0.2490</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>4173</th>
+      <td>M</td>
+      <td>0.590</td>
+      <td>0.440</td>
+      <td>0.135</td>
+      <td>0.9660</td>
+      <td>0.4390</td>
+      <td>0.2145</td>
+      <td>0.2605</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4174</th>
+      <td>M</td>
+      <td>0.600</td>
+      <td>0.475</td>
+      <td>0.205</td>
+      <td>1.1760</td>
+      <td>0.5255</td>
+      <td>0.2875</td>
+      <td>0.3080</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>4175</th>
+      <td>F</td>
+      <td>0.625</td>
+      <td>0.485</td>
+      <td>0.150</td>
+      <td>1.0945</td>
+      <td>0.5310</td>
+      <td>0.2610</td>
+      <td>0.2960</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4176</th>
+      <td>M</td>
+      <td>0.710</td>
+      <td>0.555</td>
+      <td>0.195</td>
+      <td>1.9485</td>
+      <td>0.9455</td>
+      <td>0.3765</td>
+      <td>0.4950</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+<p>4177 rows × 9 columns</p>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Length&#39;</span><span class="p">,</span> <span class="s1">&#39;Diameter&#39;</span><span class="p">,</span> <span class="s1">&#39;Height&#39;</span><span class="p">,</span> <span class="s1">&#39;Whole weight&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;Shucked weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Viscera weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Shell weight&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">corr</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">abalone_df</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Rings&#39;</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;spearman&#39;</span><span class="p">)</span>
+    <span class="n">corr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">corr</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[0.60438533540463257,
+ 0.62289500509215345,
+ 0.65771637098609093,
+ 0.63083195546639859,
+ 0.53941998208345787,
+ 0.61434381231405122,
+ 0.69247456077935632]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Shell weight&#39;</span><span class="p">],</span> <span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Rings&#39;</span><span class="p">],</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Rings&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Shell weight&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[9]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.text.Text at 0x118d1c278&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/ipython_notebooks_abalone_abalone_13_1.png" src="../../_images/ipython_notebooks_abalone_abalone_13_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">],</span> <span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Rings&#39;</span><span class="p">],</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Rings&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Height&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.text.Text at 0x119a95d30&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/ipython_notebooks_abalone_abalone_14_1.png" src="../../_images/ipython_notebooks_abalone_abalone_14_1.png" />
+</div>
+</div>
+<p>In the column <strong>Sex</strong>, <code class="docutils literal"><span class="pre">M</span></code>, <code class="docutils literal"><span class="pre">F</span></code>, and <code class="docutils literal"><span class="pre">I</span></code> represent male, female,
+and infant, respectively. Nevertheless, we will ignore this feature, and
+only consider physical (measurable) features in order to infer ages.</p>
+<p>As described in the dataset documentation, the age of an Abalone is
+given as <code class="docutils literal"><span class="pre">Rings</span></code> + 1.5 (and that’s the label we want to estimate).
+Therefore, let’s add an <code class="docutils literal"><span class="pre">Age</span></code> label to our dataset:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Rings&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.-Model-fitting">
+<h2>2. Model fitting<a class="headerlink" href="#2.-Model-fitting" title="Permalink to this headline">¶</a></h2>
+<p>Let’s use Scikit-learn to split the dataset in training set and testing
+set:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">abalone_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Length&#39;</span><span class="p">:</span><span class="s1">&#39;Shell weight&#39;</span><span class="p">],</span>
+                                                    <span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=.</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Now, let’s import the objective function <code class="docutils literal"><span class="pre">L2Norm</span></code> and the model
+<code class="docutils literal"><span class="pre">LinearModel</span></code> from <code class="docutils literal"><span class="pre">macaw</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">L2Norm</span>
+<span class="kn">from</span> <span class="nn">macaw.models</span> <span class="k">import</span> <span class="n">LinearModel</span>
+</pre></div>
+</div>
+</div>
+<p>See
+<a class="reference external" href="https://mirca.github.io/macaw/api/objective_functions.html#macaw.objective_functions">https://mirca.github.io/macaw/api/objective_functions.html#macaw.objective_functions</a>
+for documentation.</p>
+<p>Let’s instantiate an object from <code class="docutils literal"><span class="pre">LinearModel</span></code> and from <code class="docutils literal"><span class="pre">L2Norm</span></code>
+passing the labels <code class="docutils literal"><span class="pre">y_train</span></code> to the objective function and the
+features <code class="docutils literal"><span class="pre">X_train</span></code> to the <code class="docutils literal"><span class="pre">LinearModel</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">l2norm</span> <span class="o">=</span> <span class="n">L2Norm</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">LinearModel</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s use the method <code class="docutils literal"><span class="pre">fit</span></code> to get the maximum likelihood weights.</p>
+<p><em>Note that we need to pass an initial estimate for the linear weights
+and bias of the ``LinearModel``</em>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">res</span> <span class="o">=</span> <span class="n">l2norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ftol</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The maximum likelihood weights can accessed using the <code class="docutils literal"><span class="pre">.x</span></code> attribute:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">res</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[17]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>array([ -1.92692825,  13.91714826,  10.18261543,   9.75342147,
+       -20.87769625,  -9.89679523,   8.34389868,   4.56176106])
+</pre></div>
+</div>
+</div>
+<p>Additionally, we can check the status of the <code class="docutils literal"><span class="pre">fit</span></code> and the number of
+iterations that it took to converge.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">res</span><span class="o">.</span><span class="n">status</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[18]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;Success: parameters have not changed by 1e-06 since the previous iteration.&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of iterations needed: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">niters</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number of iterations needed: 127
+</pre></div></div>
+</div>
+<p>Now, let’s compute the Mean Squared Error between the model and the
+labels on the test set:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">model_test</span> <span class="o">=</span> <span class="n">LinearModel</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The mean squared error of the model on the test set is </span><span class="si">{}</span><span class="s1">&#39;</span>
+      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">model_test</span><span class="p">(</span><span class="o">*</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The mean squared error of the model on the test set is 4.867201239148009
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="3.-Comparison-against-scikit-learn">
+<h2>3. Comparison against scikit-learn<a class="headerlink" href="#3.-Comparison-against-scikit-learn" title="Permalink to this headline">¶</a></h2>
+<p>Let’s compare <code class="docutils literal"><span class="pre">macaw</span></code> against <code class="docutils literal"><span class="pre">scikit-learn</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lreg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">lreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/Users/jvmirca/anaconda3/lib/python3.6/site-packages/scipy/linalg/basic.py:1226: RuntimeWarning: internal gelsd driver lwork query error, required iwork dimension not returned. This is likely the result of LAPACK bug 0038, fixed in LAPACK 3.2.2 (released July 21, 2010). Falling back to &#39;gelss&#39; driver.
+  warnings.warn(mesg, RuntimeWarning)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[24]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The mean squared error of the model on the test set is </span><span class="si">{}</span><span class="s1">&#39;</span>
+      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">lreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The mean squared error of the model on the test set is 4.867210207940822
+</pre></div></div>
+</div>
+<p><strong>Looks like</strong> <code class="docutils literal"><span class="pre">macaw</span></code> <strong>has a good agreement with</strong> <code class="docutils literal"><span class="pre">sklearn</span></code>
+<strong>:)!</strong></p>
+</div>
+<div class="section" id="4.-Linear-Regression-with-L1-Regularization">
+<h2>4. Linear Regression with L1 Regularization<a class="headerlink" href="#4.-Linear-Regression-with-L1-Regularization" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">Lasso</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">alpha</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">100.</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">mse</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="n">lasso</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">X</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">res_lasso</span> <span class="o">=</span> <span class="n">lasso</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">mse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">model_test</span><span class="p">(</span><span class="o">*</span><span class="n">res_lasso</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">mse</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[33]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[4.867263167748132,
+ 4.867277337599111,
+ 4.8679354412745655,
+ 4.8756478738362805,
+ 5.09963858836932,
+ 5.1534303485996595]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">mse</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Mean Squared Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[34]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.text.Text at 0x119aa6048&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/ipython_notebooks_abalone_abalone_49_1.png" src="../../_images/ipython_notebooks_abalone_abalone_49_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../breast_cancer/breast-cancer.html" class="btn btn-neutral" title="Logistic Regression Applied to Classification of Breast Tumors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, mirca.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1dev0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

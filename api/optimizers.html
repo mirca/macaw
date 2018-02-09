@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Optimizers &mdash; macaw 0.1dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="API documentation" href="index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> macaw
+          
+
+          
+            
+            <img src="../_static/macaw_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#development-version">Development version</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Optimizers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#inheritance-diagram">Inheritance Diagram</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objective_functions.html">Objective Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objective_functions.html#inheritance-diagram">Inheritance Diagram</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ipython_notebooks/index.html">IPython notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/l1_l2norm_linear_regression.html">L1 and L2 Linear Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/logistic_regression.html">Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html">Logistic Regression Applied to Classification of Breast Tumors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html#1.-Data-Visualization">1. Data Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html#2.-Model-fitting">2. Model fitting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html#3.-Comparison-against-scikit-learn">3. Comparison against scikit-learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html#4.-Logistic-Regression-with-L1-Regularization">4. Logistic Regression with L1 Regularization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/abalone/abalone.html">Predicting the ages of abalones using Linear Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/abalone/abalone.html#1.-Data-Visualization">1. Data Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/abalone/abalone.html#2.-Model-fitting">2. Model fitting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/abalone/abalone.html#3.-Comparison-against-scikit-learn">3. Comparison against scikit-learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/abalone/abalone.html#4.-Linear-Regression-with-L1-Regularization">4. Linear Regression with L1 Regularization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">macaw</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API documentation</a> &raquo;</li>
+        
+      <li>Optimizers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/optimizers.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="module-macaw.optimizers">
+<span id="optimizers"></span><h1>Optimizers<a class="headerlink" href="#module-macaw.optimizers" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="macaw.optimizers.GradientDescent">
+<em class="property">class </em><code class="descclassname">macaw.optimizers.</code><code class="descname">GradientDescent</code><span class="sig-paren">(</span><em>fun</em>, <em>gradient</em>, <em>gamma=0.001</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/optimizers.html#GradientDescent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.optimizers.GradientDescent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a simple gradient descent algorithm to find local
+minimum of functions.</p>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>fun</strong></td>
+<td>(callable) The function to be minimized</td>
+</tr>
+<tr class="row-even"><td><strong>gradient</strong></td>
+<td>(callable) The gradient of the fun</td>
+</tr>
+<tr class="row-odd"><td><strong>gamma</strong></td>
+<td>(float) Learning rate</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.optimizers.GradientDescent.compute" title="macaw.optimizers.GradientDescent.compute"><code class="xref py py-obj docutils literal"><span class="pre">compute</span></code></a>(x0[,&nbsp;fun_args,&nbsp;n,&nbsp;xtol,&nbsp;ftol,&nbsp;gtol])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">save_state</span></code>(x0,&nbsp;funval,&nbsp;n_iter,&nbsp;status)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="macaw.optimizers.GradientDescent.compute">
+<code class="descname">compute</code><span class="sig-paren">(</span><em>x0</em>, <em>fun_args=()</em>, <em>n=1000</em>, <em>xtol=1e-06</em>, <em>ftol=1e-09</em>, <em>gtol=1e-06</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/optimizers.html#GradientDescent.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.optimizers.GradientDescent.compute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macaw.optimizers.CoordinateDescent">
+<em class="property">class </em><code class="descclassname">macaw.optimizers.</code><code class="descname">CoordinateDescent</code><span class="sig-paren">(</span><em>fun</em>, <em>gradient</em>, <em>gamma=0.001</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/optimizers.html#CoordinateDescent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.optimizers.CoordinateDescent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a sequential coordinate descent algorithm to find local
+minimum of functions.</p>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>fun</strong></td>
+<td>(callable) The function to be minimized</td>
+</tr>
+<tr class="row-even"><td><strong>gradient</strong></td>
+<td>(callable) The gradient of the fun</td>
+</tr>
+<tr class="row-odd"><td><strong>gamma</strong></td>
+<td>(float) Learning rate</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.optimizers.CoordinateDescent.compute" title="macaw.optimizers.CoordinateDescent.compute"><code class="xref py py-obj docutils literal"><span class="pre">compute</span></code></a>(x0[,&nbsp;fun_args,&nbsp;n,&nbsp;xtol,&nbsp;ftol,&nbsp;gtol])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">save_state</span></code>(x0,&nbsp;funval,&nbsp;n_iter,&nbsp;status)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="macaw.optimizers.CoordinateDescent.compute">
+<code class="descname">compute</code><span class="sig-paren">(</span><em>x0</em>, <em>fun_args=()</em>, <em>n=1000</em>, <em>xtol=1e-06</em>, <em>ftol=1e-06</em>, <em>gtol=1e-06</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/optimizers.html#CoordinateDescent.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.optimizers.CoordinateDescent.compute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macaw.optimizers.MajorizationMinimization">
+<em class="property">class </em><code class="descclassname">macaw.optimizers.</code><code class="descname">MajorizationMinimization</code><span class="sig-paren">(</span><em>fun</em>, <em>optimizer='gd'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/optimizers.html#MajorizationMinimization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.optimizers.MajorizationMinimization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a Majorization-Minimization scheme.</p>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="4%" />
+<col width="96%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>fun</strong></td>
+<td>(object) Objective function to be minimized. Note that this must be an object that contains the following methods::  * <cite>evaluate</cite>: returns the value of the objective function * <cite>surrogate_fun</cite>: returns the value of an appropriate surrogate function * <cite>gradient_surrogate</cite>: return the value of the gradient of the surrogate function</td>
+</tr>
+<tr class="row-even"><td><strong>optimizer</strong></td>
+<td>(str) Specifies the optimizer to use during the Minimization step. Options are::  * ‘gd’ : Gradient Descent * ‘cd’ : Coordinate Descent</td>
+</tr>
+<tr class="row-odd"><td><strong>kwargs</strong></td>
+<td>(dict) Keyword arguments to be passed to the optimizer.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.optimizers.MajorizationMinimization.compute" title="macaw.optimizers.MajorizationMinimization.compute"><code class="xref py py-obj docutils literal"><span class="pre">compute</span></code></a>(x0[,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">save_state</span></code>(x0,&nbsp;funval,&nbsp;n_iter,&nbsp;status)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="macaw.optimizers.MajorizationMinimization.compute">
+<code class="descname">compute</code><span class="sig-paren">(</span><em>x0</em>, <em>n=1000</em>, <em>xtol=1e-06</em>, <em>ftol=1e-09</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/optimizers.html#MajorizationMinimization.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.optimizers.MajorizationMinimization.compute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="section" id="inheritance-diagram">
+<h2>Inheritance Diagram<a class="headerlink" href="#inheritance-diagram" title="Permalink to this headline">¶</a></h2>
+<img src="../_images/inheritance-57caa01c654057083541e8cbf5115277e3005980.png" alt="Inheritance diagram of macaw.optimizers" usemap="#inheritance0a94db0f82" class="inheritance"/>
+<map id="inheritance0a94db0f82" name="inheritance0a94db0f82">
+<area shape="rect" id="node1" href="#macaw.optimizers.CoordinateDescent" target="_top" title="Implements a sequential coordinate descent algorithm to find local" alt="" coords="257,5,502,29"/>
+<area shape="rect" id="node2" title="A simple base class for an optimizer." alt="" coords="5,53,193,77"/>
+<area shape="rect" id="node3" href="#macaw.optimizers.GradientDescent" target="_top" title="Implements a simple gradient descent algorithm to find local" alt="" coords="264,53,495,77"/>
+<area shape="rect" id="node4" href="#macaw.optimizers.MajorizationMinimization" target="_top" title="Implements a Majorization&#45;Minimization scheme." alt="" coords="241,101,518,125"/>
+</map>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="API documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, mirca.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1dev0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

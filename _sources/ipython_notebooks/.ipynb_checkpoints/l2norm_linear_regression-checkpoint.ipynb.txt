@@ -1,0 +1,278 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# L1 and L2 Linear Regression"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The goal of this notebook is to validate the optimization code in `macaw`.\n",
+    "For that, we will compare results against sklearn's linear regression example on the `diabetes` dataset.\n",
+    "See sklearn's example here: http://scikit-learn.org/stable/auto_examples/linear_model/plot_ols.html#sphx-glr-auto-examples-linear-model-plot-ols-py"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "%matplotlib inline\n",
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from macaw.models import LinearModel\n",
+    "from macaw.objective_functions import L1Norm, L2Norm\n",
+    "from sklearn import datasets\n",
+    "from sklearn.metrics import mean_squared_error, r2_score\n",
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Load the diabetes dataset\n",
+    "diabetes = datasets.load_diabetes()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Use only one feature\n",
+    "diabetes_X = diabetes.data[:, np.newaxis, 2]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Split the data into training/testing sets\n",
+    "diabetes_X_train = diabetes_X[:-20]\n",
+    "diabetes_X_test = diabetes_X[-20:]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Split the targets into training/testing sets\n",
+    "diabetes_y_train = diabetes.target[:-20]\n",
+    "diabetes_y_test = diabetes.target[-20:]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Create linear model object\n",
+    "model = LinearModel(diabetes_X_train.reshape(-1))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Train the model using the training sets\n",
+    "l1norm = L1Norm(y=diabetes_y_train.reshape(-1), model=model)\n",
+    "res_l1 = l1norm.fit(x0=[0., 0.])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Train the model using the training sets\n",
+    "l2norm = L2Norm(y=diabetes_y_train.reshape(-1), model=model)\n",
+    "res_l2 = l2norm.fit(x0=[0., 0.])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Make predictions using the testing set\n",
+    "diabetes_y_pred_l1 = LinearModel(diabetes_X_test).evaluate(*res_l1.x)\n",
+    "diabetes_y_pred_l2 = LinearModel(diabetes_X_test).evaluate(*res_l2.x)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(L1 Norm) Coefficients: \n",
+      " [ 1038.68262063   146.84722666]\n",
+      "(L2 Norm) Coefficients: \n",
+      " [ 938.23786125  152.91885622]\n"
+     ]
+    }
+   ],
+   "source": [
+    "print('(L1 Norm) Coefficients: \\n', res_l1.x)\n",
+    "print('(L2 Norm) Coefficients: \\n', res_l2.x)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(L1 Norm) Mean squared error: 2296.18\n",
+      "(L2 Norm) Mean squared error: 2548.07\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"(L1 Norm) Mean squared error: %.2f\"\n",
+    "      % mean_squared_error(diabetes_y_test, diabetes_y_pred_l1))\n",
+    "print(\"(L2 Norm) Mean squared error: %.2f\"\n",
+    "      % mean_squared_error(diabetes_y_test, diabetes_y_pred_l2))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(L1 Norm) Variance score: 0.52\n",
+      "(L2 Norm) Variance score: 0.47\n"
+     ]
+    }
+   ],
+   "source": [
+    "print('(L1 Norm) Variance score: %.2f' % r2_score(diabetes_y_test, diabetes_y_pred_l1))\n",
+    "print('(L2 Norm) Variance score: %.2f' % r2_score(diabetes_y_test, diabetes_y_pred_l2))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<matplotlib.lines.Line2D at 0x10b05a710>]"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\nTkSuQmCC\n",
+      "text/plain": [
+       "<matplotlib.figure.Figure at 0x10afb91d0>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "plt.scatter(diabetes_X_test, diabetes_y_test, color='black')\n",
+    "plt.plot(diabetes_X_test, diabetes_y_pred_l1, color='blue')\n",
+    "plt.plot(diabetes_X_test, diabetes_y_pred_l2, color='red')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "collapsed": true
+   },
+   "source": [
+    "Note that the L1 norm estimator for this particular linear model and dataset presents a smaller mean squared error when compared against the L1 norm estimator. That is because the L1 norm finds the \"median model\", and therefore is more robust against outliers, whereas the L2 norm finds the \"mean model\" which is less robust to the presence of outliers."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python [default]",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.2"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

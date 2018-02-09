@@ -1,0 +1,10 @@
+<map id="inheritance533f8b5488" name="inheritance533f8b5488">
+<area shape="rect" id="node1" href="#macaw.objective_functions.BernoulliLikelihood" target="_top" title="Implements the negative log likelihood function for independent" alt="" coords="269,4,495,22"/>
+<area shape="rect" id="node7" href="#macaw.objective_functions.LogisticRegression" target="_top" title="Implements a Logistic regression objective function for" alt="" coords="537,4,764,22"/>
+<area shape="rect" id="node2" title="An abstract class for a generic objective function." alt="" coords="4,96,226,114"/>
+<area shape="rect" id="node3" href="#macaw.objective_functions.L1LogisticRegression" target="_top" title="Implements a Logistic regression objective function with" alt="" coords="263,41,501,59"/>
+<area shape="rect" id="node4" href="#macaw.objective_functions.L1Norm" target="_top" title="Defines the L1 Norm loss function. L1 norm is usually useful" alt="" coords="293,77,470,96"/>
+<area shape="rect" id="node5" href="#macaw.objective_functions.L2Norm" target="_top" title="Defines the squared L2 norm loss function. L2 norm" alt="" coords="293,114,470,133"/>
+<area shape="rect" id="node6" href="#macaw.objective_functions.Lasso" target="_top" title="Implements the Lasso objective function." alt="" coords="298,151,466,169"/>
+<area shape="rect" id="node8" href="#macaw.objective_functions.RidgeRegression" target="_top" title="Implements Ridge regression objective function." alt="" coords="272,188,491,206"/>
+</map>

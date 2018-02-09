@@ -1,0 +1,6 @@
+<map id="inheritance0a94db0f82" name="inheritance0a94db0f82">
+<area shape="rect" id="node1" href="#macaw.optimizers.CoordinateDescent" target="_top" title="Implements a sequential coordinate descent algorithm to find local" alt="" coords="257,5,502,29"/>
+<area shape="rect" id="node2" title="A simple base class for an optimizer." alt="" coords="5,53,193,77"/>
+<area shape="rect" id="node3" href="#macaw.optimizers.GradientDescent" target="_top" title="Implements a simple gradient descent algorithm to find local" alt="" coords="264,53,495,77"/>
+<area shape="rect" id="node4" href="#macaw.optimizers.MajorizationMinimization" target="_top" title="Implements a Majorization&#45;Minimization scheme." alt="" coords="241,101,518,125"/>
+</map>

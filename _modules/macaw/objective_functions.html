@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>macaw.objective_functions &mdash; macaw 0.1dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> macaw
+          
+
+          
+            
+            <img src="../../_static/macaw_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#development-version">Development version</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/optimizers.html">Optimizers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/optimizers.html#inheritance-diagram">Inheritance Diagram</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/objective_functions.html">Objective Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/objective_functions.html#inheritance-diagram">Inheritance Diagram</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ipython_notebooks/index.html">IPython notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/l1_l2norm_linear_regression.html">L1 and L2 Linear Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/logistic_regression.html">Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html">Logistic Regression Applied to Classification of Breast Tumors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html#1.-Data-Visualization">1. Data Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html#2.-Model-fitting">2. Model fitting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html#3.-Comparison-against-scikit-learn">3. Comparison against scikit-learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html#4.-Logistic-Regression-with-L1-Regularization">4. Logistic Regression with L1 Regularization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/abalone/abalone.html">Predicting the ages of abalones using Linear Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/abalone/abalone.html#1.-Data-Visualization">1. Data Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/abalone/abalone.html#2.-Model-fitting">2. Model fitting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/abalone/abalone.html#3.-Comparison-against-scikit-learn">3. Comparison against scikit-learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/abalone/abalone.html#4.-Linear-Regression-with-L1-Regularization">4. Linear Regression with L1 Regularization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">macaw</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>macaw.objective_functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for macaw.objective_functions</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">abstractmethod</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">macaw.models</span> <span class="k">import</span> <span class="n">LinearModel</span><span class="p">,</span> <span class="n">LogisticModel</span><span class="p">,</span> <span class="n">QuadraticModel</span>
+<span class="kn">from</span> <span class="nn">.optimizers</span> <span class="k">import</span> <span class="n">GradientDescent</span><span class="p">,</span> <span class="n">CoordinateDescent</span><span class="p">,</span> <span class="n">MajorizationMinimization</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;L1Norm&#39;</span><span class="p">,</span> <span class="s1">&#39;L2Norm&#39;</span><span class="p">,</span> <span class="s1">&#39;BernoulliLikelihood&#39;</span><span class="p">,</span> <span class="s1">&#39;Lasso&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;RidgeRegression&#39;</span><span class="p">,</span> <span class="s1">&#39;LogisticRegression&#39;</span><span class="p">,</span> <span class="s1">&#39;L1LogisticRegression&#39;</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">ObjectiveFunction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An abstract class for a generic objective function.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calls :func:`evaluate`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the objective function evaluated at theta</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        theta : ndarray</span>
+<span class="sd">            parameter vector of the model</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        objective_fun : scalar</span>
+<span class="sd">            Returns the scalar value of the objective function evaluated at</span>
+<span class="sd">            **params**</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;gd&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">):</span>
+        <span class="n">opts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;gd&#39;</span><span class="p">:</span> <span class="n">GradientDescent</span><span class="p">,</span> <span class="s1">&#39;cd&#39;</span><span class="p">:</span> <span class="n">CoordinateDescent</span><span class="p">}</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">opts</span><span class="p">[</span><span class="n">optimizer</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opt</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="n">xtol</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="n">ftol</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt</span>
+
+
+<div class="viewcode-block" id="L1Norm"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1Norm">[docs]</a><span class="k">class</span> <span class="nc">L1Norm</span><span class="p">(</span><span class="n">ObjectiveFunction</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Defines the L1 Norm loss function. L1 norm is usually useful</span>
+<span class="sd">    to optimize the &quot;median&quot; model, i.e., it is more robust to</span>
+<span class="sd">    outliers than the quadratic loss function.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \arg \min_{\theta \in \Theta} \sum_k |y_k - f(x_k, \theta)|</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y : array-like</span>
+<span class="sd">        Observed data</span>
+<span class="sd">    model : callable</span>
+<span class="sd">        A functional form that defines the model</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from macaw.objective_functions import L1Norm</span>
+<span class="sd">    &gt;&gt;&gt; from macaw.optimizers import MajorizationMinimization</span>
+<span class="sd">    &gt;&gt;&gt; from macaw.models import LinearModel</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; # generate fake data</span>
+<span class="sd">    &gt;&gt;&gt; np.random.seed(0)</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(0, 10, 200)</span>
+<span class="sd">    &gt;&gt;&gt; fake_data = x * 3 + 10 + np.random.normal(scale=2, size=x.shape)</span>
+<span class="sd">    &gt;&gt;&gt; # build the model</span>
+<span class="sd">    &gt;&gt;&gt; my_line = LinearModel(x)</span>
+<span class="sd">    &gt;&gt;&gt; # build the objective function</span>
+<span class="sd">    &gt;&gt;&gt; l1norm = L1Norm(fake_data, my_line)</span>
+<span class="sd">    &gt;&gt;&gt; # perform optimization</span>
+<span class="sd">    &gt;&gt;&gt; mm = MajorizationMinimization(l1norm)</span>
+<span class="sd">    &gt;&gt;&gt; mm.compute(x0=(1., 1.))</span>
+<span class="sd">    &gt;&gt;&gt; # get best fit parameters</span>
+<span class="sd">    &gt;&gt;&gt; print(mm.x)</span>
+<span class="sd">    [  2.96016173  10.30580954]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;L1Norm(model=</span><span class="si">{}</span><span class="s2">)&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+<div class="viewcode-block" id="L1Norm.evaluate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1Norm.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="L1Norm.surrogate_fun"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1Norm.surrogate_fun">[docs]</a>    <span class="k">def</span> <span class="nf">surrogate_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">theta_n</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluates a surrogate function that majorizes the L1Norm.&quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">abs_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta_n</span><span class="p">))</span>
+        <span class="k">return</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">/</span> <span class="n">abs_r</span> <span class="o">+</span> <span class="n">abs_r</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="L1Norm.gradient_surrogate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1Norm.gradient_surrogate">[docs]</a>    <span class="k">def</span> <span class="nf">gradient_surrogate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">theta_n</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Computes the gradient of the surrogate function.&quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">abs_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta_n</span><span class="p">))</span>
+        <span class="n">grad_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">grad_model</span> <span class="o">/</span> <span class="n">abs_r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="L1Norm.fit"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1Norm.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">mm</span> <span class="o">=</span> <span class="n">MajorizationMinimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">mm</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="n">xtol</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="n">ftol</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mm</span></div></div>
+
+
+<div class="viewcode-block" id="L2Norm"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L2Norm">[docs]</a><span class="k">class</span> <span class="nc">L2Norm</span><span class="p">(</span><span class="n">ObjectiveFunction</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Defines the squared L2 norm loss function. L2 norm</span>
+<span class="sd">    tends to fit the model to the mean trend of the data.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \arg \min_{w \in \mathcal{W}}  \frac{1}{2}||y - f(X, \mathbf{w})||^{2}_{2}</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y : array-like</span>
+<span class="sd">        Observed data</span>
+<span class="sd">    model : callable</span>
+<span class="sd">        A functional form that defines the model</span>
+<span class="sd">    yerr : scalar or array-like</span>
+<span class="sd">        Weights or uncertainties on each observed data point</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from macaw.objective_functions import L2Norm</span>
+<span class="sd">    &gt;&gt;&gt; from macaw.optimizers import GradientDescent</span>
+<span class="sd">    &gt;&gt;&gt; from macaw.models import LinearModel</span>
+<span class="sd">    &gt;&gt;&gt; # generate fake data</span>
+<span class="sd">    &gt;&gt;&gt; np.random.seed(0)</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(0, 10, 200)</span>
+<span class="sd">    &gt;&gt;&gt; fake_data = x * 3 + 10 + np.random.normal(scale=2, size=x.shape)</span>
+<span class="sd">    &gt;&gt;&gt; # build the model</span>
+<span class="sd">    &gt;&gt;&gt; my_line = LinearModel(x)</span>
+<span class="sd">    &gt;&gt;&gt; # build the objective function</span>
+<span class="sd">    &gt;&gt;&gt; l2norm = L2Norm(fake_data, my_line)</span>
+<span class="sd">    &gt;&gt;&gt; # perform optimization</span>
+<span class="sd">    &gt;&gt;&gt; gd = GradientDescent(l2norm.evaluate, l2norm.gradient)</span>
+<span class="sd">    &gt;&gt;&gt; gd.compute(x0=(1., 1.))</span>
+<span class="sd">    &gt;&gt;&gt; # get the best fit parameters</span>
+<span class="sd">    &gt;&gt;&gt; print(gd.x)</span>
+<span class="sd">    [  2.96263148  10.32861519]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span> <span class="o">=</span> <span class="n">yerr</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;L2Norm(model=</span><span class="si">{}</span><span class="s2">)&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+<div class="viewcode-block" id="L2Norm.evaluate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L2Norm.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">residual</span> <span class="o">*</span> <span class="n">residual</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yerr</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="L2Norm.gradient"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L2Norm.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">))</span> <span class="o">*</span> <span class="n">grad</span>
+                           <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yerr</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RidgeRegression"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.RidgeRegression">[docs]</a><span class="k">class</span> <span class="nc">RidgeRegression</span><span class="p">(</span><span class="n">ObjectiveFunction</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements Ridge regression objective function.</span>
+
+<span class="sd">    Ridge regression is a specific case of regression in which the</span>
+<span class="sd">    model is linear, the objective function is the L2 norm,</span>
+<span class="sd">    and the regularization term is the L2 norm.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \arg \min_{w \in \mathcal{W}}  \frac{1}{2}||y - X\mathbf{w}||^{2}_{2} + \alpha||\mathbf{w}||^{2}_{2}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">LinearModel</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_l2norm</span> <span class="o">=</span> <span class="n">L2Norm</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RidgeRegression.evaluate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.RidgeRegression.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_l2norm</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">theta</span> <span class="o">*</span> <span class="n">theta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="RidgeRegression.gradient"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.RidgeRegression.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_l2norm</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Lasso"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.Lasso">[docs]</a><span class="k">class</span> <span class="nc">Lasso</span><span class="p">(</span><span class="n">ObjectiveFunction</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements the Lasso objective function.</span>
+
+<span class="sd">    Lasso is usually used to estimate sparse coefficients.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \arg \min_{w \in \mathcal{W}}  \frac{1}{2\cdot n_{\text{samples}}}||y - X\mathbf{w}||^{2}_{2} + \alpha||\mathbf{w}||^{1}_{1}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">LinearModel</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_l2norm</span> <span class="o">=</span> <span class="n">L2Norm</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Lasso.evaluate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.Lasso.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_l2norm</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">theta</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="Lasso.surrogate_fun"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.Lasso.surrogate_fun">[docs]</a>    <span class="k">def</span> <span class="nf">surrogate_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">theta_n</span><span class="p">):</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">abs_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">theta_n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_l2norm</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+                <span class="o">+</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">theta</span> <span class="o">*</span> <span class="n">theta</span> <span class="o">/</span> <span class="n">abs_n</span> <span class="o">+</span> <span class="n">abs_n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Lasso.gradient_surrogate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.Lasso.gradient_surrogate">[docs]</a>    <span class="k">def</span> <span class="nf">gradient_surrogate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">theta_n</span><span class="p">):</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_l2norm</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">theta</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">theta_n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Lasso.fit"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.Lasso.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">mm</span> <span class="o">=</span> <span class="n">MajorizationMinimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">mm</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="n">xtol</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="n">ftol</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mm</span></div></div>
+
+
+<div class="viewcode-block" id="BernoulliLikelihood"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.BernoulliLikelihood">[docs]</a><span class="k">class</span> <span class="nc">BernoulliLikelihood</span><span class="p">(</span><span class="n">ObjectiveFunction</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Implements the negative log likelihood function for independent</span>
+<span class="sd">    (possibly non-identical distributed) Bernoulli random variables.</span>
+<span class="sd">    This class also contains a method to compute maximum likelihood estimators</span>
+<span class="sd">    for the probability of a success.</span>
+
+<span class="sd">    More precisely, the MLE is computed as</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        \arg \min_{\theta \in \Theta} - \sum_{i=1}^{n} y_i\log\pi_i(\mathbf{\theta}) + (1 - y_i)\log(1 - \pi_i(\mathbf{\theta}))</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y : array-like</span>
+<span class="sd">        Observed data</span>
+<span class="sd">    model : callable</span>
+<span class="sd">        A functional form that defines the model for the probability of success</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from macaw import BernoulliLikelihood</span>
+<span class="sd">    &gt;&gt;&gt; from macaw.models import ConstantModel as constant</span>
+<span class="sd">    &gt;&gt;&gt; # generate integer fake data in the set {0, 1}</span>
+<span class="sd">    &gt;&gt;&gt; np.random.seed(0)</span>
+<span class="sd">    &gt;&gt;&gt; y = np.random.choice([0, 1], size=100)</span>
+<span class="sd">    &gt;&gt;&gt; # create a model</span>
+<span class="sd">    &gt;&gt;&gt; p = constant()</span>
+<span class="sd">    &gt;&gt;&gt; # perform optimization</span>
+<span class="sd">    &gt;&gt;&gt; ber = BernoulliLikelihood(y=y, model=p)</span>
+<span class="sd">    &gt;&gt;&gt; result = ber.fit(x0=[0.3])</span>
+<span class="sd">    &gt;&gt;&gt; # get best fit parameters</span>
+<span class="sd">    &gt;&gt;&gt; print(result.x)</span>
+<span class="sd">    [ 0.55999999]</span>
+<span class="sd">    &gt;&gt;&gt; print(np.mean(y&gt;0)) # theorectical MLE</span>
+<span class="sd">    0.56</span>
+<span class="sd">    &gt;&gt;&gt; # get uncertainties on the best fit parameters</span>
+<span class="sd">    &gt;&gt;&gt; print(ber.uncertainties(result.x))</span>
+<span class="sd">    [ 0.04963869]</span>
+<span class="sd">    &gt;&gt;&gt; # theorectical uncertainty</span>
+<span class="sd">    &gt;&gt;&gt; print(np.sqrt(.56 * .44 / 100))</span>
+<span class="sd">    0.049638694584</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+<div class="viewcode-block" id="BernoulliLikelihood.evaluate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.BernoulliLikelihood.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">model_theta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">model_theta</span><span class="p">)</span>
+                           <span class="o">+</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">model_theta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="BernoulliLikelihood.gradient"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.BernoulliLikelihood.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">model_theta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">grad</span> <span class="o">/</span> <span class="n">model_theta</span>
+                           <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">grad</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">model_theta</span><span class="p">),</span>
+                           <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BernoulliLikelihood.fisher_information_matrix"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.BernoulliLikelihood.fisher_information_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">fisher_information_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">n_params</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">fisher</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_params</span><span class="p">,</span> <span class="n">n_params</span><span class="p">))</span>
+        <span class="n">grad_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_params</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n_params</span><span class="p">):</span>
+                <span class="n">fisher</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">grad_model</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">grad_model</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="n">fisher</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fisher</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">fisher</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="BernoulliLikelihood.uncertainties"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.BernoulliLikelihood.uncertainties">[docs]</a>    <span class="k">def</span> <span class="nf">uncertainties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">inv_fisher</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fisher_information_matrix</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">inv_fisher</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="LogisticRegression"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.LogisticRegression">[docs]</a><span class="k">class</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="n">BernoulliLikelihood</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Implements a Logistic regression objective function for</span>
+<span class="sd">    Binary classification.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">LogisticModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_linear_model</span> <span class="o">=</span> <span class="n">LinearModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LogisticRegression.evaluate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.LogisticRegression.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linear_model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">l</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">l</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="LogisticRegression.gradient"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.LogisticRegression.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="n">l_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linear_model</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">,</span> <span class="n">f_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">l_grad</span> <span class="o">-</span> <span class="n">f_grad</span> <span class="o">/</span> <span class="n">f</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogisticRegression.surrogate_fun"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.LogisticRegression.surrogate_fun">[docs]</a>    <span class="k">def</span> <span class="nf">surrogate_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">theta_n</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">,</span> <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta_n</span><span class="p">)</span>
+        <span class="n">l</span><span class="p">,</span> <span class="n">ln</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linear_model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linear_model</span><span class="p">(</span><span class="o">*</span><span class="n">theta_n</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">l</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">ln</span><span class="p">)))</span> <span class="o">-</span> <span class="n">n</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">fn</span> <span class="o">/</span> <span class="n">f</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="LogisticRegression.gradient_surrogate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.LogisticRegression.gradient_surrogate">[docs]</a>    <span class="k">def</span> <span class="nf">gradient_surrogate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">theta_n</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linear_model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">,</span> <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">theta_n</span><span class="p">)</span>
+        <span class="n">l_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linear_model</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(((</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fn</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">fn</span> <span class="o">/</span> <span class="n">f</span><span class="p">))</span> <span class="o">*</span> <span class="n">l_grad</span><span class="p">,</span>
+                         <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogisticRegression.predict"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.LogisticRegression.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">LogisticModel</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">x</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="L1LogisticRegression"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1LogisticRegression">[docs]</a><span class="k">class</span> <span class="nc">L1LogisticRegression</span><span class="p">(</span><span class="n">ObjectiveFunction</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Implements a Logistic regression objective function with</span>
+<span class="sd">    L1-norm regularization for Binary classification.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logistic</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+
+<div class="viewcode-block" id="L1LogisticRegression.evaluate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1LogisticRegression.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logistic</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="L1LogisticRegression.surrogate_fun"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1LogisticRegression.surrogate_fun">[docs]</a>    <span class="k">def</span> <span class="nf">surrogate_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">theta_n</span><span class="p">):</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">abs_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">theta_n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_logistic</span><span class="o">.</span><span class="n">surrogate_fun</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">theta_n</span><span class="p">)</span>
+                <span class="o">+</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">theta</span> <span class="o">*</span> <span class="n">theta</span> <span class="o">/</span> <span class="n">abs_n</span> <span class="o">+</span> <span class="n">abs_n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="L1LogisticRegression.gradient_surrogate"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1LogisticRegression.gradient_surrogate">[docs]</a>    <span class="k">def</span> <span class="nf">gradient_surrogate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">theta_n</span><span class="p">):</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_logistic</span><span class="o">.</span><span class="n">gradient_surrogate</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">theta_n</span><span class="p">)</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">theta</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">theta_n</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="L1LogisticRegression.fit"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1LogisticRegression.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mm</span> <span class="o">=</span> <span class="n">MajorizationMinimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="n">xtol</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="n">ftol</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span></div>
+
+<div class="viewcode-block" id="L1LogisticRegression.predict"><a class="viewcode-back" href="../../api/objective_functions.html#macaw.objective_functions.L1LogisticRegression.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">LogisticModel</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">x</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, mirca.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1dev0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

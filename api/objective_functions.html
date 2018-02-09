@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Objective Functions &mdash; macaw 0.1dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> macaw
+          
+
+          
+            
+            <img src="../_static/macaw_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../install.html#development-version">Development version</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="optimizers.html">Optimizers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="optimizers.html#inheritance-diagram">Inheritance Diagram</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Objective Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#inheritance-diagram">Inheritance Diagram</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ipython_notebooks/index.html">IPython notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/l1_l2norm_linear_regression.html">L1 and L2 Linear Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/logistic_regression.html">Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html">Logistic Regression Applied to Classification of Breast Tumors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html#1.-Data-Visualization">1. Data Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html#2.-Model-fitting">2. Model fitting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html#3.-Comparison-against-scikit-learn">3. Comparison against scikit-learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html#4.-Logistic-Regression-with-L1-Regularization">4. Logistic Regression with L1 Regularization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/abalone/abalone.html">Predicting the ages of abalones using Linear Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/abalone/abalone.html#1.-Data-Visualization">1. Data Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/abalone/abalone.html#2.-Model-fitting">2. Model fitting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/abalone/abalone.html#3.-Comparison-against-scikit-learn">3. Comparison against scikit-learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ipython_notebooks/abalone/abalone.html#4.-Linear-Regression-with-L1-Regularization">4. Linear Regression with L1 Regularization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">macaw</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API documentation</a> &raquo;</li>
+        
+      <li>Objective Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/objective_functions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="module-macaw.objective_functions">
+<span id="objective-functions"></span><h1>Objective Functions<a class="headerlink" href="#module-macaw.objective_functions" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="macaw.objective_functions.L1Norm">
+<em class="property">class </em><code class="descclassname">macaw.objective_functions.</code><code class="descname">L1Norm</code><span class="sig-paren">(</span><em>y</em>, <em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1Norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1Norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the L1 Norm loss function. L1 norm is usually useful
+to optimize the “median” model, i.e., it is more robust to
+outliers than the quadratic loss function.</p>
+<div class="math">
+\[\arg \min_{\theta \in \Theta} \sum_k |y_k - f(x_k, \theta)|\]</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">L1Norm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.optimizers</span> <span class="k">import</span> <span class="n">MajorizationMinimization</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.models</span> <span class="k">import</span> <span class="n">LinearModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># generate fake data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fake_data</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># build the model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_line</span> <span class="o">=</span> <span class="n">LinearModel</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># build the objective function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">l1norm</span> <span class="o">=</span> <span class="n">L1Norm</span><span class="p">(</span><span class="n">fake_data</span><span class="p">,</span> <span class="n">my_line</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># perform optimization</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span> <span class="o">=</span> <span class="n">MajorizationMinimization</span><span class="p">(</span><span class="n">l1norm</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mm</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># get best fit parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">mm</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="go">[  2.96016173  10.30580954]</span>
+</pre></div>
+</div>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>y</strong></td>
+<td>(array-like) Observed data</td>
+</tr>
+<tr class="row-even"><td><strong>model</strong></td>
+<td>(callable) A functional form that defines the model</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.L1Norm.evaluate" title="macaw.objective_functions.L1Norm.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.evaluate" title="macaw.objective_functions.L1Norm.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.fit" title="macaw.objective_functions.L1Norm.fit"><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code></a>(x0[,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.gradient_surrogate" title="macaw.objective_functions.L1Norm.gradient_surrogate"><code class="xref py py-obj docutils literal"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
+<td>Computes the gradient of the surrogate function.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.surrogate_fun" title="macaw.objective_functions.L1Norm.surrogate_fun"><code class="xref py py-obj docutils literal"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
+<td>Evaluates a surrogate function that majorizes the L1Norm.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="macaw.objective_functions.L1Norm.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1Norm.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1Norm.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.L1Norm.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>x0</em>, <em>n=1000</em>, <em>xtol=1e-06</em>, <em>ftol=1e-09</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1Norm.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1Norm.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.L1Norm.gradient_surrogate">
+<code class="descname">gradient_surrogate</code><span class="sig-paren">(</span><em>theta</em>, <em>theta_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1Norm.gradient_surrogate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1Norm.gradient_surrogate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the gradient of the surrogate function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.L1Norm.surrogate_fun">
+<code class="descname">surrogate_fun</code><span class="sig-paren">(</span><em>theta</em>, <em>theta_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1Norm.surrogate_fun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1Norm.surrogate_fun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates a surrogate function that majorizes the L1Norm.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macaw.objective_functions.L2Norm">
+<em class="property">class </em><code class="descclassname">macaw.objective_functions.</code><code class="descname">L2Norm</code><span class="sig-paren">(</span><em>y</em>, <em>model</em>, <em>yerr=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L2Norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L2Norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the squared L2 norm loss function. L2 norm
+tends to fit the model to the mean trend of the data.</p>
+<div class="math">
+\[\arg \min_{w \in \mathcal{W}}  \frac{1}{2}||y - f(X, \mathbf{w})||^{2}_{2}\]</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">L2Norm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.optimizers</span> <span class="k">import</span> <span class="n">GradientDescent</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.models</span> <span class="k">import</span> <span class="n">LinearModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># generate fake data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fake_data</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># build the model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_line</span> <span class="o">=</span> <span class="n">LinearModel</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># build the objective function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">l2norm</span> <span class="o">=</span> <span class="n">L2Norm</span><span class="p">(</span><span class="n">fake_data</span><span class="p">,</span> <span class="n">my_line</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># perform optimization</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gd</span> <span class="o">=</span> <span class="n">GradientDescent</span><span class="p">(</span><span class="n">l2norm</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="n">l2norm</span><span class="o">.</span><span class="n">gradient</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gd</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># get the best fit parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">gd</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="go">[  2.96263148  10.32861519]</span>
+</pre></div>
+</div>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>y</strong></td>
+<td>(array-like) Observed data</td>
+</tr>
+<tr class="row-even"><td><strong>model</strong></td>
+<td>(callable) A functional form that defines the model</td>
+</tr>
+<tr class="row-odd"><td><strong>yerr</strong></td>
+<td>(scalar or array-like) Weights or uncertainties on each observed data point</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.L2Norm.evaluate" title="macaw.objective_functions.L2Norm.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L2Norm.evaluate" title="macaw.objective_functions.L2Norm.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L2Norm.gradient" title="macaw.objective_functions.L2Norm.gradient"><code class="xref py py-obj docutils literal"><span class="pre">gradient</span></code></a>(theta)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="macaw.objective_functions.L2Norm.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L2Norm.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L2Norm.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.L2Norm.gradient">
+<code class="descname">gradient</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L2Norm.gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L2Norm.gradient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macaw.objective_functions.BernoulliLikelihood">
+<em class="property">class </em><code class="descclassname">macaw.objective_functions.</code><code class="descname">BernoulliLikelihood</code><span class="sig-paren">(</span><em>y</em>, <em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#BernoulliLikelihood"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.BernoulliLikelihood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the negative log likelihood function for independent
+(possibly non-identical distributed) Bernoulli random variables.
+This class also contains a method to compute maximum likelihood estimators
+for the probability of a success.</p>
+<p>More precisely, the MLE is computed as</p>
+<div class="math">
+\[\arg \min_{\theta \in \Theta} - \sum_{i=1}^{n} y_i\log\pi_i(\mathbf{\theta}) + (1 - y_i)\log(1 - \pi_i(\mathbf{\theta}))\]</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw</span> <span class="k">import</span> <span class="n">BernoulliLikelihood</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.models</span> <span class="k">import</span> <span class="n">ConstantModel</span> <span class="k">as</span> <span class="n">constant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># generate integer fake data in the set {0, 1}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create a model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">constant</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># perform optimization</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ber</span> <span class="o">=</span> <span class="n">BernoulliLikelihood</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">ber</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># get best fit parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+<span class="go">[ 0.55999999]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">))</span> <span class="c1"># theorectical MLE</span>
+<span class="go">0.56</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># get uncertainties on the best fit parameters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ber</span><span class="o">.</span><span class="n">uncertainties</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="go">[ 0.04963869]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># theorectical uncertainty</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">.</span><span class="mi">56</span> <span class="o">*</span> <span class="o">.</span><span class="mi">44</span> <span class="o">/</span> <span class="mi">100</span><span class="p">))</span>
+<span class="go">0.049638694584</span>
+</pre></div>
+</div>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>y</strong></td>
+<td>(array-like) Observed data</td>
+</tr>
+<tr class="row-even"><td><strong>model</strong></td>
+<td>(callable) A functional form that defines the model for the probability of success</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.evaluate" title="macaw.objective_functions.BernoulliLikelihood.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.evaluate" title="macaw.objective_functions.BernoulliLikelihood.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.fisher_information_matrix" title="macaw.objective_functions.BernoulliLikelihood.fisher_information_matrix"><code class="xref py py-obj docutils literal"><span class="pre">fisher_information_matrix</span></code></a>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.gradient" title="macaw.objective_functions.BernoulliLikelihood.gradient"><code class="xref py py-obj docutils literal"><span class="pre">gradient</span></code></a>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.uncertainties" title="macaw.objective_functions.BernoulliLikelihood.uncertainties"><code class="xref py py-obj docutils literal"><span class="pre">uncertainties</span></code></a>(theta)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="macaw.objective_functions.BernoulliLikelihood.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#BernoulliLikelihood.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.BernoulliLikelihood.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.BernoulliLikelihood.fisher_information_matrix">
+<code class="descname">fisher_information_matrix</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#BernoulliLikelihood.fisher_information_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.BernoulliLikelihood.fisher_information_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.BernoulliLikelihood.gradient">
+<code class="descname">gradient</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#BernoulliLikelihood.gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.BernoulliLikelihood.gradient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.BernoulliLikelihood.uncertainties">
+<code class="descname">uncertainties</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#BernoulliLikelihood.uncertainties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.BernoulliLikelihood.uncertainties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macaw.objective_functions.Lasso">
+<em class="property">class </em><code class="descclassname">macaw.objective_functions.</code><code class="descname">Lasso</code><span class="sig-paren">(</span><em>y</em>, <em>X</em>, <em>alpha=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#Lasso"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.Lasso" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the Lasso objective function.</p>
+<p>Lasso is usually used to estimate sparse coefficients.</p>
+<div class="math">
+\[\arg \min_{w \in \mathcal{W}}  \frac{1}{2\cdot n_{\text{samples}}}||y - X\mathbf{w}||^{2}_{2} + \alpha||\mathbf{w}||^{1}_{1}\]</div>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.Lasso.evaluate" title="macaw.objective_functions.Lasso.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.evaluate" title="macaw.objective_functions.Lasso.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.fit" title="macaw.objective_functions.Lasso.fit"><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code></a>(x0[,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.gradient_surrogate" title="macaw.objective_functions.Lasso.gradient_surrogate"><code class="xref py py-obj docutils literal"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.surrogate_fun" title="macaw.objective_functions.Lasso.surrogate_fun"><code class="xref py py-obj docutils literal"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="macaw.objective_functions.Lasso.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#Lasso.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.Lasso.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.Lasso.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>x0</em>, <em>n=1000</em>, <em>xtol=1e-06</em>, <em>ftol=1e-09</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#Lasso.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.Lasso.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.Lasso.gradient_surrogate">
+<code class="descname">gradient_surrogate</code><span class="sig-paren">(</span><em>theta</em>, <em>theta_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#Lasso.gradient_surrogate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.Lasso.gradient_surrogate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.Lasso.surrogate_fun">
+<code class="descname">surrogate_fun</code><span class="sig-paren">(</span><em>theta</em>, <em>theta_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#Lasso.surrogate_fun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.Lasso.surrogate_fun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macaw.objective_functions.RidgeRegression">
+<em class="property">class </em><code class="descclassname">macaw.objective_functions.</code><code class="descname">RidgeRegression</code><span class="sig-paren">(</span><em>y</em>, <em>X</em>, <em>alpha=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#RidgeRegression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.RidgeRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements Ridge regression objective function.</p>
+<p>Ridge regression is a specific case of regression in which the
+model is linear, the objective function is the L2 norm,
+and the regularization term is the L2 norm.</p>
+<div class="math">
+\[\arg \min_{w \in \mathcal{W}}  \frac{1}{2}||y - X\mathbf{w}||^{2}_{2} + \alpha||\mathbf{w}||^{2}_{2}\]</div>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.RidgeRegression.evaluate" title="macaw.objective_functions.RidgeRegression.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.RidgeRegression.evaluate" title="macaw.objective_functions.RidgeRegression.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.RidgeRegression.gradient" title="macaw.objective_functions.RidgeRegression.gradient"><code class="xref py py-obj docutils literal"><span class="pre">gradient</span></code></a>(theta)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="macaw.objective_functions.RidgeRegression.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#RidgeRegression.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.RidgeRegression.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.RidgeRegression.gradient">
+<code class="descname">gradient</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#RidgeRegression.gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.RidgeRegression.gradient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macaw.objective_functions.LogisticRegression">
+<em class="property">class </em><code class="descclassname">macaw.objective_functions.</code><code class="descname">LogisticRegression</code><span class="sig-paren">(</span><em>y</em>, <em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#LogisticRegression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.LogisticRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a Logistic regression objective function for
+Binary classification.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.LogisticRegression.evaluate" title="macaw.objective_functions.LogisticRegression.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.evaluate" title="macaw.objective_functions.LogisticRegression.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">fisher_information_matrix</span></code>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.gradient" title="macaw.objective_functions.LogisticRegression.gradient"><code class="xref py py-obj docutils literal"><span class="pre">gradient</span></code></a>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.gradient_surrogate" title="macaw.objective_functions.LogisticRegression.gradient_surrogate"><code class="xref py py-obj docutils literal"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.predict" title="macaw.objective_functions.LogisticRegression.predict"><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code></a>(X)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.surrogate_fun" title="macaw.objective_functions.LogisticRegression.surrogate_fun"><code class="xref py py-obj docutils literal"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">uncertainties</span></code>(theta)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="macaw.objective_functions.LogisticRegression.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#LogisticRegression.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.LogisticRegression.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.LogisticRegression.gradient">
+<code class="descname">gradient</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#LogisticRegression.gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.LogisticRegression.gradient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.LogisticRegression.gradient_surrogate">
+<code class="descname">gradient_surrogate</code><span class="sig-paren">(</span><em>theta</em>, <em>theta_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#LogisticRegression.gradient_surrogate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.LogisticRegression.gradient_surrogate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.LogisticRegression.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#LogisticRegression.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.LogisticRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.LogisticRegression.surrogate_fun">
+<code class="descname">surrogate_fun</code><span class="sig-paren">(</span><em>theta</em>, <em>theta_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#LogisticRegression.surrogate_fun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.LogisticRegression.surrogate_fun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="macaw.objective_functions.L1LogisticRegression">
+<em class="property">class </em><code class="descclassname">macaw.objective_functions.</code><code class="descname">L1LogisticRegression</code><span class="sig-paren">(</span><em>y</em>, <em>X</em>, <em>alpha=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1LogisticRegression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1LogisticRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements a Logistic regression objective function with
+L1-norm regularization for Binary classification.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.evaluate" title="macaw.objective_functions.L1LogisticRegression.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.evaluate" title="macaw.objective_functions.L1LogisticRegression.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.fit" title="macaw.objective_functions.L1LogisticRegression.fit"><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code></a>(x0[,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.gradient_surrogate" title="macaw.objective_functions.L1LogisticRegression.gradient_surrogate"><code class="xref py py-obj docutils literal"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.predict" title="macaw.objective_functions.L1LogisticRegression.predict"><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code></a>(X)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.surrogate_fun" title="macaw.objective_functions.L1LogisticRegression.surrogate_fun"><code class="xref py py-obj docutils literal"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="macaw.objective_functions.L1LogisticRegression.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1LogisticRegression.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1LogisticRegression.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.L1LogisticRegression.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>x0</em>, <em>n=10</em>, <em>xtol=1e-06</em>, <em>ftol=1e-09</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1LogisticRegression.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1LogisticRegression.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.L1LogisticRegression.gradient_surrogate">
+<code class="descname">gradient_surrogate</code><span class="sig-paren">(</span><em>theta</em>, <em>theta_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1LogisticRegression.gradient_surrogate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1LogisticRegression.gradient_surrogate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.L1LogisticRegression.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1LogisticRegression.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1LogisticRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="macaw.objective_functions.L1LogisticRegression.surrogate_fun">
+<code class="descname">surrogate_fun</code><span class="sig-paren">(</span><em>theta</em>, <em>theta_n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L1LogisticRegression.surrogate_fun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L1LogisticRegression.surrogate_fun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="section" id="inheritance-diagram">
+<h2>Inheritance Diagram<a class="headerlink" href="#inheritance-diagram" title="Permalink to this headline">¶</a></h2>
+<img src="../_images/inheritance-6c9094f0c6d2a09a335e71106ea16e8024ed8c52.png" alt="Inheritance diagram of macaw.objective_functions" usemap="#inheritance533f8b5488" class="inheritance"/>
+<map id="inheritance533f8b5488" name="inheritance533f8b5488">
+<area shape="rect" id="node1" href="#macaw.objective_functions.BernoulliLikelihood" target="_top" title="Implements the negative log likelihood function for independent" alt="" coords="269,4,495,22"/>
+<area shape="rect" id="node7" href="#macaw.objective_functions.LogisticRegression" target="_top" title="Implements a Logistic regression objective function for" alt="" coords="537,4,764,22"/>
+<area shape="rect" id="node2" title="An abstract class for a generic objective function." alt="" coords="4,96,226,114"/>
+<area shape="rect" id="node3" href="#macaw.objective_functions.L1LogisticRegression" target="_top" title="Implements a Logistic regression objective function with" alt="" coords="263,41,501,59"/>
+<area shape="rect" id="node4" href="#macaw.objective_functions.L1Norm" target="_top" title="Defines the L1 Norm loss function. L1 norm is usually useful" alt="" coords="293,77,470,96"/>
+<area shape="rect" id="node5" href="#macaw.objective_functions.L2Norm" target="_top" title="Defines the squared L2 norm loss function. L2 norm" alt="" coords="293,114,470,133"/>
+<area shape="rect" id="node6" href="#macaw.objective_functions.Lasso" target="_top" title="Implements the Lasso objective function." alt="" coords="298,151,466,169"/>
+<area shape="rect" id="node8" href="#macaw.objective_functions.RidgeRegression" target="_top" title="Implements Ridge regression objective function." alt="" coords="272,188,491,206"/>
+</map>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, mirca.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1dev0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

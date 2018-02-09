@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>macaw.optimizers &mdash; macaw 0.1dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> macaw
+          
+
+          
+            
+            <img src="../../_static/macaw_small.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../install.html#development-version">Development version</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/optimizers.html">Optimizers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/optimizers.html#inheritance-diagram">Inheritance Diagram</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/objective_functions.html">Objective Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/objective_functions.html#inheritance-diagram">Inheritance Diagram</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ipython_notebooks/index.html">IPython notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/l1_l2norm_linear_regression.html">L1 and L2 Linear Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/logistic_regression.html">Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html">Logistic Regression Applied to Classification of Breast Tumors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html#1.-Data-Visualization">1. Data Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html#2.-Model-fitting">2. Model fitting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html#3.-Comparison-against-scikit-learn">3. Comparison against scikit-learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html#4.-Logistic-Regression-with-L1-Regularization">4. Logistic Regression with L1 Regularization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/abalone/abalone.html">Predicting the ages of abalones using Linear Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/abalone/abalone.html#1.-Data-Visualization">1. Data Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/abalone/abalone.html#2.-Model-fitting">2. Model fitting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/abalone/abalone.html#3.-Comparison-against-scikit-learn">3. Comparison against scikit-learn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ipython_notebooks/abalone/abalone.html#4.-Linear-Regression-with-L1-Regularization">4. Linear Regression with L1 Regularization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">macaw</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>macaw.optimizers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for macaw.optimizers</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GradientDescent&#39;</span><span class="p">,</span> <span class="s1">&#39;CoordinateDescent&#39;</span><span class="p">,</span> <span class="s1">&#39;MajorizationMinimization&#39;</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">Optimizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A simple base class for an optimizer.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">save_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">funval</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">funval</span> <span class="o">=</span> <span class="n">funval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">niters</span> <span class="o">=</span> <span class="n">n_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+
+
+<div class="viewcode-block" id="GradientDescent"><a class="viewcode-back" href="../../api/optimizers.html#macaw.optimizers.GradientDescent">[docs]</a><span class="k">class</span> <span class="nc">GradientDescent</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements a simple gradient descent algorithm to find local</span>
+<span class="sd">    minimum of functions.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fun : callable</span>
+<span class="sd">        The function to be minimized</span>
+<span class="sd">    gradient : callable</span>
+<span class="sd">        The gradient of the fun</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        Learning rate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="o">=</span> <span class="n">fun</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span> <span class="o">=</span> <span class="n">gradient</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span>
+
+<div class="viewcode-block" id="GradientDescent.compute"><a class="viewcode-back" href="../../api/optimizers.html#macaw.optimizers.GradientDescent.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">fun_args</span><span class="o">=</span><span class="p">(),</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">gtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+        <span class="n">fun</span> <span class="o">=</span> <span class="n">_wrap_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="n">fun_args</span><span class="p">)</span>
+        <span class="n">fun_prime</span> <span class="o">=</span> <span class="n">_wrap_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradient</span><span class="p">,</span> <span class="n">fun_args</span><span class="p">)</span>
+
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">x0</span>
+            <span class="n">fun_before</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="n">fun_prime</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">grad</span> <span class="o">*</span> <span class="n">grad</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">gtol</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Success: norm of the gradient is less than </span><span class="si">{}</span><span class="s2">&quot;</span>
+                       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gtol</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_before</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="n">x0</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">grad</span>
+            <span class="n">fun_after</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+            <span class="n">grad_diff</span> <span class="o">=</span> <span class="n">fun_prime</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">-</span> <span class="n">grad</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x0</span> <span class="o">-</span> <span class="n">x_tmp</span><span class="p">,</span> <span class="n">grad_diff</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">grad_diff</span><span class="p">,</span> <span class="n">grad_diff</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">((</span><span class="n">fun_after</span> <span class="o">-</span> <span class="n">fun_before</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">fun_before</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">ftol</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Success: loss function has not changed by </span><span class="si">{}</span><span class="s2"> since&quot;</span>
+                       <span class="s2">&quot; the previous iteration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ftol</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">x_tmp</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">x0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">xtol</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Success: parameters have not changed by </span><span class="si">{}</span><span class="s2"> since&quot;</span>
+                       <span class="s2">&quot; the previous iteration.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xtol</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Failure: max. number of iterations (</span><span class="si">{}</span><span class="s2">) reached.&quot;</span>
+                   <span class="s2">&quot; The algorithm may not have converged.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CoordinateDescent"><a class="viewcode-back" href="../../api/optimizers.html#macaw.optimizers.CoordinateDescent">[docs]</a><span class="k">class</span> <span class="nc">CoordinateDescent</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements a sequential coordinate descent algorithm to find local</span>
+<span class="sd">    minimum of functions.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fun : callable</span>
+<span class="sd">        The function to be minimized</span>
+<span class="sd">    gradient : callable</span>
+<span class="sd">        The gradient of the fun</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        Learning rate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="o">=</span> <span class="n">fun</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span> <span class="o">=</span> <span class="n">gradient</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span>
+
+<div class="viewcode-block" id="CoordinateDescent.compute"><a class="viewcode-back" href="../../api/optimizers.html#macaw.optimizers.CoordinateDescent.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">fun_args</span><span class="o">=</span><span class="p">(),</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">gtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+        <span class="n">fun</span> <span class="o">=</span> <span class="n">_wrap_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="n">fun_args</span><span class="p">)</span>
+        <span class="n">fun_prime</span> <span class="o">=</span> <span class="n">_wrap_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradient</span><span class="p">,</span> <span class="n">fun_args</span><span class="p">)</span>
+
+        <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">x0_aux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+            <span class="n">total_fun_before</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">x0_aux</span><span class="p">)</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+                <span class="n">fun_before</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">x_tmp</span><span class="p">)</span>
+                <span class="n">grad</span> <span class="o">=</span> <span class="n">fun_prime</span><span class="p">(</span><span class="n">x_tmp</span><span class="p">)[</span><span class="n">j</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">grad</span> <span class="o">*</span> <span class="n">grad</span><span class="p">))</span><span class="o">/</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">gtol</span><span class="p">:</span>
+                    <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">continue</span>
+
+                <span class="n">x0</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x0</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">grad</span>
+                <span class="n">fun_after</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="p">(</span><span class="n">x0</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_tmp</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">fun_prime</span><span class="p">(</span><span class="n">x0</span><span class="p">)[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">grad</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">fun_after</span> <span class="o">-</span> <span class="n">fun_before</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">fun_before</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">ftol</span>
+                    <span class="ow">or</span> <span class="nb">abs</span><span class="p">((</span><span class="n">x_tmp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">x0</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">x0</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span> <span class="o">&lt;</span> <span class="n">xtol</span> <span class="ow">or</span> <span class="n">k</span> <span class="o">==</span> <span class="n">n</span><span class="p">):</span>
+                    <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">continue</span>
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">total_fun_after</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">total_fun_after</span> <span class="o">-</span> <span class="n">total_fun_before</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">total_fun_before</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">ftol</span><span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Success: loss function has not changed by </span><span class="si">{}</span><span class="s2"> since&quot;</span>
+                       <span class="s2">&quot; the previous iteration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ftol</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">total_fun_after</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">x0_aux</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">x0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">xtol</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Success: parameters have not changed by </span><span class="si">{}</span><span class="s2"> since&quot;</span>
+                       <span class="s2">&quot; the previous iteration.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xtol</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">total_fun_after</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="n">total_grad</span> <span class="o">=</span> <span class="n">fun_prime</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">total_grad</span> <span class="o">*</span> <span class="n">total_grad</span><span class="p">))</span><span class="o">/</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">gtol</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Sucess: mean norm of the gradient has not changed by&quot;</span>
+                       <span class="s2">&quot; </span><span class="si">{}</span><span class="s2"> since the previous iteration.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gtol</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">total_fun_after</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Failure: max. number of iterations (</span><span class="si">{}</span><span class="s2">) reached.&quot;</span>
+                   <span class="s2">&quot; The algorithm may not have converged.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="MajorizationMinimization"><a class="viewcode-back" href="../../api/optimizers.html#macaw.optimizers.MajorizationMinimization">[docs]</a><span class="k">class</span> <span class="nc">MajorizationMinimization</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements a Majorization-Minimization scheme.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fun : object</span>
+<span class="sd">        Objective function to be minimized. Note that this must be an object</span>
+<span class="sd">        that contains the following methods::</span>
+
+<span class="sd">            * `evaluate`: returns the value of the objective function</span>
+<span class="sd">            * `surrogate_fun`: returns the value of an appropriate surrogate function</span>
+<span class="sd">            * `gradient_surrogate`: return the value of the gradient of the surrogate function</span>
+<span class="sd">    optimizer : str</span>
+<span class="sd">        Specifies the optimizer to use during the Minimization step. Options are::</span>
+
+<span class="sd">            * &#39;gd&#39; : Gradient Descent</span>
+<span class="sd">            * &#39;cd&#39; : Coordinate Descent</span>
+<span class="sd">    kwargs : dict</span>
+<span class="sd">        Keyword arguments to be passed to the optimizer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;gd&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="o">=</span> <span class="n">fun</span>
+        <span class="n">opts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;gd&#39;</span><span class="p">:</span> <span class="n">GradientDescent</span><span class="p">,</span> <span class="s1">&#39;cd&#39;</span><span class="p">:</span> <span class="n">CoordinateDescent</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">opts</span><span class="p">[</span><span class="n">optimizer</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="o">.</span><span class="n">surrogate_fun</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="o">.</span><span class="n">gradient_surrogate</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MajorizationMinimization.compute"><a class="viewcode-back" href="../../api/optimizers.html#macaw.optimizers.MajorizationMinimization.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">ftol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">x_tmp</span> <span class="o">=</span> <span class="n">x0</span>
+            <span class="n">fun_before</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_args</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">x0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">x</span>
+            <span class="n">fun_after</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">((</span><span class="n">fun_after</span> <span class="o">-</span> <span class="n">fun_before</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">fun_before</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">ftol</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Success: loss function has not changed by </span><span class="si">{}</span><span class="s2"> since&quot;</span>
+                       <span class="s2">&quot; the previous iteration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ftol</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">x_tmp</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">x0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">xtol</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Success: parameters have not changed by </span><span class="si">{}</span><span class="s2"> since&quot;</span>
+                       <span class="s2">&quot; the previous iteration.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xtol</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Failure: max. number of iterations (</span><span class="si">{}</span><span class="s2">) reached.&quot;</span>
+                   <span class="s2">&quot; The algorithm may not have converged.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_wrap_function</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">function_wrapper</span><span class="p">(</span><span class="n">wrapper_args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="n">wrapper_args</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="n">wrapper_args</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">function_wrapper</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, mirca.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1dev0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
