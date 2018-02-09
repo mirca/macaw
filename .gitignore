@@ -19,6 +19,7 @@ benchmarks/_results
 # Sphinx
 docs/api
 docs/_build
+docs/sphinx_rtd_theme
 
 # Eclipse editor project files
 .project
