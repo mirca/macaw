@@ -38,5 +38,5 @@ setup(
     setup_requires=['pytest-runner'],
     tests_require=['pytest', 'pytest-cov'],
     keywords='statistics probability',
-    install_requires=['numpy, scipy, tensorflow, scikit-learn, matplotlib']
+    install_requires=['numpy', 'scipy', 'tensorflow', 'scikit-learn', 'matplotlib']
 )
