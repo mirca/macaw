@@ -35,9 +35,9 @@ def lad(X, y, yerr=None, l1_regularizer=0.12, niters=5, rtol=1e-4, session=None)
         whitening_factor = 1.
 
     # convert inputs to tensors
-    X_tensor = tf.convert_to_tensor(X / whitening_factor, dtype=tf.float64)
+    X_tensor = tf.convert_to_tensor((X.T / whitening_factor).T, dtype=tf.float64)
     y_tensor = tf.reshape(tf.convert_to_tensor(y / whitening_factor,
-                          dtype=tf.float64), (-1, 1))
+                                               dtype=tf.float64), (-1, 1))
 
     with session or tf.Session() as session:
         # solve the OLS problem and use it as initial values for the MM algorithm
