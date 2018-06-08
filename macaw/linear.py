@@ -1,7 +1,8 @@
 import tensorflow as tf
 import math
 
-def lad(X, y, yerr=None, l1_regularizer=0.12, niters=5, rtol=1e-4, session=None):
+def lad(X, y, yerr=None, l1_regularizer=0.12, niters=5, rtol=1e-4,
+        eps=1e-4, session=None):
     """
     L1 norm optimization (or least absolute deviation) with L1 norm
     regularization using Majorization-Minimization. See [1]_
@@ -21,7 +22,11 @@ def lad(X, y, yerr=None, l1_regularizer=0.12, niters=5, rtol=1e-4, session=None)
         Number of iterations of the Majorization-Minimization
     rtol : float
         Relative tolerance used as an early stopping criterion
+    eps : float
+        Inscrease this value if tensorflow raises an exception
+        saying that the Cholesky decomposition was not successful
     session : tf.Session object
+        A tensorflow.Session object
 
     Returns
     -------
@@ -51,7 +56,7 @@ def lad(X, y, yerr=None, l1_regularizer=0.12, niters=5, rtol=1e-4, session=None)
         n = 0
         while n < niters:
             reg_factor = tf.norm(x, ord=1)
-            l1_factor = tf.sqrt(tf.abs(y_tensor - tf.matmul(X_tensor, x)))
+            l1_factor = eps + tf.sqrt(tf.abs(y_tensor - tf.matmul(X_tensor, x)))
 
             X_tensor = X_tensor / l1_factor
             y_tensor = y_tensor / l1_factor
