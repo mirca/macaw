@@ -22,7 +22,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='macaw',
     packages=['macaw'],
-    version='0.1.dev0',
+    version='0.2.dev0',
     description='A colorful, long-tailed package for beautiful Majorization-minimization',
     long_description=long_description,
     url='https://github.com/mirca/macaw',
