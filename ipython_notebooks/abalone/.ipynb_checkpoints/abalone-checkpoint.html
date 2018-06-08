@@ -101,6 +101,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">IPython notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../robust_linear_l1norm.html">Robust fitting of linear models using Least Absolute Deviations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../l1_l2norm_linear_regression.html">L1 and L2 Linear Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../logistic_regression.html">Logistic Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../breast_cancer/breast-cancer.html">Logistic Regression Applied to Classification of Breast Tumors</a><ul>
@@ -397,11 +398,11 @@ features will be used to infer the age of abalones.</p>
 <h2>1. Data Visualization<a class="headerlink" href="#1.-Data-Visualization" title="Permalink to this headline">¶</a></h2>
 <p>Let’s load and visualize the dataset using Pandas</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
@@ -409,38 +410,38 @@ features will be used to infer the age of abalones.</p>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span> <span class="s1">&#39;Length&#39;</span><span class="p">,</span> <span class="s1">&#39;Diameter&#39;</span><span class="p">,</span> <span class="s1">&#39;Height&#39;</span><span class="p">,</span> <span class="s1">&#39;Whole weight&#39;</span><span class="p">,</span>
          <span class="s1">&#39;Shucked weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Viscera weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Shell weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Rings&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">abalone_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;abalone.data&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">abalone_df</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[4]:
 </pre></div>
 </div>
@@ -1213,22 +1214,22 @@ features will be used to infer the age of abalones.</p>
 </div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Length&#39;</span><span class="p">,</span> <span class="s1">&#39;Diameter&#39;</span><span class="p">,</span> <span class="s1">&#39;Height&#39;</span><span class="p">,</span> <span class="s1">&#39;Whole weight&#39;</span><span class="p">,</span>
          <span class="s1">&#39;Shucked weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Viscera weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Shell weight&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">corr</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">abalone_df</span><span class="p">[</span><span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Rings&#39;</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;spearman&#39;</span><span class="p">)</span>
@@ -1237,21 +1238,21 @@ features will be used to infer the age of abalones.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">corr</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[7]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>[0.60438533540463257,
  0.62289500509215345,
  0.65771637098609093,
@@ -1263,22 +1264,22 @@ features will be used to infer the age of abalones.</p>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Shell weight&#39;</span><span class="p">],</span> <span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Rings&#39;</span><span class="p">],</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Rings&#39;</span><span class="p">)</span>
@@ -1296,11 +1297,11 @@ features will be used to infer the age of abalones.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Height&#39;</span><span class="p">],</span> <span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Rings&#39;</span><span class="p">],</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Rings&#39;</span><span class="p">)</span>
@@ -1317,18 +1318,18 @@ features will be used to infer the age of abalones.</p>
 <img alt="../../../_images/ipython_notebooks_abalone_.ipynb_checkpoints_abalone-checkpoint_14_0.png" src="../../../_images/ipython_notebooks_abalone_.ipynb_checkpoints_abalone-checkpoint_14_0.png" />
 </div>
 </div>
-<p>In the column <strong>Sex</strong>, <code class="docutils literal"><span class="pre">M</span></code>, <code class="docutils literal"><span class="pre">F</span></code>, and <code class="docutils literal"><span class="pre">I</span></code> represent male, female,
+<p>In the column <strong>Sex</strong>, <code class="docutils literal notranslate"><span class="pre">M</span></code>, <code class="docutils literal notranslate"><span class="pre">F</span></code>, and <code class="docutils literal notranslate"><span class="pre">I</span></code> represent male, female,
 and infant, respectively. Nevertheless, we will ignore this feature, and
 only consider physical (measurable) features in order to infer ages.</p>
 <p>As described in the dataset documentation, the age of an Abalone is
-given as <code class="docutils literal"><span class="pre">Rings</span></code> + 1.5 (and that’s the label we want to estimate).
-Therefore, let’s add an <code class="docutils literal"><span class="pre">Age</span></code> label to our dataset:</p>
+given as <code class="docutils literal notranslate"><span class="pre">Rings</span></code> + 1.5 (and that’s the label we want to estimate).
+Therefore, let’s add an <code class="docutils literal notranslate"><span class="pre">Age</span></code> label to our dataset:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Rings&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.5</span>
 </pre></div>
 </div>
@@ -1339,34 +1340,34 @@ Therefore, let’s add an <code class="docutils literal"><span class="pre">Age</
 <p>Let’s use Scikit-learn to split the dataset in training set and testing
 set:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">abalone_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Length&#39;</span><span class="p">:</span><span class="s1">&#39;Shell weight&#39;</span><span class="p">],</span>
                                                     <span class="n">abalone_df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=.</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p>Now, let’s import the objective function <code class="docutils literal"><span class="pre">L2Norm</span></code> and the model
-<code class="docutils literal"><span class="pre">LinearModel</span></code> from <code class="docutils literal"><span class="pre">macaw</span></code>:</p>
+<p>Now, let’s import the objective function <code class="docutils literal notranslate"><span class="pre">L2Norm</span></code> and the model
+<code class="docutils literal notranslate"><span class="pre">LinearModel</span></code> from <code class="docutils literal notranslate"><span class="pre">macaw</span></code>:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">L2Norm</span>
 <span class="kn">from</span> <span class="nn">macaw.models</span> <span class="k">import</span> <span class="n">LinearModel</span>
 </pre></div>
@@ -1375,82 +1376,82 @@ set:</p>
 <p>See
 <a class="reference external" href="https://mirca.github.io/macaw/api/objective_functions.html#macaw.objective_functions">https://mirca.github.io/macaw/api/objective_functions.html#macaw.objective_functions</a>
 for documentation.</p>
-<p>Let’s instantiate an object from <code class="docutils literal"><span class="pre">LinearModel</span></code> and from <code class="docutils literal"><span class="pre">L2Norm</span></code>
-passing the labels <code class="docutils literal"><span class="pre">y_train</span></code> to the objective function and the
-features <code class="docutils literal"><span class="pre">X_train</span></code> to the <code class="docutils literal"><span class="pre">LinearModel</span></code>:</p>
+<p>Let’s instantiate an object from <code class="docutils literal notranslate"><span class="pre">LinearModel</span></code> and from <code class="docutils literal notranslate"><span class="pre">L2Norm</span></code>
+passing the labels <code class="docutils literal notranslate"><span class="pre">y_train</span></code> to the objective function and the
+features <code class="docutils literal notranslate"><span class="pre">X_train</span></code> to the <code class="docutils literal notranslate"><span class="pre">LinearModel</span></code>:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">l2norm</span> <span class="o">=</span> <span class="n">L2Norm</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">LinearModel</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
-<p>Let’s use the method <code class="docutils literal"><span class="pre">fit</span></code> to get the maximum likelihood weights.</p>
+<p>Let’s use the method <code class="docutils literal notranslate"><span class="pre">fit</span></code> to get the maximum likelihood weights.</p>
 <p><em>Note that we need to pass an initial estimate for the linear weights
 and bias of the ``LinearModel``</em>:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">res</span> <span class="o">=</span> <span class="n">l2norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ftol</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p>The maximum likelihood weights can accessed using the <code class="docutils literal"><span class="pre">.x</span></code> attribute:</p>
+<p>The maximum likelihood weights can accessed using the <code class="docutils literal notranslate"><span class="pre">.x</span></code> attribute:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">res</span><span class="o">.</span><span class="n">x</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[11]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>array([ -1.92274555,  13.91206177,  10.18196547,   9.75304369,
        -20.87760092,  -9.89623461,   8.34503531,   4.56163237])
 </pre></div>
 </div>
 </div>
-<p>Additionally, we can check the status of the <code class="docutils literal"><span class="pre">fit</span></code> and the number of
+<p>Additionally, we can check the status of the <code class="docutils literal notranslate"><span class="pre">fit</span></code> and the number of
 iterations that it took to converge.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">res</span><span class="o">.</span><span class="n">status</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[12]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&#39;Success: parameters have not changed by 1e-06 since the previous iteration.&#39;
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of iterations needed: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">niters</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1466,21 +1467,21 @@ Number of iterations needed: 118
 <p>Now, let’s compute the Mean Squared Error between the model and the
 labels on the test set:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">model_test</span> <span class="o">=</span> <span class="n">LinearModel</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The mean squared error of the model on the test set is </span><span class="si">{}</span><span class="s1">&#39;</span>
       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">model_test</span><span class="p">(</span><span class="o">*</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
 </pre></div>
@@ -1497,33 +1498,33 @@ The mean squared error of the model on the test set is 4.867204495294917
 </div>
 <div class="section" id="3.-Comparison-against-scikit-learn">
 <h2>3. Comparison against scikit-learn<a class="headerlink" href="#3.-Comparison-against-scikit-learn" title="Permalink to this headline">¶</a></h2>
-<p>Let’s compare <code class="docutils literal"><span class="pre">macaw</span></code> against <code class="docutils literal"><span class="pre">scikit-learn</span></code>:</p>
+<p>Let’s compare <code class="docutils literal notranslate"><span class="pre">macaw</span></code> against <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">lreg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">lreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1538,21 +1539,21 @@ The mean squared error of the model on the test set is 4.867204495294917
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[18]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The mean squared error of the model on the test set is </span><span class="si">{}</span><span class="s1">&#39;</span>
       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">lreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
 </pre></div>
@@ -1566,88 +1567,88 @@ The mean squared error of the model on the test set is 4.867204495294917
 The mean squared error of the model on the test set is 4.867210207940822
 </pre></div></div>
 </div>
-<p><strong>Looks like</strong> <code class="docutils literal"><span class="pre">macaw</span></code> <strong>has a good agreement with</strong> <code class="docutils literal"><span class="pre">sklearn</span></code>
+<p><strong>Looks like</strong> <code class="docutils literal notranslate"><span class="pre">macaw</span></code> <strong>has a good agreement with</strong> <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>
 <strong>:)!</strong></p>
 </div>
 <div class="section" id="4.-Linear-Regression-with-L1-Regularization">
 <h2>4. Linear Regression with L1 Regularization<a class="headerlink" href="#4.-Linear-Regression-with-L1-Regularization" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">Lasso</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">lasso</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">X</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">res_lasso</span> <span class="o">=</span> <span class="n">lasso</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">res_lasso</span><span class="o">.</span><span class="n">x</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[23]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>array([ -1.47336887,  13.49089567,   9.40491406,  10.44875188,
        -21.44324635, -10.87523239,   7.58790273,   4.59064036])
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">res_lasso</span><span class="o">.</span><span class="n">status</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[24]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&#39;Success: parameters have not changed by 1e-06 since the previous iteration.&#39;
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The mean squared error of the model on the test set is </span><span class="si">{}</span><span class="s1">&#39;</span>
       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">model_test</span><span class="p">(</span><span class="o">*</span><span class="n">res_lasso</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
 </pre></div>

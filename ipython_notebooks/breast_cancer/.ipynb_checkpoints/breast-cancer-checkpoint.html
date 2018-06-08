@@ -101,6 +101,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">IPython notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../robust_linear_l1norm.html">Robust fitting of linear models using Least Absolute Deviations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../l1_l2norm_linear_regression.html">L1 and L2 Linear Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../logistic_regression.html">Logistic Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../breast-cancer.html">Logistic Regression Applied to Classification of Breast Tumors</a><ul>
@@ -391,22 +392,22 @@ tutorial is available here:
 <em>Note: there were a few missing data (label as ‘?’) which were replaced
 with zeros</em>.</p>
 <p>The whole documentation of the dataset can be seen in the
-<code class="docutils literal"><span class="pre">breast-cancer-wisconsin.names</span></code> file available in the link above.
+<code class="docutils literal notranslate"><span class="pre">breast-cancer-wisconsin.names</span></code> file available in the link above.
 Nonetheless, I will briefly mention the characteristics of this dataset.</p>
 <p>This dataset has nine interger-valued features that biologically
 characterizes a given tumor, e.g., size of the cell, clump thickness,
-etc. Every sample in the dataset has a label (or <code class="docutils literal"><span class="pre">class</span></code>) which
+etc. Every sample in the dataset has a label (or <code class="docutils literal notranslate"><span class="pre">class</span></code>) which
 indicates whether the tumor is benign or malignant. Benign samples have
-<code class="docutils literal"><span class="pre">class</span> <span class="pre">==</span> <span class="pre">2</span></code> whereas malignant samples have <code class="docutils literal"><span class="pre">class</span> <span class="pre">==</span> <span class="pre">4</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">==</span> <span class="pre">2</span></code> whereas malignant samples have <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">==</span> <span class="pre">4</span></code>.</p>
 <div class="section" id="1.-Data-Visualization">
 <h2>1. Data Visualization<a class="headerlink" href="#1.-Data-Visualization" title="Permalink to this headline">¶</a></h2>
 <p>Let’s load and visualize the dataset using Pandas</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
@@ -414,11 +415,11 @@ indicates whether the tumor is benign or malignant. Benign samples have
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Sample code number&#39;</span><span class="p">,</span> <span class="s1">&#39;Clump Thickness&#39;</span><span class="p">,</span> <span class="s1">&#39;Uniformity of Cell Size&#39;</span><span class="p">,</span>
           <span class="s1">&#39;Uniformity of Cell Shape&#39;</span><span class="p">,</span> <span class="s1">&#39;Marginal Adhesion&#39;</span><span class="p">,</span> <span class="s1">&#39;Single Epithelial Cell Size&#39;</span><span class="p">,</span>
           <span class="s1">&#39;Bare Nuclei&#39;</span><span class="p">,</span> <span class="s1">&#39;Bland Chromatin&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal Nucleoli&#39;</span><span class="p">,</span> <span class="s1">&#39;Mitoses&#39;</span><span class="p">,</span> <span class="s1">&#39;Class&#39;</span><span class="p">]</span>
@@ -426,27 +427,27 @@ indicates whether the tumor is benign or malignant. Benign samples have
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">breast_cancer_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;breast-cancer-wisconsin.data&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">breast_cancer_df</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[4]:
 </pre></div>
 </div>
@@ -1344,31 +1345,31 @@ indicates whether the tumor is benign or malignant. Benign samples have
 </div>
 <p>Let’s take a look at the distribution of the dataset:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">benign_samples</span> <span class="o">=</span> <span class="n">breast_cancer_df</span><span class="p">[</span><span class="n">breast_cancer_df</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">malignant_samples</span> <span class="o">=</span> <span class="n">breast_cancer_df</span><span class="p">[</span><span class="n">breast_cancer_df</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Percentage of benign examples: </span><span class="si">{}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">benign_samples</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">breast_cancer_df</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)))</span>
 </pre></div>
 </div>
@@ -1382,11 +1383,11 @@ Percentage of benign examples: 66.0%
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Percentage of malignant examples: </span><span class="si">{}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">malignant_samples</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">breast_cancer_df</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)))</span>
 </pre></div>
 </div>
@@ -1405,38 +1406,38 @@ Percentage of malignant examples: 34.0%
 <p>Let’s use Scikit-learn to split the dataset in training set and testing
 set:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">breast_cancer_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Clump Thickness&#39;</span><span class="p">:</span><span class="s1">&#39;Mitoses&#39;</span><span class="p">],</span>
                                                     <span class="n">breast_cancer_df</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=.</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p>Note that I scaled the <code class="docutils literal"><span class="pre">'Class'</span></code> label such that <code class="docutils literal"><span class="pre">0</span></code> represents
-benign sample and <code class="docutils literal"><span class="pre">1</span></code> represents malignant samples. This has to be
+<p>Note that I scaled the <code class="docutils literal notranslate"><span class="pre">'Class'</span></code> label such that <code class="docutils literal notranslate"><span class="pre">0</span></code> represents
+benign sample and <code class="docutils literal notranslate"><span class="pre">1</span></code> represents malignant samples. This has to be
 done solely because of the assumptions of the logistic regression
-algorithm implemented in <code class="docutils literal"><span class="pre">macaw</span></code>.</p>
-<p>Now, let’s import the <code class="docutils literal"><span class="pre">LogisticRegression</span></code> objective function from
-<code class="docutils literal"><span class="pre">macaw</span></code>:</p>
+algorithm implemented in <code class="docutils literal notranslate"><span class="pre">macaw</span></code>.</p>
+<p>Now, let’s import the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> objective function from
+<code class="docutils literal notranslate"><span class="pre">macaw</span></code>:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
 </pre></div>
 </div>
@@ -1444,82 +1445,82 @@ algorithm implemented in <code class="docutils literal"><span class="pre">macaw<
 <p>See
 <a class="reference external" href="https://mirca.github.io/macaw/api/objective_functions.html#macaw.objective_functions.LogisticRegression">https://mirca.github.io/macaw/api/objective_functions.html#macaw.objective_functions.LogisticRegression</a>
 for documentation.</p>
-<p>Let’s instantiate an object from <code class="docutils literal"><span class="pre">LogisticRegression</span></code> passing the
-labels <code class="docutils literal"><span class="pre">y_train</span></code> and the features <code class="docutils literal"><span class="pre">X_train</span></code>:</p>
+<p>Let’s instantiate an object from <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> passing the
+labels <code class="docutils literal notranslate"><span class="pre">y_train</span></code> and the features <code class="docutils literal notranslate"><span class="pre">X_train</span></code>:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">logreg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">X</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
-<p>Let’s use the method <code class="docutils literal"><span class="pre">fit</span></code> to get the maximum likelihood weights.</p>
+<p>Let’s use the method <code class="docutils literal notranslate"><span class="pre">fit</span></code> to get the maximum likelihood weights.</p>
 <p><em>Note that we need to pass an initial estimate for the linear weights
 and bias of the ``LogisiticRegression``</em>:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">res</span> <span class="o">=</span> <span class="n">logreg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
-<p>The maximum likelihood weights can accessed using the <code class="docutils literal"><span class="pre">.x</span></code> attribute:</p>
+<p>The maximum likelihood weights can accessed using the <code class="docutils literal notranslate"><span class="pre">.x</span></code> attribute:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">res</span><span class="o">.</span><span class="n">x</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[14]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>array([  0.67344859,  -0.12356275,   0.22360975,   0.37988553,
         -0.06955918,   0.48159258,   0.66077088,   0.25734695,
          0.5895142 , -11.20932873])
 </pre></div>
 </div>
 </div>
-<p>Additionally, we can check the status of the <code class="docutils literal"><span class="pre">fit</span></code> and the number of
+<p>Additionally, we can check the status of the <code class="docutils literal notranslate"><span class="pre">fit</span></code> and the number of
 iterations that it took to converge.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">res</span><span class="o">.</span><span class="n">status</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[15]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&#39;Success: loss function has not changed by 1e-09 since the previous iteration&#39;
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of iterations needed: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">niters</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1533,24 +1534,24 @@ Number of iterations needed: 244
 </pre></div></div>
 </div>
 <p>Now, let’s compute the accuracy of our model using the test set. For
-that we can use the <code class="docutils literal"><span class="pre">predict</span></code> method passing the testing samples. This
+that we can use the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method passing the testing samples. This
 method outputs the class of each samples:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[17]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>array([ 1.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,  1.,  1.,  0.,  0.,  0.,
         0.,  0.,  1.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  0.,  1.,  0.,
         0.,  1.,  0.,  1.,  0.,  1.,  0.,  1.,  1.,  0.,  0.,  0.,  0.,
@@ -1573,21 +1574,21 @@ method outputs the class of each samples:</p>
 </div>
 <p>Now we can compute the percentage of samples correctly classified:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span> <span class="o">==</span> <span class="n">logreg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_test</span><span class="p">)))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The accuracy of the model is </span><span class="si">{}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accuracy</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1603,43 +1604,43 @@ The accuracy of the model is 96.19048%
 </div>
 <div class="section" id="3.-Comparison-against-scikit-learn">
 <h2>3. Comparison against scikit-learn<a class="headerlink" href="#3.-Comparison-against-scikit-learn" title="Permalink to this headline">¶</a></h2>
-<p>Let’s compare <code class="docutils literal"><span class="pre">macaw</span></code> against <code class="docutils literal"><span class="pre">scikit-learn</span></code>:</p>
+<p>Let’s compare <code class="docutils literal notranslate"><span class="pre">macaw</span></code> against <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">logit</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">logit</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[22]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
           intercept_scaling=1, max_iter=100, multi_class=&#39;ovr&#39;, n_jobs=1,
           penalty=&#39;l2&#39;, random_state=None, solver=&#39;liblinear&#39;, tol=0.0001,
@@ -1648,56 +1649,56 @@ The accuracy of the model is 96.19048%
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">logit</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[23]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>0.96190476190476193
 </pre></div>
 </div>
 </div>
-<p><strong>Looks like</strong> <code class="docutils literal"><span class="pre">macaw</span></code> <strong>has a good agreement with</strong> <code class="docutils literal"><span class="pre">sklearn</span></code>
+<p><strong>Looks like</strong> <code class="docutils literal notranslate"><span class="pre">macaw</span></code> <strong>has a good agreement with</strong> <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>
 <strong>:)!</strong></p>
 </div>
 <div class="section" id="4.-Logistic-Regression-with-L1-Regularization">
 <h2>4. Logistic Regression with L1 Regularization<a class="headerlink" href="#4.-Logistic-Regression-with-L1-Regularization" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">L1LogisticRegression</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">alpha</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">100.</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">acc</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">alpha</span><span class="p">:</span>
     <span class="n">l1logreg</span> <span class="o">=</span> <span class="n">L1LogisticRegression</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">X</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
@@ -1709,21 +1710,21 @@ The accuracy of the model is 96.19048%
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">acc</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[27]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>[95.238100000000003,
  95.714290000000005,
  96.190479999999994,
@@ -1732,22 +1733,22 @@ The accuracy of the model is 96.19048%
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [28]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [29]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">)</span>
@@ -1755,11 +1756,11 @@ The accuracy of the model is 96.19048%
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[29]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;matplotlib.text.Text at 0x1197fbef0&gt;
 </pre></div>
 </div>

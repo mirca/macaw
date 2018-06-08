@@ -101,6 +101,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../ipython_notebooks/index.html">IPython notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/robust_linear_l1norm.html">Robust fitting of linear models using Least Absolute Deviations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/l1_l2norm_linear_regression.html">L1 and L2 Linear Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/logistic_regression.html">Logistic Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../ipython_notebooks/breast_cancer/breast-cancer.html">Logistic Regression Applied to Classification of Breast Tumors</a><ul>
@@ -255,8 +256,8 @@
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Failure: max. number of iterations (</span><span class="si">{}</span><span class="s2">) reached.&quot;</span>
                    <span class="s2">&quot; The algorithm may not have converged.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</div></div>
 
 <div class="viewcode-block" id="CoordinateDescent"><a class="viewcode-back" href="../../api/optimizers.html#macaw.optimizers.CoordinateDescent">[docs]</a><span class="k">class</span> <span class="nc">CoordinateDescent</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Implements a sequential coordinate descent algorithm to find local</span>
@@ -333,8 +334,8 @@
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Failure: max. number of iterations (</span><span class="si">{}</span><span class="s2">) reached.&quot;</span>
                    <span class="s2">&quot; The algorithm may not have converged.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</div></div>
 
 <div class="viewcode-block" id="MajorizationMinimization"><a class="viewcode-back" href="../../api/optimizers.html#macaw.optimizers.MajorizationMinimization">[docs]</a><span class="k">class</span> <span class="nc">MajorizationMinimization</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -390,8 +391,8 @@
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Failure: max. number of iterations (</span><span class="si">{}</span><span class="s2">) reached.&quot;</span>
                    <span class="s2">&quot; The algorithm may not have converged.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">fun_after</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</div></div>
 
 <span class="k">def</span> <span class="nf">_wrap_function</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">function_wrapper</span><span class="p">(</span><span class="n">wrapper_args</span><span class="p">):</span>

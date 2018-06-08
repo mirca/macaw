@@ -101,6 +101,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ipython_notebooks/index.html">IPython notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/robust_linear_l1norm.html">Robust fitting of linear models using Least Absolute Deviations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/l1_l2norm_linear_regression.html">L1 and L2 Linear Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/logistic_regression.html">Logistic Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ipython_notebooks/breast_cancer/breast-cancer.html">Logistic Regression Applied to Classification of Breast Tumors</a><ul>
@@ -228,10 +229,10 @@
 <dd><p>Defines the L1 Norm loss function. L1 norm is usually useful
 to optimize the “median” model, i.e., it is more robust to
 outliers than the quadratic loss function.</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\arg \min_{\theta \in \Theta} \sum_k |y_k - f(x_k, \theta)|\]</div>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">L1Norm</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">L1Norm</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.optimizers</span> <span class="k">import</span> <span class="n">MajorizationMinimization</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.models</span> <span class="k">import</span> <span class="n">LinearModel</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -273,19 +274,19 @@ outliers than the quadratic loss function.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
-<td>Calls <a class="reference internal" href="#macaw.objective_functions.L1Norm.evaluate" title="macaw.objective_functions.L1Norm.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.L1Norm.evaluate" title="macaw.objective_functions.L1Norm.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate()</span></code></a></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.evaluate" title="macaw.objective_functions.L1Norm.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.evaluate" title="macaw.objective_functions.L1Norm.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.fit" title="macaw.objective_functions.L1Norm.fit"><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code></a>(x0[,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.fit" title="macaw.objective_functions.L1Norm.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(x0[,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.gradient_surrogate" title="macaw.objective_functions.L1Norm.gradient_surrogate"><code class="xref py py-obj docutils literal"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.gradient_surrogate" title="macaw.objective_functions.L1Norm.gradient_surrogate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
 <td>Computes the gradient of the surrogate function.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.surrogate_fun" title="macaw.objective_functions.L1Norm.surrogate_fun"><code class="xref py py-obj docutils literal"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1Norm.surrogate_fun" title="macaw.objective_functions.L1Norm.surrogate_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
 <td>Evaluates a surrogate function that majorizes the L1Norm.</td>
 </tr>
 </tbody>
@@ -319,10 +320,10 @@ outliers than the quadratic loss function.</p>
 <em class="property">class </em><code class="descclassname">macaw.objective_functions.</code><code class="descname">L2Norm</code><span class="sig-paren">(</span><em>y</em>, <em>model</em>, <em>yerr=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#L2Norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.L2Norm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines the squared L2 norm loss function. L2 norm
 tends to fit the model to the mean trend of the data.</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\arg \min_{w \in \mathcal{W}}  \frac{1}{2}||y - f(X, \mathbf{w})||^{2}_{2}\]</div>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.objective_functions</span> <span class="k">import</span> <span class="n">L2Norm</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.optimizers</span> <span class="k">import</span> <span class="n">GradientDescent</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.models</span> <span class="k">import</span> <span class="n">LinearModel</span>
@@ -367,16 +368,16 @@ tends to fit the model to the mean trend of the data.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
-<td>Calls <a class="reference internal" href="#macaw.objective_functions.L2Norm.evaluate" title="macaw.objective_functions.L2Norm.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.L2Norm.evaluate" title="macaw.objective_functions.L2Norm.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate()</span></code></a></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L2Norm.evaluate" title="macaw.objective_functions.L2Norm.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L2Norm.evaluate" title="macaw.objective_functions.L2Norm.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L2Norm.gradient" title="macaw.objective_functions.L2Norm.gradient"><code class="xref py py-obj docutils literal"><span class="pre">gradient</span></code></a>(theta)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L2Norm.gradient" title="macaw.objective_functions.L2Norm.gradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gradient</span></code></a>(theta)</td>
 <td></td>
 </tr>
 </tbody>
@@ -401,10 +402,10 @@ tends to fit the model to the mean trend of the data.</p>
 This class also contains a method to compute maximum likelihood estimators
 for the probability of a success.</p>
 <p>More precisely, the MLE is computed as</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\arg \min_{\theta \in \Theta} - \sum_{i=1}^{n} y_i\log\pi_i(\mathbf{\theta}) + (1 - y_i)\log(1 - \pi_i(\mathbf{\theta}))\]</div>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw</span> <span class="k">import</span> <span class="n">BernoulliLikelihood</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">macaw.models</span> <span class="k">import</span> <span class="n">ConstantModel</span> <span class="k">as</span> <span class="n">constant</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># generate integer fake data in the set {0, 1}</span>
@@ -450,22 +451,22 @@ for the probability of a success.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
-<td>Calls <a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.evaluate" title="macaw.objective_functions.BernoulliLikelihood.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.evaluate" title="macaw.objective_functions.BernoulliLikelihood.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate()</span></code></a></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.evaluate" title="macaw.objective_functions.BernoulliLikelihood.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.evaluate" title="macaw.objective_functions.BernoulliLikelihood.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.fisher_information_matrix" title="macaw.objective_functions.BernoulliLikelihood.fisher_information_matrix"><code class="xref py py-obj docutils literal"><span class="pre">fisher_information_matrix</span></code></a>(theta)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.fisher_information_matrix" title="macaw.objective_functions.BernoulliLikelihood.fisher_information_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fisher_information_matrix</span></code></a>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.gradient" title="macaw.objective_functions.BernoulliLikelihood.gradient"><code class="xref py py-obj docutils literal"><span class="pre">gradient</span></code></a>(theta)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.gradient" title="macaw.objective_functions.BernoulliLikelihood.gradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gradient</span></code></a>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.uncertainties" title="macaw.objective_functions.BernoulliLikelihood.uncertainties"><code class="xref py py-obj docutils literal"><span class="pre">uncertainties</span></code></a>(theta)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.BernoulliLikelihood.uncertainties" title="macaw.objective_functions.BernoulliLikelihood.uncertainties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uncertainties</span></code></a>(theta)</td>
 <td></td>
 </tr>
 </tbody>
@@ -497,7 +498,7 @@ for the probability of a success.</p>
 <em class="property">class </em><code class="descclassname">macaw.objective_functions.</code><code class="descname">Lasso</code><span class="sig-paren">(</span><em>y</em>, <em>X</em>, <em>alpha=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/macaw/objective_functions.html#Lasso"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#macaw.objective_functions.Lasso" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements the Lasso objective function.</p>
 <p>Lasso is usually used to estimate sparse coefficients.</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\arg \min_{w \in \mathcal{W}}  \frac{1}{2\cdot n_{\text{samples}}}||y - X\mathbf{w}||^{2}_{2} + \alpha||\mathbf{w}||^{1}_{1}\]</div>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
@@ -506,19 +507,19 @@ for the probability of a success.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
-<td>Calls <a class="reference internal" href="#macaw.objective_functions.Lasso.evaluate" title="macaw.objective_functions.Lasso.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.Lasso.evaluate" title="macaw.objective_functions.Lasso.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate()</span></code></a></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.evaluate" title="macaw.objective_functions.Lasso.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.evaluate" title="macaw.objective_functions.Lasso.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.fit" title="macaw.objective_functions.Lasso.fit"><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code></a>(x0[,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.fit" title="macaw.objective_functions.Lasso.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(x0[,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.gradient_surrogate" title="macaw.objective_functions.Lasso.gradient_surrogate"><code class="xref py py-obj docutils literal"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.gradient_surrogate" title="macaw.objective_functions.Lasso.gradient_surrogate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.surrogate_fun" title="macaw.objective_functions.Lasso.surrogate_fun"><code class="xref py py-obj docutils literal"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.Lasso.surrogate_fun" title="macaw.objective_functions.Lasso.surrogate_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
 <td></td>
 </tr>
 </tbody>
@@ -552,7 +553,7 @@ for the probability of a success.</p>
 <p>Ridge regression is a specific case of regression in which the
 model is linear, the objective function is the L2 norm,
 and the regularization term is the L2 norm.</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\arg \min_{w \in \mathcal{W}}  \frac{1}{2}||y - X\mathbf{w}||^{2}_{2} + \alpha||\mathbf{w}||^{2}_{2}\]</div>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
@@ -561,16 +562,16 @@ and the regularization term is the L2 norm.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
-<td>Calls <a class="reference internal" href="#macaw.objective_functions.RidgeRegression.evaluate" title="macaw.objective_functions.RidgeRegression.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.RidgeRegression.evaluate" title="macaw.objective_functions.RidgeRegression.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate()</span></code></a></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.RidgeRegression.evaluate" title="macaw.objective_functions.RidgeRegression.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.RidgeRegression.evaluate" title="macaw.objective_functions.RidgeRegression.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.RidgeRegression.gradient" title="macaw.objective_functions.RidgeRegression.gradient"><code class="xref py py-obj docutils literal"><span class="pre">gradient</span></code></a>(theta)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.RidgeRegression.gradient" title="macaw.objective_functions.RidgeRegression.gradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gradient</span></code></a>(theta)</td>
 <td></td>
 </tr>
 </tbody>
@@ -599,31 +600,31 @@ Binary classification.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
-<td>Calls <a class="reference internal" href="#macaw.objective_functions.LogisticRegression.evaluate" title="macaw.objective_functions.LogisticRegression.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.LogisticRegression.evaluate" title="macaw.objective_functions.LogisticRegression.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate()</span></code></a></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.evaluate" title="macaw.objective_functions.LogisticRegression.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.evaluate" title="macaw.objective_functions.LogisticRegression.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">fisher_information_matrix</span></code>(theta)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">fisher_information_matrix</span></code>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code>(x0[,&nbsp;optimizer,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.gradient" title="macaw.objective_functions.LogisticRegression.gradient"><code class="xref py py-obj docutils literal"><span class="pre">gradient</span></code></a>(theta)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.gradient" title="macaw.objective_functions.LogisticRegression.gradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gradient</span></code></a>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.gradient_surrogate" title="macaw.objective_functions.LogisticRegression.gradient_surrogate"><code class="xref py py-obj docutils literal"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.gradient_surrogate" title="macaw.objective_functions.LogisticRegression.gradient_surrogate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.predict" title="macaw.objective_functions.LogisticRegression.predict"><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code></a>(X)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.predict" title="macaw.objective_functions.LogisticRegression.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(X)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.surrogate_fun" title="macaw.objective_functions.LogisticRegression.surrogate_fun"><code class="xref py py-obj docutils literal"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.LogisticRegression.surrogate_fun" title="macaw.objective_functions.LogisticRegression.surrogate_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">uncertainties</span></code>(theta)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">uncertainties</span></code>(theta)</td>
 <td></td>
 </tr>
 </tbody>
@@ -667,22 +668,22 @@ L1-norm regularization for Binary classification.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(theta)</td>
-<td>Calls <a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.evaluate" title="macaw.objective_functions.L1LogisticRegression.evaluate"><code class="xref py py-func docutils literal"><span class="pre">evaluate()</span></code></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(theta)</td>
+<td>Calls <a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.evaluate" title="macaw.objective_functions.L1LogisticRegression.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate()</span></code></a></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.evaluate" title="macaw.objective_functions.L1LogisticRegression.evaluate"><code class="xref py py-obj docutils literal"><span class="pre">evaluate</span></code></a>(theta)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.evaluate" title="macaw.objective_functions.L1LogisticRegression.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(theta)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.fit" title="macaw.objective_functions.L1LogisticRegression.fit"><code class="xref py py-obj docutils literal"><span class="pre">fit</span></code></a>(x0[,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.fit" title="macaw.objective_functions.L1LogisticRegression.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>(x0[,&nbsp;n,&nbsp;xtol,&nbsp;ftol])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.gradient_surrogate" title="macaw.objective_functions.L1LogisticRegression.gradient_surrogate"><code class="xref py py-obj docutils literal"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.gradient_surrogate" title="macaw.objective_functions.L1LogisticRegression.gradient_surrogate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gradient_surrogate</span></code></a>(theta,&nbsp;theta_n)</td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.predict" title="macaw.objective_functions.L1LogisticRegression.predict"><code class="xref py py-obj docutils literal"><span class="pre">predict</span></code></a>(X)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.predict" title="macaw.objective_functions.L1LogisticRegression.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(X)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.surrogate_fun" title="macaw.objective_functions.L1LogisticRegression.surrogate_fun"><code class="xref py py-obj docutils literal"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
+<tr class="row-even"><td><a class="reference internal" href="#macaw.objective_functions.L1LogisticRegression.surrogate_fun" title="macaw.objective_functions.L1LogisticRegression.surrogate_fun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">surrogate_fun</span></code></a>(theta,&nbsp;theta_n)</td>
 <td></td>
 </tr>
 </tbody>
@@ -720,14 +721,12 @@ L1-norm regularization for Binary classification.</p>
 <map id="inheritance533f8b5488" name="inheritance533f8b5488">
 <area shape="rect" id="node1" href="#macaw.objective_functions.BernoulliLikelihood" target="_top" title="Implements the negative log likelihood function for independent" alt="" coords="269,4,495,22"/>
 <area shape="rect" id="node7" href="#macaw.objective_functions.LogisticRegression" target="_top" title="Implements a Logistic regression objective function for" alt="" coords="537,4,764,22"/>
-<area shape="rect" id="node2" title="An abstract class for a generic objective function." alt="" coords="4,96,226,114"/>
 <area shape="rect" id="node3" href="#macaw.objective_functions.L1LogisticRegression" target="_top" title="Implements a Logistic regression objective function with" alt="" coords="263,41,501,59"/>
 <area shape="rect" id="node4" href="#macaw.objective_functions.L1Norm" target="_top" title="Defines the L1 Norm loss function. L1 norm is usually useful" alt="" coords="293,77,470,96"/>
 <area shape="rect" id="node5" href="#macaw.objective_functions.L2Norm" target="_top" title="Defines the squared L2 norm loss function. L2 norm" alt="" coords="293,114,470,133"/>
 <area shape="rect" id="node6" href="#macaw.objective_functions.Lasso" target="_top" title="Implements the Lasso objective function." alt="" coords="298,151,466,169"/>
 <area shape="rect" id="node8" href="#macaw.objective_functions.RidgeRegression" target="_top" title="Implements Ridge regression objective function." alt="" coords="272,188,491,206"/>
-</map>
-</div>
+</map></div>
 </div>
 
 
