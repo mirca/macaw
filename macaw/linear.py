@@ -4,7 +4,8 @@ import math
 def lad(X, y, yerr=None, l1_regularizer=0.12, niters=5, rtol=1e-4, session=None):
     """
     L1 norm optimization (or least absolute deviation) with L1 norm
-    regularization using Majorization-Minimization.
+    regularization using Majorization-Minimization. See [1]_
+    for a similar mathematical derivation.
 
     Parameters
     ----------
@@ -27,6 +28,11 @@ def lad(X, y, yerr=None, l1_regularizer=0.12, niters=5, rtol=1e-4, session=None)
     x : (m, 1) matrix
         Vector of coefficients that minimizes the least absolute deviations
         with L1 regularization.
+
+    References
+    ----------
+    [1] Phillips, R. F. Least absolute deviations estimation via the EM
+        algorithm. Statistics and Computing, 12, 281-285, 2002.
     """
 
     if yerr is not None:
