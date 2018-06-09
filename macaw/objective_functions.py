@@ -93,7 +93,7 @@ class L1Norm(ObjectiveFunction):
         """Evaluates a surrogate function that majorizes the L1Norm."""
         r = self.y - self.model(*theta)
         abs_r = np.abs(self.y - self.model(*theta_n))
-        return .5 * np.nansum(r * r / abs_r + abs_r)
+        return .5 * np.nansum(r * r / (1e-6 + abs_r) + abs_r)
 
     def gradient_surrogate(self, theta, theta_n):
         """Computes the gradient of the surrogate function."""
@@ -216,7 +216,7 @@ class Lasso(ObjectiveFunction):
         theta = np.asarray(theta)
         abs_n = np.abs(theta_n)
         return (self._l2norm(theta) / len(self.y)
-                + .5 * self.alpha * np.nansum(theta * theta / abs_n + abs_n))
+                + .5 * self.alpha * np.nansum(theta * theta / (1e-6 + abs_n) + abs_n))
 
     def gradient_surrogate(self, theta, theta_n):
         theta = np.asarray(theta)
