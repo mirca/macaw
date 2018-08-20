@@ -2,7 +2,7 @@ macaw
 =====
 |ci-badge| |cov-badge| |bib-badge| |binder|
 
-|logo|: A colorful long-tailed package for beautiful Majorization-Minimization applied to Machine Learning
+|logo|: A colorful long-tailed package for Majorization-Minimization applied to Machine Learning
 
 .. |bib-badge| image:: https://zenodo.org/badge/108071896.svg
    :target: https://zenodo.org/badge/latestdoi/108071896
