@@ -16,3 +16,9 @@ macaw
 
 
 *image credit:* `@christinahedges <https://www.github.com/christinahedges>`_
+
+Support
+-------
+
+If this software has been useful to you, please consider buying me a coffee at:
+`https://buymeacoff.ee/Csg8p1Y <https://buymeacoff.ee/Csg8p1Y>`_. Thanks!
