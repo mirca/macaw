@@ -13,6 +13,8 @@ macaw
 .. |logo| image:: docs/source/_static/logo/macaw_small.png
 .. |binder| image:: https://mybinder.org/badge.svg
    :target: https://mybinder.org/v2/gh/mirca/macaw/master?filepath=docs%2Fsource%2Fipython_notebooks
+.. |buy-me-a-coffee| image:: https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png
+   :target: https://www.buymeacoffee.com/Csg8p1Y
 
 
 *image credit:* `@christinahedges <https://www.github.com/christinahedges>`_
@@ -22,6 +24,8 @@ Support
 
 If this software has been useful to you, please consider buying me a coffee at
 `https://buymeacoff.ee/Csg8p1Y <https://buymeacoff.ee/Csg8p1Y>`_ or via WeChat:
+
+|buy-me-a-coffee|
 
 .. image:: static/wechat_pay.jpg
 
